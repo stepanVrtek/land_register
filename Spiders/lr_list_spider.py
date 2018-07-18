@@ -19,7 +19,7 @@ class LandRegisterListSpider(scrapy.Spider):
         )
 
     def parse_second(self, response):
-        print(response.xpath('//span[@id="ctl00_bodyPlaceHolder_vyberObecKU_vyberKU_lblKU"]/text()').extract())
+        print(response.xpath('//span[@id="ctl00_bodyPlaceHolder_vyberObecKU_vyberKU_lblKU"]/text()').extract_first())
 
         yield scrapy.FormRequest.from_response(
             response,
