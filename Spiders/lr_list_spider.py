@@ -5,6 +5,9 @@ from scrapy.crawler import CrawlerProcess
 class LandRegisterListSpider(scrapy.Spider):
     name = "Land Register List Spider"
     start_urls = ['http://nahlizenidokn.cuzk.cz/VyberLV.aspx']
+    custom_settings = {
+        'AUTOTHROTTLE_ENABLED': True
+    }
 
     def parse(self, response):
         # print(response.xpath('//input[@id="__VIEWSTATE"]/@value').extract_first())
@@ -30,7 +33,7 @@ class LandRegisterListSpider(scrapy.Spider):
             callback = self.parse_land_register
         )
 
-    def pase_land_register(self, response):
+    def parse_land_register(self, response):
         print(response)
 
 
