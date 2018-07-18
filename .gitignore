@@ -1,0 +1,30 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.pyc
+
+# Virtualenv related
+venv/
+pip-selfcheck.json
+
+# Distribution / packaging
+.Python
+build/
+lib/
+
+# Django stuff:
+*.log
+*.pot
+
+# Django auth db
+db.sqlite3
+db
+*.egg-info
+*.pot
+*.py[co]
+.tox/
+.DS_Store
+.env
+
+# IDE data
+.idea/
