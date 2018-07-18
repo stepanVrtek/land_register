@@ -1,22 +1,15 @@
 import Spiders.SeznamNemovitosti
+import Spiders.lr_list_spider
 import requests
 import time
 from bs4 import BeautifulSoup
+from scrapy.crawler import CrawlerProcess
 
-url = "http://nahlizenidokn.cuzk.cz/VyberLV.aspx"
-payloadOne = {'ctl00$bodyPlaceHolder$vyberObecKU$vyberKU$txtKU': 600016}
-payloadTwo = {'ctl00$bodyPlaceHolder$txtLV': 1}
-spider = Spiders.SeznamNemovitosti.seznamNemovitosti()
 
-with requests.Session() as s:
-    r = s.get(url)
-    session_id = s.cookies['ASP.NET_SessionId']
-    print(session_id)
-    print(r.headers) ##Posílá server
-    #print(r.request.headers) ##Posíláme na server
-    first = s.post(url, params=payloadOne)
-    time.sleep(3)
-    second = s.post(url, params=payloadTwo)
-    print(second.headers)
-    #soup = BeautifulSoup(second.text, "html.parser")
-    #print(soup.text)
+process = CrawlerProcess({
+    'USER_AGENT': 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)'
+})
+
+process.crawl(Spiders.lr_list_spider)
+process.start()
+
