@@ -22,20 +22,33 @@ class LandRegisterListSpider(scrapy.Spider):
         )
 
     def parse_second(self, response):
-        print(response.xpath('//span[@id="ctl00_bodyPlaceHolder_vyberObecKU_vyberKU_lblKU"]/text()').extract_first())
+        ku_xpath = '//span[@id="ctl00_bodyPlaceHolder_vyberObecKU_vyberKU_lblKU"]/text()'
+        print(response.xpath(ku_xpath).extract_first())
 
         yield scrapy.FormRequest.from_response(
             response,
             formdata = {
                 'ctl00$bodyPlaceHolder$txtLV': '1',
-                'ctl00%24bodyPlaceHolder%24txtLV=1&ctl00%24bodyPlaceHolder%24btnVyhledat': 'Vyhledat'
+                'ctl00$bodyPlaceHolder$btnVyhledat': 'Vyhledat'
             },
-            callback = self.parse_land_register
+            callback = self.parse_content
         )
 
-    def parse_land_register(self, response):
-        print(response)
+    def parse_content(self, response):
+        owners = response.xpath('//table[@summary="Vlastníci, jiní oprávnění"]/tbody/tr')
 
+        items = []
+        for row in owners:
+            # header check
+            if row.xpath('th/text()').extract_first() is not None:
+                continue
+
+            items.append({
+                'vlastnik': row.xpath('td[1]/text()').extract_first(),
+                'podil': row.xpath('td[2]/text()').extract_first()
+            })
+
+        print(items)
 
 
 process = CrawlerProcess({
