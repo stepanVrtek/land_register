@@ -12,12 +12,11 @@ class seznamNemovitosti(scrapy.Spider):
     def parse(self, response):
         main_url = "http://nahlizenidokn.cuzk.cz/"
 
-        for link in response.css(
-               "[summary=Pozemky]"):  # dalsi moznost k "table.zarovnat" je ziskat primo prvni tabulku a to: "[summary=Pozemky]"
-            yield {
-                'link': link.css("a::attr(href)").extract()
+        for link in response.css("[summary=Pozemky]"):  # dalsi moznost k "table.zarovnat" je ziskat primo prvni tabulku a to: "[summary=Pozemky]"
+                next_url = link.css("a::attr(href)").extract()
             # kazdy link ma tvar: ZobrazObjekt.aspx?encrypted=*shitloadkodu==* ktery se musi spojit s predponou "http://nahlizenidokn.cuzk.cz/"
-            }
+                yield next_url
+
 
         filename = "seznam nemovitosti.txt"
         with open(filename, 'wb') as outfile:
