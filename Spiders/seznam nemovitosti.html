@@ -1,0 +1,1436 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:aria="http://www.w3.org/2005/07/aaa" xml:lang="cs" lang="cs">
+
+<head><title>
+	Seznam nemovitostí na LV | Nahlížení do katastru nemovitostí
+</title><link href="/Content/themes/base/css?v=BKathIO9xEzqKSX5Khqm-um8UvMgpUnOUtLfluH0mDg1" rel="stylesheet"/>
+<link href="/Content/themes/application/css?v=LFSQ2jtuKNXMw1MBau-W6C0IKNvLM6Sp59gWdNoLLoY1" rel="stylesheet"/>
+
+
+        
+
+        
+        <meta charset="utf-8" />
+
+        <!-- IE BEGIN -->
+        <meta name="application-name" content="Nahlížení do katastru nemovitostí." />
+        <meta name="msapplication-tooltip" content="Informace z katastru nemovitostí, včetně mapy, poskytované zdarma." />
+        <meta name="msapplication-starturl" content="http://nahlizenidokn.cuzk.cz/" />
+        <meta name="msapplication-task" content="name=Informace o parcele;action-uri=http://nahlizenidokn.cuzk.cz/VyberParcelu.aspx" />
+        <meta name="msapplication-task" content="name=Informace o stavbě;action-uri=http://nahlizenidokn.cuzk.cz/VyberBudovu.aspx?typ=Stavba" />
+        <meta name="msapplication-task" content="name=Informace o jednotce;action-uri=http://nahlizenidokn.cuzk.cz/VyberBudovu.aspx?typ=Jednotka" />
+        <meta name="msapplication-task" content="name=Informace o řízení;action-uri=http://nahlizenidokn.cuzk.cz/VyberRizeni.aspx" />
+        <meta name="msapplication-task" content="name=Zobrazení mapy (kat. území);action-uri=http://nahlizenidokn.cuzk.cz/VyberKatastrMapa.aspx" />
+        <!-- IE END -->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <script type="text/javascript">window.name = 'nahlizenidokn'; </script>
+
+    <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" /><link href="favicon.ico" rel="apple-touch-icon" type="image/x-icon" />
+<meta name="description" content="Nahlížení do KN" /></head>
+
+<body>
+    <form method="post" action="./ZobrazObjekt.aspx?encrypted=uu0_vXSkvRSfhan18k8-z78XoPyxHogsMCT7bJK_Oyj347qdQO09vtWJiTJJms1dx15GkKjRvJaa9jF9Lmb-9CzR_codJ5ebOfESMOKUveZyZ5RtIvqlMg%3d%3d" id="aspnetForm">
+<input type="hidden" name="ctl00_scriptManager_TSM" id="ctl00_scriptManager_TSM" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="qYMuXHupqIt3hcUssnPw3PZloj2rIdsXl9tzsPmSxgmehFOU/Pi5KDErEH3htrLMbLVFVLxi4SFWrnnuqvvwUCeABJMdg09o5+QKHyOguyhGnrgsnO6x1o62GpynVhIrwtBQ9SVdoVBlG4XqU0uhuep0B/N5qRfcPjDcFuhov31JcpF4fkTJbR1ZyL3b371TdvVututZnls6oBCurGHba8IKmPLxMFJ7qtrVjC6F7jhbF2SZgTLMki6L+9dxfhe3umpVE+C59mSiEq8aADx66ii3Er3ktlEmyQwjOmjU2ctp63KQbWVTHkN1Nyulod6OO62nV4/3XyxuTliFG5r1k0dtIs84ZQsiYbwEHHlaQcPXlMpsHwrMH4cRP6IO45jDfCGz37j8OzW7Yq94s2MnZgiNMKSWJx5IBU9xYypfjcPfEPa6cJMyti3itbDstO6iv5Q9ZHhEyFA8aTPBKIzUt37YdqGXBHKIXe0bgwWH9WtBh5ybG7GHpzAfJ9HIVpTZGQghNuK40iuJGvFlCKypHnBxuYRn61lGpPhcM6q8FCQ=" />
+
+
+<script src="http://ajax.aspnetcdn.com/ajax/4.6/1/MicrosoftAjax.js" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+(window.Sys && Sys._Application && Sys.Observer)||document.write('<script type="text/javascript" src="/ScriptResource.axd?d=NJmAwtEo3Ipnlaxl6CMhvsU6N1ZktRd1SGXPC7R0vDnnpdn6J5k1LdlNlzD5r4e-0o4jB0BePALyoYe5WDSCRCkhzm4vkWeMSWY2NGD1HRkzab4cYZAs3fti6QTLAL8xx3kMoXoeCmddni1Pb3775jkqHWDMYzMEB1JSQyJa1-c1&t=72fc8ae3"><\/script>');//]]>
+</script>
+
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.10.2.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+(window.jQuery)||document.write('<script type="text/javascript" src="Scripts/jquery-1.10.2.min.js"><\/script>');//]]>
+</script>
+
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.10.4/jquery-ui.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+(!!window.jQuery.ui && !!window.jQuery.ui.version)||document.write('<script type="text/javascript" src="Scripts/jquery-ui-1.10.4.min.js"><\/script>');//]]>
+</script>
+
+<script src="/bundles/NahlizeniJsGlobal?v=j4NpHk00l2njIAXjxnmdOO5hiJrgnlfxEVqL4W3-rKI1" type="text/javascript"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/4.5.1/1/WebFormsBundle.js" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+(window.WebForm_PostBackOptions)||document.write('<script type="text/javascript" src="/bundles/WebFormsJs?v=2c44eZfyhqD0gZvaVMUstgF2b_-z2HBi6r1i2reCors1"><\/script>');//]]>
+</script>
+
+<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="92AF9FB1" />
+<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="0wfdirJDT0D6PErIWa6O27QVsnLE+Js0r8faZU4XqEpCU/ugf9MZReR7giV3KrggRDWC+8d7v/bweM8KEV1ufwFwi2ksQXdYA2dm5cuJ87RONdBMWD3q9KvTawZA3mS78tE2jbiofoXaxfmsvgMFjw==" />
+
+        
+
+        
+
+
+        <div id="header-box" >
+            <div id="header" title="Banner a logo aplikace" role="banner">
+                <div id="skipNav">
+                    <a id="ctl00_skipToContentLink" accesskey="o" tabindex="1" href="#content">Přeskočit na obsah</a>
+                    |
+                    <a id="ctl00_skipToMenuLink" accesskey="n" tabindex="2" href="#menu-horizontal-box">Přeskočit na navigaci</a>
+                </div>
+                <div id="header-left">
+                    <div id="header-logo">
+                        <a class="noExternalLinkSymbol" href="http://www.cuzk.cz" id="logo" title="Odkaz na stránku www.cuzk.cz"><img id="ctl00_imgLogo" src="Images/logoCUZK.gif" /></a>
+                    </div>
+                    <div id="header-nadpis">
+                        <a id="ctl00_linkBannerNadpis" title="Hlavní stránka aplikace" href="./">Nahlížení do katastru nemovitostí</a></div>
+                </div>
+                <div id="header_right">
+                    <div id="header-icons">
+                        
+                                <a id="ctl00_loginView_linkLogin" title="Přihlášení k aplikaci" href="Login.aspx"><img id="ctl00_loginView_imgLogin" title="Přihlášení k aplikaci" src="Images/Login.png" alt="Přihlášení k aplikaci" /></a>
+                            
+
+                        <input type="image" name="ctl00$buttonKosik" id="ctl00_buttonKosik" title="Seznam objednaných sestav" src="Images/kosik.png" alt="Seznam objednaných sestav" />
+
+                        <span id="ctl00_napoveda"><a title="Nápověda" href="Napoveda/index.htm?id=idh_UVOD" target="napoveda"><img src="Images/help-header.png" alt="Nápověda k aplikaci" /></a></span>
+                    </div>
+                </div>
+            </div>
+            <div class="clearElement"></div>
+        </div>
+
+        <div id="menu-horizontal-box" >
+            <div id="menu_horizontal" role="navigation">
+                <h4 class="screenreader">Hlavní navigace</h4>
+                <ul id="menu-horizontal-left">
+                    <li><a href="/VyberParcelu.aspx" title="Vyhledat parcelu" rel="nofollow">Parcela</a></li>
+                    <li><a href="/VyberBudovu.aspx?typ=Stavba" title="Vyhledat stavbu" rel="nofollow">Stavba</a></li>
+                    
+                        <li><a href="/VyberBudovu.aspx?typ=Jednotka" title="Vyhledat jednotku" rel="nofollow">Jednotka</a></li>
+                        <li><a href="/VyberPS.aspx" title="Vyhledat právo stavby" rel="nofollow">Právo stavby</a></li>
+                        <li><a href="/VyberRizeni.aspx" title="Vyhledat řízení" rel="nofollow">Řízení</a></li>
+                    
+                    <li><a href="/VyberKatastrMapa.aspx" title="Zobrazení mapy" rel="nofollow">Mapa</a></li>
+                    <li><a href="/VyberLV.aspx" title="Seznam nemovitostí evidovaných na LV" rel="nofollow">LV</a></li>
+                    <li><a href="/VyberKatastrInfo.aspx" title="Informace z katastrálního území" rel="nofollow">Kat. území</a></li>
+
+                    
+                </ul>
+
+                <div id="menu-horizontal-right">
+                    
+                 </div>
+
+
+            </div>
+        </div>
+
+
+        <div id="main">
+            <div id="contentWrapper">
+                <div id="content" role="main">
+                    
+
+
+    <div id="ctl00_updatePanelHlaseniOnMasterPage">
+	
+            <div id="ctl00_UpdateProgressHlaseniOnMasterPage" style="display:none;">
+		
+                    <div class="loadingPanel">
+                        Probíhá zpracování ...
+                    </div>
+                
+	</div>
+
+                    
+
+        
+</div>
+
+
+                    
+
+    <h1>Seznam nemovitostí na LV</h1>
+<table border="0" cellspacing="0" summary="LV" class="atributy stinuj" >
+<tr>
+<td class="nazev"><strong>Číslo LV:</strong></td><td><strong>1</strong></td>
+</tr>
+<tr>
+<td class="nazev">Katastrální území:</td><td><a href='VyberKatastrInfo.aspx?encrypted=RGhItdgXI7C4X1XnCs5DEJJ434IN05mu4YLSGLhVTtfF1LlTOLixsuEYU-nwUC7TRywz95pw5lt4bK6Njr-8fI3AlPLlXoO0fxjjrcFxIkF5MWcoZ0SB7Q=='>Abertamy [600016]</a></td>
+</tr>
+</table>
+<span id="linkMapa"><a class="inlineButton" href="#" title="Zobrazení mapy" onclick="MarCallLocalize('http://sgi.nahlizenidokn.cuzk.cz/marushka/default.aspx?themeid=3','Marushka','D6B992BE','348180403'); return false;" >Zobrazení v mapě</a></span>
+
+<h2>Vlastníci, jiní oprávnění</h2>
+<table summary="Vlastníci, jiní oprávnění" cellspacing="0" class="zarovnat stinuj  zarovnat stinuj  vlastnici">
+	 <tbody>
+		 <tr>
+			<th>Vlastnické právo</th><th class="right">Podíl</th>
+		</tr>
+		<tr>
+			<td>Město Abertamy, Farní 2, 36235 Abertamy</td><td class="right"></td>
+		 </tr>
+	 </tbody>
+</table>
+<h2>Pozemky</h2>
+<table summary="Pozemky" cellspacing="0" class="zarovnat stinuj  ">
+	 <thead>
+		 <tr>
+			 <th>Parcelní číslo</th>
+		 </tr>
+	 </thead>
+	 <tbody>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=f9g0S7bz5BlpLiOt-1y_1s7ebGkHJsiVVXgirJJ7X5o9s02Aj6ddJwr2XsjAkYOX_y7sYg_nWqJ5UGyWSliwj3PPj7-KwI9F5UH5tLm84rpy7DNoKH6GwhiLwTUA982g" title="Informace o parcele">st. 2/1; součástí pozemku je stavba</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=wiUwGwgNTjEBGqupRcatzC0UDX92rI9A4j2EOtqwXvzJSKLQJH5TfGMidH4bl-BaTHNFfM3ZbNZwZNcny2bq0yXUBuBGL29N0nlyLdCCYAVWaEOG7qAQucLA0qTp7U6a" title="Informace o parcele">st. 4/2; součástí pozemku je stavba</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=SJfCQNs3zaZ80guY-Vs_--aabXtCj3rHlNwZVO_uyWpMHfOEtgbPj48K0d59jUV4hBBevHKX13KGDFAUUm_0H_3jsRXyQEhAkWF5bu6JzzZ8T6cpe00bpLbnaxAt0xR-" title="Informace o parcele">st. 4/3; součástí pozemku je stavba</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=yecyVcD2nVtszIvtFf702w8TJLKs6Nt6x4R1aSM3E4VC4JgQYffXIb4FHzNeR_zPeN_blfMqGcJUegoj5GQ2YGneV5-ynhx3umu5LrMurXVZ552jbS4UnmPCj1snDL72" title="Informace o parcele">st. 9; součástí pozemku je stavba</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=6n6Tq8ciakWbn_L6kgY-RKAcZLJDE4L0nlXTd02QxKDPorUmS8ogDbhdoj5_MMPqtOxO8nTonazpr4aA3gyXb3QtOMdHH-1KV65fY2GUj0ZVfrMNBXJ6JjlYb4Y10G9o" title="Informace o parcele">st. 57/1; součástí pozemku je stavba</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=HIQp5UJ0rQxvGMpe0aeRmTGRePs8fLTIdzMD4gb-gzXskWOPKnoP7R7NP5VttNLDLP0ZS9clMY2Q9jDg1LJES_YROQqx3oE_p6XudRKkvvf_WXwGHPgZSEL4N7BD6TbA" title="Informace o parcele">st. 77/4</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=Tu1Yh5L5e6fQJWOnfgOkQQ7BJsYqb2FHv177XLg1vJrpXGOxjKF04YYnrYTw2A_7YefnLzXGUiD0NmDKNnmASfag9FwA9z1_7N6rovrxFB-EWV_mdBXMFjKQSGCTIe1C" title="Informace o parcele">st. 85/2; součástí pozemku je stavba</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=T4GSSDsX_NMOcHLsBsE3JgotU_r8J2cKtuUu7ndarSI0LhNbKHOZ8lqNi7zpqgJcYYUSsuniIRnrYh5oi4CkENUqY3m7mvQ9fbUSoQEuHu805Wbl8WoWhvug2-gTAx5r" title="Informace o parcele">st. 223/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=oq8jGypwAvbeybwVIfnMzAlTWboImerAuZIDynkMCaOWsxyGlxK5gXAIWz25Ic9w80l2HhuGI_x1ctxT6D5Y9Tys3yXgVc1g-30mAJGbw2lkvLpr2X1qu6aEMNps9TET" title="Informace o parcele">st. 458; součástí pozemku je stavba</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=rjtjZfQzvQObURTpVlhi2XIimbWeScb6uHdgA-59ODY7zUkkqzyoSRaX956-rvCJbwCssjMF8tcY_TG8NyDyOE7GL1-hEXG53Ks8CqvtMPvXpA9YbHk-8rQS6hDyLBF6" title="Informace o parcele">st. 545; součástí pozemku je stavba</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=vxoFCtH01LR_nRqm1zpGuWE_0TZz2cLYwD3pBfQ1Yz3UdDP-0YJ8tsZpYEZz2I-z2h6TKW_vHxKjTh5ETh7w4sWyVebGo3fM09Zgg7_M8OMc_iu3IhzUz3V6K2Yr8ULk" title="Informace o parcele">st. 647</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=o7cVlCPg-OOykHAmlrWjxgUGEVQn2rVFPrce5nJIXdC4j6BlKMHhl_YhbGZ3dlJPm3oQP-OGEdCDrXab86E1MihYU0VmKn4xAcjm1CmGcEGcDBd6_57bbGvYIh7hEzcU" title="Informace o parcele">st. 650; součástí pozemku je stavba</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=9h86sKAcWe1TMr_VMO33ZET9hlQiVXXw0mUCcC3tSQ2Q9Gwb0P9iUNPweAoyDhKxi3j4m949AO43iYM-lgvjbl0XtekcOaoQZj3zabDvZ1YQrswo-OrRV79CusmS09jB" title="Informace o parcele">st. 669; součástí pozemku je stavba</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=bJQU5ESwSOvJ_6AnVOvRakJD0FEcIUu8zrSOTj-k8MDJQoSxqxyOWrBG-2zr4JZZ6nVJgGeGbnCaHpBV9k3ijM430Ba9H487_KlSWcoB83YNGCdVxm_HMt5rv0GVMWT1" title="Informace o parcele">st. 687</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=mlgd_aKHlQrTGYxqwV2iaXoW2nFtlVOjtGvbivbrehWkUX42woCDsvx0HAX4KDdaYH0KT23SK2z6g_hCVwFP9BLVQy6gSs5ZTkJlBJwRvx1V_6AvT4-sEVTEdrKWq2kv" title="Informace o parcele">st. 700; součástí pozemku je stavba</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=1Sl0W8uFs4DQ8cbG28lhdTCTiPwsctONiFzAmjvxu0U8U18rPAS0Z-TSBjxcMMRJbB4hejGWKt6LNXxf7cYz2YmOJQ-KgmiLWJVXn-j3KiSPaYDijPsRuyjIP76iMOUz" title="Informace o parcele">st. 714</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=6ah43uN4-Skelf2-0YJxKkbOThXAV3gDtsD7kyeM7BRAudn-S7PmYrwTt4uDl1tj5YiGwqq73sgPXenYE6pHoLzCFxVQhmKzX01Vhu-dIXPDCmEnlg8neffjgYANpCge" title="Informace o parcele">st. 732</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=62FhdrPbI3LgtVOmPRPKbhIrOpMiG9OE0ww1q0DS4r_50Dfr_1A5RzjIf_EtGOI3MFph-DHAbIz0apST3YPFx7At-dWB5rPPlyVw3KA2oC3ZVfiVCvCX_ZF1OrIeKK_R" title="Informace o parcele">st. 733; součástí pozemku je stavba</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=qLGmGUe30klorvNlr8PBynTheRN4mSs6izc5SPE6poCzyky3hlL-BWKVsCN3TaTl-tN0oBjt-t3GroaMa61Gcvc2fkQ7rxiXoa3s8GZ1ESChG1mfbvZRS3Si22MUKdS6" title="Informace o parcele">st. 735</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=afVynAsHSyAMaGfs7EKzeDWC0z6IPyPkQGA7MaZLEXEJM1xtdpNkN0N49eEGYvvHcQmSlKpggHNQvlMn1-UMrgc7Y2XtGbgYBFrPdPJUlx1hFHXp_G2wLOHNE0m6PnBp" title="Informace o parcele">st. 741</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=nEEUnaf9RT7laCrK9FjIW-C5VZF8unp9Eo-WLSEdDSAZ574RkvMOUnPz3DKX8AsdJ747-7bMFG8g8dM-oiU799400vd0iLA0Xb19-cpxkpz-uFpdQcBq3O2uevHfs3Vd" title="Informace o parcele">st. 748</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=Lhjw6D7Gwt950e7K6aPuFe2qihQkN_nIcKtAIfELDZM6r3AsYSIqBdsGIVAHMsveP7F8rJ8h3KDiuBCaVPY_6ahj0QYbIXY-gah1J1AH6rbMa2hsltSJSPNgMMXgYypp" title="Informace o parcele">st. 753</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=-DZQjNExEXeXuTAxwHxuTlbplc5bchgFS-M09N0So1IQJvB0yNgrJPWiYc4DQym5kVs9uD4Xic4JUaKB84kE-JNpgjFeku6Tj5kjQ-sA76pckgjv4AEelOAlkz-9qUOK" title="Informace o parcele">st. 786; součástí pozemku je stavba</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=6yUm7HkU6jdiSxswklQl92b8MCrt1E3UX6mBUhJUMguVU3_O5EtPVE-NxKg7pa-RPGgdc55ovmZkgFLpZdHrI1CgVxV_NgsUIy61KUFaQ92aM1jT4gAjcbf_xOxZIyYa" title="Informace o parcele">st. 794; součástí pozemku je stavba</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=s6yPFpFyF-lMZAAW_BpmfSpvQ_9KGYjcieAt3i8qDMtiRQNf67Nq-DXh0CjA66x0Fyduz532rcv5taEJMZBQPswhtDFGU3c1uHcbk5z1B55W5taWm9EO0KMoLMTBCGF6" title="Informace o parcele">st. 831; součástí pozemku je stavba</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=KK9SKFTSMwCvBj3ATFCvfAW_YEqNLgr1VzqUhYOjJaLsJ_YV0lcwJs-alUqlHXYBOC9iKWGfymnSfdN-gaMmk-F1ZZvVrWrnBHRDY_749W_X7szS3Ouf6VkhiBt46T85" title="Informace o parcele">st. 832; součástí pozemku je stavba</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=69K4bfXBz6qYF6xKuf57kgH3rSutKa5np3quF9jACdr6bsUWg-UqffeNHGLdgt7wudFaLG7LtjG0DE7UyJNC-ZJHRyL-LmhRzwf1J953OrgFurFguAUf61o1yeYIqdLP" title="Informace o parcele">st. 842</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=tgIEzlZejIqpdHnQtYwm3lCU1mevtDMdDqJ7pE7_1D0prVXnO334KPQnyvnIn5LJ3xiil47cMI5T4zRu4klfEMFyDmZ4A7iHX1HL2fgHs-OjEGv8aarsGBVcrADSuqoA" title="Informace o parcele">st. 843</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=jPF48lQWchhqZyczIQwsZzX69ApzCHt1QxyNzf40i4-Sr3yfai7BhCVPQ1NoTdH41iLCfrw_6-R_aZJEinFCjqY9tEkcIo1lMkW8g_YjE83zBS3LG6c5alDrkrbxZH87" title="Informace o parcele">st. 844</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=YuSnkxw-ocdMYPhpb21mpSgeFS6fEhL4Que_MVL5_Dc9d4MGWjuTJLbYhJB-ZpyP297GvEmHwuzOuWcwCDOj75ZzTU5MowdzhJHZFGy58GIra799JKbK0ZNRqdG8V9u1" title="Informace o parcele">10/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=_3mtfSb4ZGYTj96KckHNTcCSFlfABmoVXTXMsMVjbX9pn-2v3uBf7yKIqxEtEvvoNRkBy2ERvxjRX6n9UoZz5NpyJfMX8I9oFsw8r9_3HUWTClAOJ12hixUwUEBTziec" title="Informace o parcele">10/8</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=aTkYzU_1GBUPenn2oLsmmvxakDcyTal8OvOZrhdVf07DFkQq03Oc1Vck-S-jfIa8ixhwnVBc99t4LBYPjXTqjEtPXboig9t1WlDia6dFHRhazBFhse91v5tkfZmhXVKJ" title="Informace o parcele">10/10</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=VQX6khnBFh-CcUA1EDvoio8lSTzyB1rClWf2q4NG3pZ6xyc1yyldVQ4bOA9i9J3sQlTz8hrN0-sskUwmVjvNxrwybj43YCDdrwFzprAxMmv111kh9JDJkmP2gJ-061hy" title="Informace o parcele">13/2</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=U-wSC5XDOfyzifU96_jw2pTh3uLsYPpPyONZ2Pl_wjgVC4MRhNCOCtMDi5GWXipkn7B4HLmKqzOREwuf3hudG9mpZwF2t3e6jI3uuWuga80ZVEW2387fRwt5zNTDEbFM" title="Informace o parcele">23/17</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=nFkA2YLas2TYmS9j5VQ7k7DpZLg-nRQyRcks9f0bw4SLSSPi6EHNtL9F0DJtZBCm9mZ2WPQKvZObE6DOo9VYoeXZscfi1nbMLh1DbMZVZ4U56q0tItU7_qkfcGS8He9B" title="Informace o parcele">28/26</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=YnX5q8R8zl-ok3v37jYOBiZocRT7El20hXDD7yfoH-ybRm27uVLsPHn1cQ5w9c6JzLVpbyP9OwCK2qJocDoCso7DDRyPWtIlYLd82FtUdjSoQqOGS3Xb9NiXT9E-7CVF" title="Informace o parcele">36</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=fcYZ5R2d_aXJ9KlXJjT7YlWHbNp28ZmkDAhGobbcT8LY188T8lytLOxOBub6C5PF1lorp0NeKddQj1f54sNF8oIyltYR5qHX5KcYiryL6wmnVhOUTez0H0fXQJWX2oyU" title="Informace o parcele">37/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=KNUQvNj0xQIZtu34_UXx5gzpGDpQA11LChyHvI7g4epj6EhCeJuusWSL4lQjpMbFivRBBMGWLaZJMozQDqgQsLGXUza6rgksD7lZx9ZGzYTmdAr-MNrtY2pG_FlJJJgN" title="Informace o parcele">41/14</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=y4grQ8CZFm4Hfi8W4Fy6LuzpWK-XA6WW_HfrXIKT7jw23mw9XyW-JNVrAdkrqvoqynzc-a_HwEZObYdqN1kcaWug55e-PgGv5092VDWrvdOrk7myHWytn_xOh9jjrAlm" title="Informace o parcele">55</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=ccPAvE6FPnyqQ7zcRUTg3cQVcSXv17af2ATFoDWZfZvyZcCC9XuptfoOH_oxhqbJeW4Gmk7n6UgN-jREmxXCXEEIcUqhgoqAO16_v_NLtznWtqua7en8YR2HgSqd0hZ6" title="Informace o parcele">56/9</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=Vdwj7A_omGp2_voUoAEjuI4Wfh-Ss3BZabqU2bVsCracGj2LeTaO0Etg_5HCh7gDVODm76nalf9a0KzSPKMTGljUfCAAP1m18cowPzAtkBiKmsp8YRTXDhTBl8ZaGtWq" title="Informace o parcele">56/19</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=ZDWy9ZDipo5EnG2BZECclOVMFD7R1bswDzelBJn-YMsDYtt_RQ-QNViAGp6RZTpTLeC8jTrpB7gAM03L_28h6uGzzpmB7bliKko8zYWp4eHZ2Nj6WszRlNDxq2VwLsCk" title="Informace o parcele">60/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=Nq2bcyx7RWh5JIoz_-9g2IkEaGUt4y1q8LwKvGmXxQ0oxzhPI1QIgbXg5PzR7bh816yedxfdIKH6eS3tQdgquG1U-4oISr4lG66UO8jVzgLlhyGLF-J5QGpUZj0YBPT4" title="Informace o parcele">67</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=brgVbpJbLzYwZlZdOhA1k_EGFRg_vFWmMPJ8g67uUhXBZDG-lgesi4IG5BGXkeLOuqSF73GNRrw_A95Gse7MUOgVFhLdNgVppJ4QqQTMJKGSng3ObhhgFlgVeq2pjqKH" title="Informace o parcele">93/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=9xn2GVrp0LXMInxtGvbF-Pde8eE2C-avjT5fAvS6k4OFbslj3GUo2YVa7G0ax-nmlC-9F9dyOZkxuEFv7Lvn606OT84Fb5lFdS-TWvLMnibKluOoI5aEJsbOG5uoVuxB" title="Informace o parcele">93/3</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=LoDp3uw7SXk3Z8I_v7TdGueLI_VK8HK1NwNdp9AWBdDUv29xsk6Lzw5c3aVWJG3SXw32pL3phfi0A-kXeDPwajg8N_2SJFKOFt7QyNML7Nc-vHKW5tD0WJW5ZHy9HNZz" title="Informace o parcele">119/2</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=W6qXNThdzb2Sri-n_Y4k0YNxnZJ3YayS_u1dpUWseCmOaDVs7OtEmTEjMUVaYTWvFlKnt_0ZkFMAwjZylCDcOvYVW66TsEZeHs3qV5WRmzjZSHB2EZXw-muStAZ6AKkJ" title="Informace o parcele">126/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=N3NURpHEDMbg-uFmeljO8FxxW-JHuLdIfX6QdXS3tRvBwBuxchWvP3eseszG_XmwJivr8BMWeIGD64E2Sy6sPCL2pYT3W2_2qeshSs3ipo9KqVeSmohEx2cwWPNq-Cl4" title="Informace o parcele">126/9</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=QTc7AfTF9xKsqpQr44VGU6crnXLisnAhIx6sC6O7IDHptyvmzL6G14SA0jzvclYNWGZa-z7zx_ezifxtzacnT3pgF-eRKnN_JZj4G3gDNtZH-JcXgBi-JU13VmznJs7o" title="Informace o parcele">126/12</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=aQ5QjVO-04GAAKFsDs4uadwNqy-408VTsxmZg54jWl5Z8eLEsD-8yyr51koW7fMRQ-q-2l0meWqTkWQDNkDrBQbgZaSYH9S8gNeBsk2mpVTrOnI8Gbo5sSV4nZ4Mx-j_" title="Informace o parcele">126/29</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=tADaaQncpKR8S9Il7wD46BdVNTjz1BRqsgtgKxOD9-a6lJjZl3MVZcfbG8BGKcji3LDHuEI3-20ba6mS03-UdciMEgxFDSrtDa65RC49_LyTV0aJua3J06w1wCOlyUU9" title="Informace o parcele">126/33</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=nzH8okzj9wjQ7nnXRIynF6UuJU9CNJ7qyI76Mky40icX7tGTSNZ9z0GbU95kMr6mQizUuEMPNraaZUVAE95tPEeRaUEJNhGoMeS3RAoWgacY17SCEUPcLPCIhFA_ylwA" title="Informace o parcele">144/2</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=SSzWxvbiFrWVynkguA-fkjUKGamGC7h73KUhbeI8usz7ScFWJn-2tPPAg70ZGEvaT9sf8PcnMZ1_HkrnGkH3_-b7MP0sBeK7GpulPaIAKWENZD4UOgRYzOxPAnmCF4P8" title="Informace o parcele">146/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=aHvWpz1w2CmOfQDlWPZIYX5w-foYbd4sHwpnkWFPZdxNmBY_jb-tk2T8ZlkCn1Gadbaz3nY2PCCH9XokLjyu373qPAhkQz3kAWriQbzyPqFgL40N82iPVp6Qmyp0t2cl" title="Informace o parcele">150/4</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=AaQGVTERSyaetnw08B0qFW-BVcGfx8f_57wG5EpENXc-I9vLtJPU4fHZ9Z9UcaFZt2bb4dZ7rFYMGhZe6I3QrkCwz_Lvmsh0l0TPf5defeOPVGKb3wzFHLzitlf_tbNi" title="Informace o parcele">150/5</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=HiVMrLrvIVo9xWHzsUSmNFW1XXWsT8Ti01PGyT9CUGoy-6cEgo1_uYln2nnaEk4-519gntDa3hwITXsq9rkCofUkVcul1tq5n23PeAKcQTbIGMsMx9l6CKB4VY_Azi8F" title="Informace o parcele">152/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=LUM6T3UU2kkH89g9R-UaDmJWV8Rxo_7IhJL4kFPNQZwNZgl-iTQuBx5lKK4q8fzFEqGJHzk4tyd_NnJbZfqSQsv4V655eq2roKZv8GRWpBOmPquorkY18dNBOvr5jhSg" title="Informace o parcele">152/3</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=bSGuuWF8XJS5MOlpII12Zgfv91fDNRVphlHdcFgfRoiBgQi7h-fmmPvmFQ0tbZVSiR3szXM-1Efs_kjWit8P_kDX-A0nCFHUKeDZHbyn_Mje3tlDelFwP54JqLS88qfW" title="Informace o parcele">152/4</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=s82YktoHL6bpUvJ1qO6vmql-SYO0EM3eDAW6kxhmz1mnMrzVSlfF7fA1bYRfYwysLwlm94fnoaYrd_P6bgvw5Nz4XZnAhmhy_1W7-yZfFqPwhADTBVBhIy0nS0WrruZD" title="Informace o parcele">159/3</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=ogFk1TFuyzHSg8u9HCJmy3pA03UE5GIm2SOcO2pvXaocHilZ7D8gSnyt47ex9YeGL2zOeihf-deecavvCp0ec1BSPOKaH1EGGskxH-DXqThYqkBeC87AXh96962519MD" title="Informace o parcele">167/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=fD-J14rgc-Ec4B_723rPjBKfUdNoqAg9eElmGw5M8vwKYroxL200-wzrVtPON6eHTs093YL3a7LqhYMNcAmgup1WdFDW2-UvquyzK9RV_SHHmskHIo_lAR2nMySv3jck" title="Informace o parcele">167/2</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=5tZu-m8kCH3jx_m1NhcotGeU11MGWjI0qN64le1mUVF-bPMxMT_cjOmtC81RPL6e1YGpthsaF64vtiCMafLnamthM4MkpZcnpGwMdVbZG6jWechOPo6uA9FLo8MJzfv4" title="Informace o parcele">167/6</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=DqI124dw1UTZBSHbSYTbTMysROdXox1w2559hkW6_whU468d6Qz954-bcQiyJH9V_njaBTLv23mKweO51oC5RsRNDo-3rhgZ1-RMAsaQAWM-cHmymUEArXxI0lkYPn0N" title="Informace o parcele">169/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=xtMPVOGMFsSUDaHoI7uNgv6mn32Hdm6jf42ufC6Mwmg_hrGFFDcrU3uAL9xdH5pP1ptqrZt6CesRrluJjI5Q-CmgWg1tTVTZltOPb8iN54T215tQBc-MbRMVI_k_5drO" title="Informace o parcele">169/2</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=GX1RdatmywePFnJIDGvpEr8Dw7qz39C0bAsq6HpDsjVJR0RH87dacD_fW2CyvleUDJm_kOYsDuZ4jWOsADu377zekOVkYOEVyllduAKhiNeID_AAYwwdizEWdgNKJdIy" title="Informace o parcele">169/10</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=qarptJ50m2lhbZhSnjvXDwKC7yz9FKjqBo9uwNOns5cX8JFlGchUE-gJ4cR9ER3wSOav_gq0i8eHj9_e4JV1FWsMo1tV4w39yv5LCiCVTa7pjX-Kps_PMX6pziGvYd6r" title="Informace o parcele">169/11</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=4LuhLmmwODaTWlosBlZKWsvtQyMsyeOqx7ox1fhWmpHt4VDelGNpxr_p9edqO5QW6_J1oq1FyE8h3yZxMhO7imt7Ti9IrUBuK4l-zWHLoTAvAX7wC5liNBGRDYTgWSjR" title="Informace o parcele">173/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=mBqnANSEaLgA5R2pwERsUAOpilAFlavM4Kd3Zeot3DNyIBFYkXh_m4EGmnxRoJwiw16P504xCv5Hu6KO3SrGY90rYC9-vSv9F4XQCQZ2eUJ388rNsVGReU2mjmV7AqZV" title="Informace o parcele">173/3</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=5s6f5Tr2eO_8p5kX5iXGyu6TG1SXlUcCcWFem2j088huFdIhtpRM7v7HeeZZ0fsrTVx23osSMUaSxdPP0QhYVN-aapFLjQfJfKfFFrWaMt3yXcjf6StUdPmMhTX_mC7J" title="Informace o parcele">173/6</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=S-AxgS8TOH140VaWQQZFB6B-aCdvIpZaVs14QnUfSDqbHTYz61Y_ZgKD0OP-ETaqHuSyXCWG7TCJPIyIpIpG3FdweyTxkVGnJVPiUtZRaomRAu8NLUgccHZAYbwBG37u" title="Informace o parcele">173/7</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=exFvW_6tjV9w_AaTSIlOmWQ6YGuMEfEVDXmT0Kf8e0zxBKrNbmKdUHsKnryGDi19f5cJ5QrZqppjAbm_-dO19WSmXfe-f-PGqC8Wh-RZJumZ22uArNpdA7gvTFUqX0X7" title="Informace o parcele">178/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=VJeEHwyGzx3VJd-mQtjFJ0WQPCkITVdfYDfPNAuGdnJgjcwXWRgn0yzDGkga6mid3yuwwuNQtkc9E5_qGkHSKecbuvrz2PPYDMKd_hnbLAWSdi7uKCd8uoJ_UrSrG_vy" title="Informace o parcele">186/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=iB1yuwzG6Nz7FHKOMtWszV7yJ0kY8epKWWz4mJDiQDk3w-i5J51KZDhIUf2MYUP5iYNSAPJB-c1qqP0Y9tf1n36B5bnBOlLL68r0nE7M6ZRjbtAUQmI1pqFUmxkVvQ3B" title="Informace o parcele">186/4</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=HVRHvhPj7QaiHMaNN3eSPvqS-LKcosvIaB7dXh2jtwBoMNEoGY8rn8wvY1W8vHsMrl8RuZyhIFXJhqFgVXWrcVptD6Apz4ntvr5J3VjJUQg9PYv9ckVNVQTNOKZeGJiD" title="Informace o parcele">186/5</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=lCosEpcJNX4pZuhzDgkSxBDnAN8sL3K0nY0FuKcbmFImbKVg6wkSM0gBHaiUAphB9S1HVqZI73_3sMXbO-Qe3Z8sGeFCd0Hlk-aUI37kmv08fhPk2k8mLeG5y2qWy6V6" title="Informace o parcele">186/17</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=m7AU6DrCYTDHwNa2drpXwOvTdzA7QK1gSt1g1MeDm1qlGdUa7JB-uKdh3y3ryUSjZL5Rb_E8xSdVIK9qDhX9nw1RjmjYrkwZAmh1aeOzGZ9q8Tse4ci38CdAaX9QtpVU" title="Informace o parcele">186/28</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=e-3DrHbL3xR6j99lMrtE37XW6wniBGuyqPayb4eZJuGSWLoEq11EM6UfoDksWZ5Z2Q5P8phdgQI5j7LE3-FnkbugPFP6SDFrsIh67FU6_N2mnL6ckTaY3xerqQfoUVIK" title="Informace o parcele">186/32</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=ZDWy9ZDipo4kLXeBvovj20ruz5ZG0nuu5zmbfEgoRXIMyGAeXJWGzn9WfOpUUwG_tQXnEHEouYC3uGXKOyiBHiSBy8NQcgEEPvoogHRc33c8relvuP88bRjVpebv9VpK" title="Informace o parcele">186/33</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=79Ru3FglHuUcgAA0VoFFSDEpI9S_NRcHyTcy5kXu9k0A0wQOT7cHR4eMOX1sQir7Aj5Hn5zHJ-u0gQtwPD8WNGmh2EY69cNn5zH2Zkh9yFEFJhFX6s1na0RNMrqCXjfC" title="Informace o parcele">186/41</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=GpYjkHLDDfXU9KpOOZpYMygG1prlfLxyPP9oUb6AubFuG_ntnWsrD8KSYf5FI7wt-5i1FObxCj7TezB4SIisQnQqNBFFOOUtuTzqcbQFvZgb6FSMaZeMEm5iBSnJICoV" title="Informace o parcele">190/4</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=sHiytENCC7UOJQutXEtpzCiiijrBTsZxMuUJXH61ZWoYwdIkvi601sRo0R82ph6Ux2qjKsOW0xcjEkq3LNLeMoAQFLDsW7ifp13HlBnhYUx7Ah4-GQFx0ggvLb9KDRGQ" title="Informace o parcele">193/4</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=VTyT_tLi5pEjln2x6Xhg8A0qHRpsG864pYdg-EKMl3d6VoQZJZnZD-kR8tym61eCK-DDCm8FmBp4BmDPJ3rDq7vc4bRjIKU58nTNZ-9PX-A4w6kwNo6wsSNB9EkSJ4XD" title="Informace o parcele">193/5</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=hNPWCwYRsvVVWitznjjDPqPgYcqvbyuYRIE8OzSQVz8SA3NTjl4kmOq8cj9LLG1F4Z1TuaBT1jLZMDgWiqmk_D5duCRn66vgAJeOzrvJtqgIPHdX3wDraQVF86mMrxqo" title="Informace o parcele">194/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=mqN8VcfL86xKEOlHuOy6Lzby8cezraSAFxVHzmT1hGjlrUH7GA6Yyu0ZhjfsOaYf8Wrblkghz5oDTzRbxdeMNwFoO-aHDaICNdPShYUMqBXiAMZgovrfiInxk4BySiT8" title="Informace o parcele">204/5</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=79vvgSmK4IueYlpegGQ0blYxPoUaQ00p4XEl7esY4TvPFW2JORlNPyTnVge7y5b4XaNBSweBqNh53eHS28NCPk5t69rIvDU7yxzfcG1Xb5_tmtqOwxNTWfYP1Pma8dE8" title="Informace o parcele">207/3</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=pWd-FLWdPvU22fyTUSycD9U0Soui3YzaFNjZXXczNDPsyX-Wkd6p1jK1bEbfbqMobQREFHua3nz--zZfbRGCKRApxU_0reGhgrAiiQJJ4anvIXsCSW9aNDLImje_I1eH" title="Informace o parcele">208</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=kyjKRYANhyiKxT1SI2DfFNerHAEGvCDFPYDoIKh7igABEvuE6q2pEYDCWVyFaASOMIY7s-NuQj22nPQvPN_Eb8krYiAQKKdyLpqw1PvC08ghjeHHRhTczAbI7TtKojQT" title="Informace o parcele">209/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=A98Evx5qXDX0e9fUDFO5VoniEvsaT0FN_DtI30txi85oBVx5uK2CM4HyRlZQ2KHvAI5AQ0yRNAu3mkHKyr-6J-zZ2WS_7EGxlrb65rbeiVCokq45v_aI5k2kUlTRQ4nL" title="Informace o parcele">209/2</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=sn8NVvgnaXno0umY3t_H06p2nrMoM_DoEQ3v5DTL8FUj7v48QDODsWNMSs9zUvY2BDBrN9BWZhcRQkDLbJFl_UNT52FJqijWuk1A2VXZJLA0azPDLGqzMLGc3lPt3EcR" title="Informace o parcele">215/3</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=A4Qc_1re30PexuID5OsOPqzbXLvqfBLjvV6FijOcXHrzdLkmC6ZClI5g5noIWO7x3ZyjUaICI5uhvQ2XJdOYud7mmO3HhX_f8hwL6u6oCc26ste99AODJ1f5LNBWBD1L" title="Informace o parcele">216/5</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=J4desWBRmL6g7zIYTTwME3uDZv3E3gTScnLLHcwQeeomLX-fYccwMZYk3GvN4ase2euVh6gf284DNj7f1IGm4M6Wcy-iflDtGEitH-QsAV7z_3YjQ4X2YiFTbe46GXra" title="Informace o parcele">216/7</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=bg76-uSrJu6rrv0RUlXK3Jbjlx2MAz6MCJIg43V1a5Q6NIqs4i9RLHtTC8eAv2J9a6r9lJ0kVl2cwsoxvIDeItRIgJYrEIB5mB1hfWM1dHmoMNvPFxAhw_cpfcMw9RWx" title="Informace o parcele">217/2</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=5kWxTCZptdIR6Xvuvz-uIfUL-Pir1BfJjKjZWpUxfgV1gfDIQxd0hA5lP-aDg0CG9ekn5tK9tz5fH4zWRf3fWJmUTeJK5Yq9kxPhKpq4DNhmkCjhuUmOnpnliBgC_cvt" title="Informace o parcele">228/2</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=mpJSQtPvuTRHDlFTDsW2_mxdtlMWrjfxtAtjiWcGecUcA8A6g1GWTviFlzbqvpH6LxmdgaDPPyDo8FMex3XuJ6pdHfVZkY5KIejPFWjITKRfdnRVqLIw62D-RBWRUtsy" title="Informace o parcele">229/2</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=SJd3Bj1tllHENzaZ0VrAWNJATL5LPRn8IJGW5_DDTOm8umeeio5q7Lm_dLtm-kNm8I0i8YXPsTqmhIyG2skQ5FxTFYkBa_uUndrhPQXi5W9Z4FcbE7IaUmJtMSb3235f" title="Informace o parcele">233/4</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=xq9SlEeME8r1P1Tsa8X5dwYupbkHrkyaZkmdTWsUqxS3xWLmQ24gCvGybcdRjOKJBe6QWzQ-ERI2CWdYfglqTacZjbgE_Mer9Etkbd8SYgC1KvBcDgz_wP7uNG94u5nu" title="Informace o parcele">253</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=lteEDMNQNK9eJdCzlmjSrFh_bNQhOQF3DzVv-zSWUSUYunRnpAGIprSDPslJPw0p_kNistMIJ3B0GNBZ7FD3nvtsjqPMxu1RiqSDTpxQiNFavtZB-DgcU7tisg2qVKBU" title="Informace o parcele">256/2</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=4eERI8z8EqwUap9rICNqsNCuvAqFG6u4PAReWJIerB_ea3NIR0ACxiYS3Pjn3iYNj0QsMsHJXnztlS4Eqv4SM3WhDi6X1HJ22Iw7PgcUeTyT5WxOMxXaAkwhYBnJf7Z4" title="Informace o parcele">256/6</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=NbhsyHDL4kOq9xuhWoESC5BurvlNpyJdTOJA5_CnO9wev3wvrCEDV5ndm8DTNnnLZJHo8BSeuPAs5WKJz7PMy1lTxc3JhpEZCaRq3B8TpKhfAkqnsVk1J66QeN4m5SE6" title="Informace o parcele">256/7</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=W8hp8GZ4oPWy32wr6vVZ6V41axeDrkMOoqJp4Cyi02GZ_VF11D3s8utfqnN0qyNIuUDpGulYQshcV5v82QygyxnQuh11vfOJkSZz7Djk7zzqg6oD89heLOCmVbxBqwvt" title="Informace o parcele">256/11</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=bWYeIsKWTxrP3O8abcN6JAu553DgtorVfpAyui473NK5al2vnodkPQDuwfCGpjL07f9FIyx9_fldv_tD8WVojfUGImeX4gG0CANsBztFkkEjT3el6genOv23RuwLeGLC" title="Informace o parcele">264/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=IphybxK17Ft4V-lM3svRnEHqAkThjnWqWIYBgrYHyq1Tz-Yhf7Ubx0sulUjvWwI67JhdpsMBx3PRvNKJhf3JTPWBTTuUtMlQYlxwZFzywj6QomX9mdjthNXvfvqy5kqt" title="Informace o parcele">269</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=ZTH948b_sHOq3JO931l_9TR5n269w6BHhZGDSqeuY9XCD4IyDzrVliubmEhMvBajgKTd-NUt7H1J9mhKn8cCV2M5b3iYgHBaJUWl5db6wFXHdfPSTDyB0m-lo-ZGHBde" title="Informace o parcele">273/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=hPbU45-MJiz9LkjTW1vK0WlEwO4Ypxe-kgboTwGkN825xLmxZ_sZx1mHvzM9U6Qmw0Hvb-wHOQUpeBvv73lNKM_tG2VHBx0roHNZm3jYqKmZmVrHUu3NvM6FOTGn3KQ0" title="Informace o parcele">273/2</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=sEyS0snw0gjTrCTyc3r4zCIXkyxBxE4cbH_inVkal8YHJHiEQ7YWKzTR1RG4vxfATxzyjd72_c3QyMxzUVyzq8HUDkME9Ki8NaSfDiVuU4iRTLc7pxvFeWE6AVk3Reyg" title="Informace o parcele">273/3</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=4swrUg_ONKjV8zneg9kQSjgNg0OhhLLSNtBEtUzZROPgbXSPgXfSadavHeO5vVroV-IwP8kETWovEOT6AePDnhzByZxAc7HuuAbAOnsfLJXDGidbZqsYkjqLH3mJ6iKp" title="Informace o parcele">273/5</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=kiOhPvxHKwuW6Ox-bX1KuFA5h24XSpUhWSopyJqdqDNN4jgRbddOIYpPQWwzjYSi0rdxQPTpDOxZyhei-hCAVP4uL1E1e1tOt5yKA1aDitlR8Jdqj1AsPw7vZwCC5PRO" title="Informace o parcele">273/6</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=cH7OT-f-_N7xOy_5nrvZFP3o6p5n2QkEboYZ9COSYaW6mtCtzP5-SoDJrYSUGUgnYlMD2yxtz5wn2ul6B-CXUrRkXCgUKEk6fbaUIg2fdcUHpx-7JeU8MGNVQOp9A9z5" title="Informace o parcele">273/7</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=V-SRIF_tyoA0eUGl6oXmU1kOL3dw-sMCwju2ZE3PL4YZ1QhLtQFlTrgwGEEzl9-DB-AlNZANDds59cv3s0cwxnMDaPyVIEI3W_E7GWeDDAUri-R1OLye9t3LeWKuJXYi" title="Informace o parcele">273/8</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=mBdIC0OKUsYus9EnDhCEgGV7SIPriiOVV4EIONE6vIGGglicODp-bCycKTp6El3k8mYB9KGfKUx6YE2NxcksbyAGuoxCzmbeRP5hxsH-fvNtn7wivRpgsoe9YN5g4NKO" title="Informace o parcele">273/9</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=RhieDhhOFAuOvfbmexObtEH1w-EccngI96ylXQivetK2vtgAzBmBa69YzNd8IgiGlm1HX-dou81UCh7cBpgZeoHxOdnFxU-MnTWhLFgLC8IOEsgwGuGggt9W5Psui2yk" title="Informace o parcele">273/17</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=beACa-ss-fcFHCY_6V0xPj59JHWac-YOCsLoson-8sc2jGuC8bdnk6dvJTKzVsgk4vGpe2mfPQzXgipK0clU1S6xdZlRJHAIEYyGmYvqk1JFUKOSZchMdwfNYqgOlE9E" title="Informace o parcele">278/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=nlS6XKrtuyaf7jq2qlBkef9fVP8LuAZ6dRnWpVffIKQtZSiZG5fdz1GomFgRzGr2Z7tHMrROmGJvvvIiPJW4AwTo5OvWkFT0LIak7BsNBofstQqHEZJy64qtiOm0AMaM" title="Informace o parcele">280/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=juvDucNPrTGZ2lZh5x0kjvaDGmdxiffk7_FgfRbDi5dJoYK5Xop2IZc3CoQ8XyYo1rbi5D41xh2h2xJY37QLBVoLx6DM5mXarilxRr_zM9WNhhGRloD4ag_OC8dHd0pz" title="Informace o parcele">280/4</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=xtMPVOGMFsQV1MwEktlM1FsF88PkAtvxBi5xidUNENqYU7GKmMKuSBy_X0AFnf5Ww24beyKXrMLHT3t1ZVvL-h9HrKc2dOZ_z8BPvIXBIT_pGaDY10gzc8-ttwo8J6VP" title="Informace o parcele">280/5</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=aFSUSTVmGT28FXbf1BN7FQKx5eQmWHYteIVl3fBLbz8H63uE4LZtm6TC74CC1L1US0gLoCmdfkaimdfApFn82yUxwHHowTSYDCdRJGF9c7pe1Cnw4UogqgsvRccln77B" title="Informace o parcele">280/8</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=o1JNVimLkWfe0RicTR5MBbZk7ddTOboDTtts_SJlT1WFsgsBQWm1bgZU7s8tkfTx9louwM4OVaGYIIDjmCq61XUI1zkXerHtcQyObltE5SSCA6yWbZdVmYZ8Cf3Rz1Lt" title="Informace o parcele">288/2</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=nKbTICwg86gMJ743_t88FNpLbqx-1zbtUV4OSgKBTsXa5Mzj99zEYSzCUzdCaj4lLaLBea04UVQrS1UuBQRuul48KVpEfHXS6IeadmQjkQuP-f_oxeTlBlj5ZCtJHfLE" title="Informace o parcele">288/11</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=nIDBOcn8PxK_Dg7J7Rs2rWl6pEY579DZuUEKZxNQaY1ZcBWp0itL5vHD4-aUJ8OMP5YVGWAgt2Y2UNpEQXP4LBP_eD4Fd3ntwmdwyFfSWTzyRXOrNKsOkNSu4P1lExz7" title="Informace o parcele">327/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=rItUX9L9FUOHmoBjc19mA2rGnq1Dg6MMhyhLA-PFobQLxA2T5KOQmkRB8d2p2Yy3YV8jrZV-KNJ4spG9lfgQJJfuIH3EgXHxR-oWqUTK5Umda5rD1bDqJroFVRboN0cO" title="Informace o parcele">327/51</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=9ExcJ1KCvUc4-DydokggHqaTWBrEPQcrsdP5YV7cY_f08jhSOAoTbMC4P832nSAfJ5RMhqeJz4f4dzPg1Bj-1MKtq6ciwgTSgWAHXTVN2t_iLHEOra-H3w3mT_hg86RO" title="Informace o parcele">329/2</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=gQqfHMU3MjQmVqYmoskDNHdQYTwH_tZX1gTWul7dHiOXUix3zS8joVlWVXELFyBmnai8qReuBYciRPgpSBvvItwZlzgq2XN8t8ya580z17hmzaI9mZ8aeR132V7fHqrb" title="Informace o parcele">342/8</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=6fN8g6u1PLf_kyVc5pzaVYSahwzKdWbOkzwHgqP3t0FqN3Sz3yQd5wHGUrPStPee5R3nq3INXVUhKwQkBmDHFFnTcEhmu3L9TvngczdQIQJ55oYh3ytUkxi0Ub8zk796" title="Informace o parcele">448/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=Z3Buv28StL-k-aPJ1E5t8vez_qcLpcujAEuc20RpsYQe3yTp8d3cGWD4rywLI8BUpWgdkyRXSUddgMTE630sZW4oMvYwidCBIfDJxzXnoDKkFJUgMDt8MdErs17y5x7m" title="Informace o parcele">448/15</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=nwbndrBkOaAgeO3kc326ioJ6e1hDca3xdUdscRNIuDAv9rkp71kYW3QhC8o0TzzTxRtRNQGvpINE1qMVdSm_fE2-wy6ghViumoAJZaKU_XVb2IhhObCjXOO3A58by5gj" title="Informace o parcele">450/4</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=Vl4s9IEZl3fahfmV_oxaZWh8w5TnEOuaAwtcEN_GyTxEz3Wqzft_A7IN0BPcyQNhnezAE5ryMKjHlVVoIKhoEa69_pPU5SM3lqW9XYNV73i5n6en9dJAB8OeV5r8y2ag" title="Informace o parcele">452/7</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=sqzBmF6BLVXCdAD5X-znHISy7GnI87RYBfYD8TwNmJw0C8CHkHBzE5_lY41McKX7JmzOuDietvXWNEI3QmCplza_83ItVGpQYz6ZGwEqn742UMlD6eQuvK7rwXnVkYYF" title="Informace o parcele">453/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=RsTa6v3w-i_Ir5adxj5VrikpF8uY4REwMcyeJjUp6N9Zwz1unkoVAWvLGsULjfcamA_HVUsXdpp-EvJyM_zBQLi-r4rkzuPPkP6aYv7EvME2TSF2udqzdSBI5SDceyNO" title="Informace o parcele">453/2</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=r0DgRdKXZrJz2X2lScTIm_EaGsiSWKGnzqRbB5640S7JdXeUNha2nd9gpBAcRKgF4vNnrTiZ2kvyRVaXp0yxEJr8x8ZQY_K-CDvrKMrpOghDAS9rKyCq9fn8OmBrPtFj" title="Informace o parcele">453/4</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=s-9uFqX51t1vV4MwLpDVX-pAX6aaJfpAA3k1K1Hz-ozW852ZAs02TqTJuigK_xl5j0XwlYffiRL6ca0RggBTgW_1mTgTmZh8hBTl80lEidEpAoVagUMwnb4iyUv62E5w" title="Informace o parcele">453/10</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=xDSucrRCg3cJy5VFKBihiB4ug39eRKmO41F4OhjkmlFlR0-WD0f7mgS5rgbTwpbTLLhpgDrwmvesnpGCkbbPRABlVUI0g-EM4Iy26GOQJxVAWiZbkdTUdFnkqASzG0t9" title="Informace o parcele">453/16</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=iK6EiWjev9v1yvIE9M8Y2v1eVlv-I_DculBooKYrhzBb0p3FfMUFYvzmt82UV_Gf5uk7HCyCtXUEQsIZeL1M8Tn8q5usunYGWVtHzvHTBnv-Wjbxn4e648tLJweHO411" title="Informace o parcele">453/20</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=Tlw3HAKbOuxEtI4HsTpgIVeVOt1uf_tq18KTZP9Gyo-8ABBOzPMXwIH8dKp5nMwvHvYEu2zk6zILl_2FKtG6U7nmFrPTCjFIqDT3vXt4l0nYcmXhoxwaCGmsjZirBACX" title="Informace o parcele">453/24</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=_13Rili-cCTu47xQ4oFswvW0OkLL4k-3VvrI4pvy1b3dnj6nCFkpzdCe03Zp2mGnkfDgutg2KOKSj-pWHJ75XfaqPCXhnMB60ZDAlZM0gFrEZ8bgsDrc0iDSYCrV-vv5" title="Informace o parcele">470/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=cd-5b6LKsM6rRBJxKoyIDoCTBS5Jsxa-279W6Yz-VeV1LDqmOdy8oiP45QLQ5HCYx8f3rpCQQfOjzIQSVHm83r_WYdbO8swacXS-wI0JFKfvctvgWN1eOa3bhYAhf7VW" title="Informace o parcele">472/6</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=6WsJSggZV4WW1KG0Usph2qcq-YPdxjB_eNu9i6pOKt12dR-9NE_EbU4IODkPrQF0DVCJ7SjE94fODBMNVlz3Qp8nctqFmuZw6DmJ6vQlohHlH_-yQWWaCoiLn50YIrGj" title="Informace o parcele">472/11</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=aWOB0zZuTTYZ5WOFOsoMo67wPy_IEfN1REo1Mu7Y3XQfz0bMfy5-JLMS6jzXXbfljB8pYvJW9JuACGkACRv1YrNw6R_xshk5BGyojsLMn4T5JZnz9BsDWJlVYiEWeNB8" title="Informace o parcele">473/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=dy4AzC2k5EWtD0LJBEttRyGb4NpfzX8ruyPA4umgOR5_puvwMRPt1mxGj13eip02IazC1xN3mdxh38jRZG20O1-v5zi9kwI_eBdxMZrTAT2mib_zDStU_yJsOEkPSJ_a" title="Informace o parcele">500/3</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=CBVSabjKyYkIISrkrX9XfJPHnkjnux7EhBXqIUw9P-GJqvd4OSV2g5CYr8oqulUs4D41P0jJalz2u7XtjyVIVQSLRj39p7SnDiB_C6DzisDolrNFVR2v9gloSxn1NhWG" title="Informace o parcele">500/6</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=ciQr0GKnSCyyJrCRjHUnXGL_vk7CyVagS0wSeYvxsMsvG-hS_-FvBWxubA028XYngKyfvV6HjGDigS3x5OYRFbyLE7SBzWKeb6PFvk6hGILhDIz3KXA227kNcIqBQW1s" title="Informace o parcele">555/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=2BiUqTROWk5pe4r0wF-Q7sijy-n9wmcov3OtEnwaqVFSQDFLRM_q39DdxdZ-KkA9K1LM7UqLokofYhtC_uvFcRoPdl6gCFJUBK4TGqsL7w03yIBNde6fOm3LGQLrXwaB" title="Informace o parcele">562/2</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=vjJN8l8EIqrImgMdRCQ2An4OaCM-sfGjQ4T67khKg6r2gbaiWIF2XaUtyrKSdR2isizbNUVekvpjhedJLOdQqmXfQYvAc3NK3dybLSQ0Kv2A3OYHwQRPmvFNKfKtEDaK" title="Informace o parcele">563/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=eG6r_h5RI96k6yJOqFQpuLHJ3rAGsK314zG0vMFRqiJvBIflcHqYyFAqsV9Kg9sgfr867HOjkDmqNkrdt8j8d4zoIo2govWn6dOJvfkXjxvL5lwSUQ4cPw8mQBR6M5G8" title="Informace o parcele">568/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=ZknXqPoZkbu8zTGr-YKA7cVATlAG3fuitiGA9F8Ftj4r5dzIis0r-jMMzajXZ6Pjai5PoORoR3aA8QFnruDFG4QmMuOEMKTV3iloCwPEDVoVlWclBcOfCrUyjMsIlyaG" title="Informace o parcele">568/3</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=pEra7u4lPPYuCz0qfcS03rVep1ktv59Q0pQ8TPwJrxgraPk0aUOdj5Dn3V7MghC0qJFseBrt499XF4s1Sv5PTwlnF7zbdB2Q64K_RP2sIYyCONvhtd-w3PnQ5mDwcvMQ" title="Informace o parcele">568/10</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=GymoA7msSnn1pQ3Dbs_5S52Dz3SCXq6FM2jkJ1-Z3odtyqZzx2bCU3nlNw3GVmeeEAZhApnnYcObw4oZauOyyfXgdSzb0S-lse00o6ql1a11nJMUn5Yv11hRwQoXQsx5" title="Informace o parcele">576/11</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=bIKisUXbEYI0eUCzAAcq9NwIBAVJiEEFLJ45gxHxkVvmINWwtFgC7IXFG1s_NGp9t-Q99utOiU61IAIuyQMpVv2ojY3IbXIkCWu-9QQJ3OAHAh1zZ0TmWQVGbASAr7VR" title="Informace o parcele">576/12</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=DmbxhcMmxtOZYFe2KpvF__NbylMv-XabU1q9hduWPeYFVTPi8ElmNI48EXdW3Un5GgwwEnNj_3SvHy3ktltt0OEsFTV2HKjk8Qyl6qx3PtJ-wHaJBnYaI_IziDV_2rZx" title="Informace o parcele">576/14</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=n6nvDqOqhfJfCWg0smvy1BFj-jFzDD2ALrfsw4apAvJIfVdM0_xGXQMMKaMknTFn5QBmT9PqcR36zqb5wH1mhgNIGJTcxMlB5gFia2ysv5D89444j6OITzrksTtRyRoh" title="Informace o parcele">583/3</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=WTyZKKmMJX8eRDWJ5LLq4vnwT0h_irRsD2YKptieiYBq29nJP8vuvR6bDr65QgsBG34IDJ2KVnXR37-J_7ZvLEGHNsf2KLQp7ymhvkA6Ts_3QthB5-ZSvkEsPpndbKmp" title="Informace o parcele">583/5</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=lteEDMNQNK9wTv82St---nasiW7gpt14uQFwwmt_tHKfV3lsohbWpxvlva0YqDNWaqI7TkGM_PZq7ToVGcA_-GnG_8m8IkGp7RoDe2q_BKkEgiCbrLSFYOMapO7LjaZG" title="Informace o parcele">583/7</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=H_mV0VCqkkxUG8dcPxIcfZXcNlDXFCp7cm_jxrZSn3WPi8fzihV6LtCTdTIQSRwnRopCOmh0FIFJtlswjY6foLEBtP4aPMX8gKiiEiURrnIhZrQvDMAGxxd9l9ngKUf8" title="Informace o parcele">597</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=j8sPCgwKCeldpveLb3Q8yBB2vf0H_Lp72cO5JNqmy2rJDF73OLa8A30ZWRqREwDtS8h99mk3EHRSDpZ9voD5Z0qXU1-iQnAVRlUi_qYacFAdluKrZhqzmJ-7s-Eqgy60" title="Informace o parcele">601/4</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=SlWfPEoLfKxIXdi8VGFZCkqfFjc8IYSB-DXU9k7WaDOmtJM5FGxtEC7g08MbTZ9N9iODMIPCsdRHr3VW2kQLW6Q1ZU8JGkbDkwTUeGjcAmkBA0FScg1jA8-2xUZnJ4fQ" title="Informace o parcele">608/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=a456TSm2dWo2BErD4EzqBf5JwAOD3-zZvv5xLZVoBZ_iyw9GaU_mjw_QFOLyBiuf7tc9GVnI7s6MvoQ5g3raKX3g3kEK6Sm8BUuNGMJZNUj5P39ngyMJ1_pMu1A5ZdSm" title="Informace o parcele">608/3</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=qGIvYRk_BQybVdeUi8cMsDikYAvlhja_q6S67dMe0IjBm1A6Mn61No5Nfvie2Be46a_PrtLYDYuzTr3AR61aAv3n28T6wXyb6RymOxhVLjmtYPrFVSx5kUPQ468Lbba4" title="Informace o parcele">608/4</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=QBCqVYiuYXMieRHEaPee_uWm5pmC_yPwLAU9OXFy88w3m0JPHt1LZVhfG_bKPe5YRiytgWY1AV_XuXbjGsDxA2YJUroFFU0i4_TBZ_vHHaBTBtLaE-eBzGB8EIRbY44j" title="Informace o parcele">608/5</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=CNRyHySl82KUCaEUuTNoWracZy9JlWosJOBJyQoutygp0Our-8XDywO0HdlYS-5LoS94tDCAgEgaY_jFWL9ro3qY1AOq7GF6LC1Y6KsFPe_4QgRS-znNfTNdjQPZzQPk" title="Informace o parcele">615/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=RnzZ3zVfncOJVN-EJgGCElFND62x1vOnzomEgzZmpRiW2jH4CqaaGPxz6JWkWoczE90iKOFRPZvgHbpgxD6bBTAS1cMi8sTliHpHcnWSUFL6CVVdHXhXFbg00ktgFSGE" title="Informace o parcele">615/2</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=ET3iCrRywhgsF2sgwlfMz7KntZT-BTBHURgOsCJbOGaqGsG1TEwtAziYQrgS7-bzVNFRkHlmO8xVUi8RVN9M9lV_LbZmH2lOJAM9QvsfbzXSTYKOGZl8_f-90ZIVoNf9" title="Informace o parcele">620</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=BQcq3ksOoNMkyXQqiLdsuRMzKUJub40t8FZooHpQIph1QGcj9HtzetBlqC-o_7LyCrNYiNodGamt3g6dsV7iHhPdNCIRElMGpyQWkSQs4JSnZw1oKFJtnLJ2k0_XF_3a" title="Informace o parcele">633/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=GmDzfwkYoafIgy3j7ZOJm40d3dvRDcqHBdzNbpGMKUkYB4T5h-l87TLVizC3HgTF8DD5F7sMS0CnKaJWGYhJhe54XOYk1vIh-dzmP6ioci9qPlTbQGNT8tVGAQNaSssL" title="Informace o parcele">638/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=k7FvPkFfrJ7Dk5kFsuU55P0Dbcemv7GSaHlgU4x3kBC1lO-QpPRUGMyXN_xm8gicJmH7xgTpnr2tJiE0Zx3fqWiLiVPZAh_nYICenDljRmYIR1TClj4cfBm7U1i5lBqC" title="Informace o parcele">642/2</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=awy6lNUd_BjReU8pDSDxl00y2Mqru14NaQ-pUsviVjSGRb_h6b9oUsSmJ5Wpcl5PfeCiwFZpiz-VVjY6i8Do85gKU9GlGNdg26eb94HofLtSa5ShA3xsoB9A3o81YVyn" title="Informace o parcele">642/3</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=4KWM5iu-HYlpDZmj5kPQIugympUnssH3sLvMEafTTPv9ZsIHqiU5mN3z2RJ-iMUbIZIfUXWBZbtEeswDZnfB9q5AQPTmg1OqChoH1bdIEC9ZE0Tr1_6iI3cNnIAm4v9r" title="Informace o parcele">642/10</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=_f35Jqc5ZFtOxIW-GV44rcAumiwWTfJMuFcogAiD_4_Gh__JlrYettXss-IMb_7Phqdf0kqIZ_2NLx4E8pbqnvCsoVPe98EW-4b5e16t9ovrlfHttw7Zc4binCTVYZTZ" title="Informace o parcele">643/2</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=ZEvtRd2iC2t3gEdZcLu7jfn_7ECLcPLlqDjASQVZQxapYIwUgTHJF1ebQZW45si0ElgciQcsXOoHkuZX880Ijejgb2AxkeK9WJTTgEnMOu9qYEcCRmjZMpP0YxIOL540" title="Informace o parcele">646/6</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=GG9rKxorGFQiivwZnjxlTmn0Dm-V-cCtbtfKEQ7yg7Q4SJD0zCHMkN_-tLRl6MjiebJJ1zVcaCGSMaD2P6gI5Pcoyhq2PWVuXs7ZgzcTLkOy7z3nH3t1QXftQQmKKbab" title="Informace o parcele">646/8</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=jdwRUw41dAv9Ima-1Srj8aN9-3Kd6ca__H3Smf0wlzCb-dDIrHBGofnQgWOHJQFlgCd_91SrXEXtFcnPulNOcOpO24uOj0T3diPc_nGo3GVFDZIALQUah9TYVm33VxVI" title="Informace o parcele">667/3</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=2d0rjrbyZCdDt39ApTBlHBxe_n1ooN0cKtIgoczN2rgur5yjNBVU7H8AEEkqiJT8v_k6iCWQXOvbLPgt82BRtBQR8uz57K10zZE1V_geRDdcpJ-Sf3wMMoM9diWS3XN6" title="Informace o parcele">670/5</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=TyujV_vba_vudW8f4Dr0mtDSjLpVeHdoIX2oy55pKs4HMNOZJ-sfa-mZiS3lqCavZlyhNayPJ9xHdZFQr23SFoUYxrdjxBgrcQYD9-4wOgkGW26v5YBoANEdHgt7X3RP" title="Informace o parcele">697/2</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=Y1d9NTOAknHfNrGv6FsjOQu0XjwJgwXnvzlGKFYgVT_3AM2EQJ3Nu3lxmD4T8bWExOi1oRIRrmUI91LP3t7zyNVQsQ9xSsmikRKLd25_Wdo5grIrX0emRyaD3Qrivm9o" title="Informace o parcele">714/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=Rn_RPkSadV2VwqLhTX_xFQzv6m1nVLb1vtolt2PbOQTYZl7ejXdRk6DlH_EuQzU4l5VqIvxtEObTaKd1nMqgX4C8KBHjWmbB8IBp_YZFQvBDMixnndHQ-uQMT2tlgY-V" title="Informace o parcele">714/2</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=fbP-FwyYOz4VBcAw8BHZNna0ZdifSGpvwEdJfDFsp1lID-M7PJQzoAnv_RSr2-Bz-AQu2zBIiFEvYU_BWER2cfg-hRYoFct5ij7Q640hwuOPmEULu9Af-HWFp_SWrKKE" title="Informace o parcele">714/3</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=fcemBE0dvvgP9Q_m0lmFC60Q7tPJVZsIv9EooMp3YLB5olJwbcHRSgMTyg2jJa2mbvUVxFyjQ7_ZKPL7unZ5d8dJUC-DZYKYsd74NZ5AD6k-ZA-q6pn1JQdVcJqNC_4t" title="Informace o parcele">714/6</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=-rwPevSWoe6vyHquLG_kuIuHWVnEG11Y_e13EODmtJK-ie9xvXal7lC71fMHaMmuH_ko5PBe1h15CkQKWZsQR1cCCBMj2DoRqVSGxJ7M2vSbymEQRQKgGRLNLx-erTRD" title="Informace o parcele">714/8</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=JrDCvmLLFJOwX8iGbGJIX32cWqDJp3KyHDHJnS_QvLFZ7Q82U7rSU6Z8QpQqFX51QNTFFftU0hiy8MpErl2EpU2gJ7-vBznAxz7BZTqS-Jqwqk9jFJkMBRnsDdVCHQyD" title="Informace o parcele">714/9</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=oX7XaFBrjKfR7jrVBxp2AawLZDvPeYaBHArKg1bwtOAr1V5m0r4kNzo6YlURV8h-zSi409XquiRY2_l1FkGAduAL43wewWpidcu12po0kHDHNIX00iECAzhDNmAiY1a5" title="Informace o parcele">741/2</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=6fCw8uZbV_dVb2C5jdkfnQsb8JAL9Mfpt9S5lqpLzLaAC2kshsqUUb7oP35PzaaNtRSE-Lkq7q4mGe2dTokk4LOnOv2JeiGuX3Vev87uRqzTDDHyziRywmSvR6Q_Z4G_" title="Informace o parcele">742/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=-lsRG0NOUZWGKL5Pl2E38Qwrp2OPD16EPT6A_-l_iYDZPQHMykisq0ct62qoOJittDJUQbO9fXzkzNcszpJRl2IJH9EjuBX3z9ZhkUDKmhmn-j896hfKbu42xlY5d469" title="Informace o parcele">743/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=j30T0jLzmjBJeVH0E4Yg_RyD6SMVL_pdccABjrtL1fVUhPh1-WvjvhMShfzwnmep5sr6SSH3bMywT2JgedetXYKK7qfr8amfmPqRc8fm-1iiY6W6uwInm7SEoFFtJ6fK" title="Informace o parcele">744/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=tJyw_BzM_N45rYVjBB1Rckyi25DZl7fRo1_d6fC7nEI-vwe808e9BaP6cXuGvZsbp30sAYh80cenZRQfxCyZCyqgge5A0V8zAFyjNioAXgmKX9v9NCz8XLApYDJcsSZW" title="Informace o parcele">744/2</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=OzRXneY7dbCj5fSpurHQ5kaWPpA2jWB5BV2kBxfe4OJiWcWp2RvdUsS3eg-HZpvhPnR4aGnlyYBn2NegGGq1t4MOvuk1ghIxUp_yPkCxDXv6EsmVqkS3Q4wyQuL_9KzV" title="Informace o parcele">744/7</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=CRfxyiswRKKV4R927_F_xF_cRWJDz2y6x8iFpY39y06t-uceQUXwsWdooVjMMEHYPK-qlCjeQB_1X7OKnQukjLyzHivnTFKeB7smm8iapNr105IyxEM1QxdA8Fj-fMdz" title="Informace o parcele">744/9</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=mCKA_eKm852d7mTpgEzKteQ4r4Xrs2mtDlS4A4o1_43T3BE0wlwFeZaQULFaTnuCS0PRhYfdeSZjus3qO-D6D-U_yItMVzvYSsGdLB6geQrbnnVrWMMs7IrLGTDD08-d" title="Informace o parcele">744/22</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=2KUdZ3Q8vh9OsQNnZF8e_3dRfFjliLRcc0CnTmBtHEF1vomesmCc5HBULBviVAd9btLYCn_42V1WeGyIPVj-bq7AEfy--vgdMMaI9lqdf_NCegFPNymUyjOC2q-Vyz7j" title="Informace o parcele">744/23</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=qLh2uqRnUHLkVLfo9Tn5oioMxyGc2_M2tEhBVQXmTUQCGpDmg4kWpZ2aLGdG0C4IcENYt3UzS4DTFTm0IQuLzMPTBH9uXcGhDcnxEYsTaBbgoieIGnVQ9o6Smub7IG_G" title="Informace o parcele">765/2</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=qs8rma7iSZlbJ4bipFlzLSN30qZ-PiIYIJpYZU9-DE1MFuNXbOrCWbim0Jvcgn1FLFuyDQ3Ps0_5RTrvU6zuOR0VtlaxMMa6wan1OTixRO7mcVlOcN7TWbEyC1JdzQsI" title="Informace o parcele">765/4</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=61MhYWJEX4aonqZq_RE8D2dPG6-M2Ie_aSafY1RsppBH-QF_mXS_WLVVtlo8i2plBMrmSORusw8XXgWITi8L938rhGONLTSRzrdZXDTSvO1fUp-lth1gMxsS6RjgAH6n" title="Informace o parcele">765/8</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=W2i1Jswq72uh2V1rNDnBTbQHCjAQqVGqxdM9_C-zqFKqgSYlgBrdJmjkejKqOv4l5uVLemaYY6Xq56WExMNqyJNSZc0rLkVf0fczD7n-VSrBn-ydS34gc7OwVNPAood4" title="Informace o parcele">765/9</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=YlHsxnjSq3JqdxVYfbtJMqrVVlm9IpP2kuGGpUqCC-BneiYMh0nGyK69AjYq4GJlsJYhhhJe5Yh5X5tu1YsMYnldEn2jqIxRNpa8LPtdXOIycdja6kL73msFrbN0B2cC" title="Informace o parcele">765/10</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=sWxrXJiXmb3Am7MSmWB4VhtlXBE2luSybiHOpkfNaIaYQArAUD7ttSL0o1iPTkWl6_6xtKFQ2PWsKU_k6bzm7wsQzmYgriz4x0aVhzpUh_RsfVK1OSyowD71WGd6w_i2" title="Informace o parcele">765/12</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=8v7PSYuOuPQpQUa7IiU3Pb_8-p9Yfg_Jdw0T-vAhO3SF1I5ojdR7DVrC6iTfxKo-_1nsL5HASiYUldu4nAayPqT_NXsn4r6njc2GSe1tH_QB8ob2Wpj1pyvFP5WXSWia" title="Informace o parcele">765/13</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=d1p_I4FKBp1-jpVyxwPz1vE7Urb_LQVY2lGa_xZHRRiVjMCbMCAJT5fXt3EB7B_KlHghKQXVY1dUg1-BGTDkZ0SsSYaRGWT9wjTPYmha4X16LFP3ueVbdp7i2jg2x8N-" title="Informace o parcele">765/14</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=myPsGhjO80xZzl1BKG_MJw2PYwFEsjnnUroRos4QZwK6uvrQuUQ3OoI0pTm3x5zKMcL-8esNv0UtMK9JNRXwaKciXof9tRPDEuRRaQgodh4e_qFoo_iOLDV2QvFKnYbL" title="Informace o parcele">765/15</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=MKS8mp3ifC5Rq67tqNknb2cUd0PKCB78hBurNJGJ6PgG6JXjXWtM-We61J_cMXsfVzg8hj0bT37yGzXMGE5YffzGa8bDy2LLjO4mHnuEbHfRhMH5RkFlPEoy8IPGZH-7" title="Informace o parcele">765/17</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=zfcxgvL3Nfy0d9EFotQtczipHrq0AlBZXEW8FrTX8sHuk4kf8uCeO4wtDh71JAEqve4DxO_i48tHEqy05xmKa94aUB6JPW5ovn18rHDwAMb6mcR1DEejyTBAurjP7QT4" title="Informace o parcele">765/18</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=PFeIhxxTf73BiWb1UsLhvNPGw3Or6YJHYcX9RqwdhtSlyHE3iA_LEdV1TcD3mIZSda7322KKrDMov_VEiRJeMLYKgwMV-1zTo0KmRynp5xKt03ZiAqtxF3bcmU_q1WY1" title="Informace o parcele">765/22</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=by7volce21enrgD2cJEZ1eFkYh2uE93sOz_LK01_JUQA6w9mr4zCH_E3oNhSR8uNUiKIUhabPjIJduV_Igi3k-s0ZdE-i6my-lv6G0PQEQc0pcpzRYIXXhN4ca23P896" title="Informace o parcele">765/42</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=GJGJUOQfskzGPdlwB4aedcCPm06MBDFv4xqWmO1-_67Xl6VuWO6puRnXQ2LpT7Cr-Jj-EWfED8uRHIagAwLPCaTMCTLVb5ZuxHYyzksoY3MbeG4fkU2Dwuw-xiU7JHFG" title="Informace o parcele">796/5</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=f4B5W_tJUFPPklXu_tjJ-fF5h5l6EeOiXJGD9hmS4nmbXLHomBUM0w-X9U3jTIz6caOsb-X4Ypek1KPEmN8Pv4tRThKT9l_zAwu53OwReeY5y9sMGhcaxxI_bZqmVL9m" title="Informace o parcele">796/6</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=0W7Fv9rlv5qCepJBe1JVfVIX5zER5mLaUQfjBw3kw8qdjrzhIsWBWFih0DbtI928QVYfBMUkgS24L92sUGY8t8qsVdVBeXMUii2ijQWx8-Cd9dkPEWzPhu5NjmnRt_Jz" title="Informace o parcele">796/8</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=HtoAhWUj4MPMlfZFktrI7AsjpWZk2hsPjYzsgtcOUHrU1-YTyL19MCzedUFAT1k275qIuZBa1m5bqZcuj_FWkitrgyhgj54Sj4RKcceQswJzKGz399NKmnn0FfuY8nA9" title="Informace o parcele">796/10</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=azLwWrCM_QaRluLWb2bKb63kwBEPRqrB7ANVg42hWqJCsxcNK2WS9Bop5ecT_KtS60jTGQZFOR1lUF6jQqgttNqmDc4oUAEmKkSiAfJaIQyn0tQGGVghmNOCoPjHAQ6h" title="Informace o parcele">813/2</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=SmiHId9Q_XNiXmG_EgoKofIW6EtUxCmucafaMWQIrl5U3tL1rX1Y4jEV88n1Dwp5hIDAbK6YldecfQpreN7IdiucavjiZiySX4Weau8_xcVOM96AQmgZExighpPInuY3" title="Informace o parcele">826/5</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=oJKTC7FGZTpglvBGZqagmLRIbQ2t2sLf0E2N3nMDUvPEzE_0bHM7WQwV85Q3VovaVPE-vIQyz7XZkg1kb8BdBw1z3CM665A8QhXOQE01wfxnDNdClzC63RIwGCxn1q5B" title="Informace o parcele">879/3</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=qYD-g08sMkZTod5Mo8wjhpZYOFmCQ2j8ZHgoEmBWPvYeOjXllSKmPwZI8CDJXsVC3x14fGd7kFUwiHaw1VLBN-IwRh2P7741ENQ34KmJpPqst4eInA5Ek0APxHmPxpE1" title="Informace o parcele">879/4</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=Qu58oe5z8JyZ-aRFZfEbPtpoAWcfho6L068bxKSY8e7-3wVqLQGMVb0dNh8HhHXpj5kUTgxBEFTAhLOVVdcOFjiQ3SbTgRTjPpAfNWAiIzvgvfJ1UUgoeqvCkfWPoAMb" title="Informace o parcele">964/2</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=MigMEkmqdeGIMvCkUMqnZMCc10Y4MFu7l8siHt53JM4JX047v5107zPKA7blfWKV8wtlT9bal74oByPMbl02eal3qNvFV3905RFYoLxEgntAGBo4ywXDS1xvIzB_svmr" title="Informace o parcele">976/5</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=qDTT4fTORiWl6Kp99VI-UpUbhiHghCmJMLgxMheqiHnYeUWdpbt8-GZb8ylc3s_UGxnM8gJn-ecRTJbZO9zWtqMT_chSajpm4J1HxGQDjInrFfmE9yQg-1-wLqfwow-v" title="Informace o parcele">980/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=BPkwVIiSKYLD0W1OOJWnHXK6uId95mRmZUHUsUdknDRHkQDTK5R5rm8p_XdVhUBis5ns8hyiK1qukjcWkqYZNguRITrmFjJbwRf06jKlFCBY7G0WoeDotFiGUfCcKxcq" title="Informace o parcele">980/5</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=Eu_nITbdbTEl1MIbsAwIzHkUT8HcanU73D8wWGSx073UYuydD-mzt0ggCsCAl_jsXErXbeoiA_muDwUFZMQNWzOYySgrLV4jRIU0U2Lpk_eFOMl5KKPciPe51A2CwmEU" title="Informace o parcele">981</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=d2jVbNBAjc2jdnhTr9nH3MmDudXTVEz9mpTA8IF1-FGcvFMUj4AEZewGICO-bganDFob0TBxDsEQN4noNoBZ6WzilQikxvL38wWMqIF8CZF-UnPQnxuCuM72SZUBcc2_" title="Informace o parcele">983/3</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=sJngqG5RC0jAqMYxpvhwxPla9-nvuVkFR3DBOQJyHU60AhpTb8GzTshvs_dtHrdpPhvyblZvgOa6cXsyI92zDOPFMgrwRjaEoGwlCzDW_kOXTjcpVJzJwA6npVoodtE4" title="Informace o parcele">983/4</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=_QCRJHO94uxDqLWMQLjqYCtTVMGm3AjU09DHIT-zcyMoJY15oTAUGIMuGeoKGFJsaMMjZJ1_k7Xwhd58BxGt0uiH8gLYdIZ9u0SePszkfZa5me0f-PTFMUlJitmy1Eqj" title="Informace o parcele">1179</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=OsH8MbVNPe4ICCjoI2auho53tgmLK2dCiEO0XUOO5mUGWvRnVHuhE6hcNWIXnD-_mkavHlB1R0NfC6VJzzx5SV1ctFIfaxsrDQExr0p1Ya3p3BAmAbtAitnewnZ6B82N" title="Informace o parcele">1181/2</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=1UYH1BxQHrfu1_MlW5fhj3IwSeyILqyyHDkg4ED3D-HonAndw-2X1_5_POYjebCX1q3vPn7z8lMzO4HYXfvsDQo5uP6C4gw18l0KuQMRrZChNWqBuOyvKalivqHFOt7h" title="Informace o parcele">1900/5</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=wuwiIy1eYcs7TzaFWXVl-PN0_Te0NUSAhZLaKK5eDw23STP6-XM0DOVpLJY5hW6ADY0EPH6r3wj4WAhDT8hiNVlA86o2tlowNuLSN_5W1tlygFMPm_v8zwis04gcT0cp" title="Informace o parcele">1930/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=UUtfjAXxzqFaB9CrS6ZrokJkPFgYim4KF47ZZSh2VHIsN2ZxwFoX9QaU4je64h-M7eqwi4I06DLM6c0QyN-cc_jkJe23uaBiYQXWXFlVomxLA722AD6UxUE7UVjlqe92" title="Informace o parcele">1934/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=wB_MHIBfH_yq9cFV2LdKmnwq09tBOd3M_NN7K4ISF2d3qBjkY9k1HgczWPhcX8rJZNiKZN0rOsP4Wrf6dwWX9uJ4ReURhuX2BIa4s-LADeT9RGwdDZa1L5A7Fvp3PRjD" title="Informace o parcele">1934/2</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=0ox2REeRdPW_VzWqpRgT2LGeoI3-vCVA-zzvne27Sq6z5QfJewPjUGPAtcslghHLBH0zGkp0-ISUMvC30VlNfX1_qEKBcuj2XSjGoeOMiaUW0i5ehHDtt203LwoWsdUF" title="Informace o parcele">1935/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=LoSwN6bMr6yhm_SkgBsZlKpwikWhNG13a3jyr56H4uqXi0aAaZx_Dd4wX2rFHo7owA1Uc--tSpCbvx69UjtUXwmn_Kx_YB1QrOfi-YJCSwdRC1wyCi6K-Mkp4G83XUK-" title="Informace o parcele">1935/2</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=FsjzgMtyGTPDu8BidxVUxrI4HbYL2RuNtJs6MUiVoSAmUEZMAOBpByylqBawugi69ccyIi4jpyempBoEcaLP3THVjpMEYHUJx2n5NNZ-v5fzgZFrebz_1Ibj1SENHHZl" title="Informace o parcele">1935/4</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=exmLbySohc9d-2xcsZMs-d_D_7Wm3mgzqZOwwampGt2MIS4tiMUh6fbCejQi2Pc7AQ1o_wXw6-hUYCnyJPbch3S6B3qGtIZwmC1biRdnPgaH88mN-EZVh_WF7_vrI4L9" title="Informace o parcele">1935/5</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=2HQ2d9Ha8t9G6czQjxFsiQEbOP86NVbSaX-2GhOW1t7mV5PiY32nKK0nBSfPIDE0OC37-hkvdWoSySmo8HRuQM1STkGyoD0UvXvdxLA1oCEC6nABM5-uS35MakEVvvai" title="Informace o parcele">1938/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=2JYK7sVEtvxmuuPFX64TQVeFGAFmj-hjxOIRgEEcMtqZ4BCMWYU21xo_jV3Zes6hyeh0XfUMYrbOOg_EHpmYYXQmvoooVKvwnB8IbrqPspfSzU5oIaLRkFr9H5b9sTxF" title="Informace o parcele">1939/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=DpevVqc_vjiXmDkreigC75YpJa5nMkuBTrF_p38Y7Aai2j7O9j0qKEIZIVhVX4nTW4Her6b1PWIhLaG3keY4LDN6hYoE5bFzbRlv1QGXCaVVoUiFn5kNjqMO1mw205T_" title="Informace o parcele">1940/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=3lWjPtaLoGPnJNme88VgczlVCXnMH6Yy20882DxRcoUaFDYGBS7dmBtdOyY4c9UpvvmfxlYu9q0T36ox5J099mt6FkxGxpeKjQYDRzFu1IZyyjotHRns8ezBYWMogCZi" title="Informace o parcele">1941/3</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=TpAPYChmh9dYkHMUZQtqsIyyEb3wXvpijYyrFEmVqx7bp-Ws6WFDxEL9P6Tj9MQz40U9YLak2licKuJmmLPK9nxHnpMq9st6V-BRxeFxvGBkqdxSIFICexYSEhA0NiHP" title="Informace o parcele">1941/4</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=La22u3itojjmgPg4auTOJY54Y4w3wVUBqK--fNqxkhVQR8ZJvPge_XjaBZj-63JBXy4_HPQLzGfS7hohjD44gSTzQXtFxw6wZim9juJjqftBePx1u1QYS1X0MyYkjNKw" title="Informace o parcele">1941/5</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=xtMPVOGMFsR2nlsbt6gj2-baNXm7P_urkBlud2eeUgLhv4xdociAcAV_E3xWAj5AoprjdvNlUiHLgKeLEF0EnIF9_9r20FpLmnEu-_4emvMjJgNPRxhVS2n58LpdeB9-" title="Informace o parcele">1941/6</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=rJ4-RKOftVLOCvTr8F_xNwjvuoSRP2D1C9sMWndF9qoSkBKsWIbFNucrzc7GvNBTSLgUykJH3JEt-vNu_2dxKg-mNHs4w9_lhxfAjuiWlC9SywQ1vkICY9aLkZVcFfy3" title="Informace o parcele">1941/7</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=17zZwpEdR-28Kz85F7f3PakyXMYqq80bUiROhnUa8lTPpjhbg_u8QounTdifLCyUTmagrtORPHJC7vC-LBJrZSIsgXTsRlOfVkRtoehK9gpyYbsanl_tsV6TfHpPFmp8" title="Informace o parcele">1948</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=vDeEAt5QNjdBKs7L2kUijm-rU5R4kXVlZYw4Y1gGTmmnsI79Wkut71kkUvGlafbxnAIaiI19CBNbuwwZet4SQZ7SnYkwaSUp7vohTNERtnfybPhWe8k1QVaCJj-IRPJd" title="Informace o parcele">1949</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=sAqXl4ZcyN-rVHdcU8NI_8UZEzVj5ZBJ8_QAjbbWFSgseCgD6JnPg7XYQmImyCZdyQDuzzKw3LEH0Rve3TyfCVtd4GJvQIxNSsUD8g-DNVItV41_N9-wjMZhKyer3ohZ" title="Informace o parcele">1958/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=bxfplSRuf_dtn_BYss_ErI4WcNxYgPTRH6wS449-vwOSyb5mdMRlhfZ47u-7bmHNFhah2tR_95hsdTqzP2hCKX63AyhTSjhP3vSjJc5rfZLDezLpy68KquKSsOrZ6IwE" title="Informace o parcele">1960</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=FMKpQiTifhUNXnHGF1SEEES7g7RRjacRUeqF8bSXGSB21e6Cu08VEIlahbTm16aLHoUgcHJGEYcJg9uSpTutQLpUMobZ5Rnr4-sFECy7elGEUImfODao5RCfwI6oaB46" title="Informace o parcele">1961/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=yRaOvWVIeDs4esBS-Wpsehk38kDl2d3g7xUq32ENUKCxpH6KyGkCQTvgLtWaE_nif3C2Zd1zAmSV_2dwy-XlECUjkjluwVQqyeE0moMRhHszxaXZzCZ4eg89p2KQvT0u" title="Informace o parcele">1962</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=syhx6EDqtovWf7fmgLngUaY44DGpEFngs5_m8oIstBXeOH1-VncvOZmm6rV5v-KnwYyiWPORhMCSQYbRaI5GtC8tNUijXSGL6sA_yP0SsnMmdjYTIRVoC6ADygqaXywI" title="Informace o parcele">1964</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=CWhi2u1kPRP0_APhGaeMH9lPlq6DQEJ3mSOmpqGkA_B0XNNHGALSiFwCwnec851cz_aN8oTXY0rWQd6cAYZRlWgC0yuVNKZlZUDOHvSj5_QJg6igklGyq9v57prR3aao" title="Informace o parcele">1968/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=Alsxv0Ymquy-LztVsooqSl1Ga6ggkzBCYuvHpMtI6LbpaXevx3idWtVUvdZgXiqqwNusAPlMK-JoI96XVCxSAf-hK7jtDxpbwCoaJhKnV8AWeNWuVRahfdU6TJAMMF3d" title="Informace o parcele">1969</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=YOBtanwQYfQ2OAHBxMa8HMZvlcXt6_rdE8hScrxeVsxTGB59xHm0ZBRxwVpPavccLe6UGIlWTawnhbs2ITJase-_ADNCHlE2Oz6U2KtRonUgvbte8v0tBc_IExSJFy0C" title="Informace o parcele">1970/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=AP0UuyNdsWISXtaYfh-NN_ZJsGUUPVwUerd93mSEkHMhoSGWmgJ2_yi1MG3IIEz2X9AhzG02CjjfPJgyl4RCgIqutgXM9Bx8RPlrv7LR3joUJs8A7DodpJZWVn4DaYFO" title="Informace o parcele">1970/3</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=XtQc7GzXLw-nHjDPBqt6eV4_-ZpCHs0zG_xNTESTb82wCHf5y_pAAXM5rTqER4cpQgnOHTFztslWOTLMSQvWWcTPpNDMZ6TSujBTBbdRLofB5B-MLaL5ZCUP4Pk8WPgg" title="Informace o parcele">1970/4</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=lkAG-RNVZToI2dHo3kMln3aVFzkWPwhK3J775mRyhztdKyCfx01wbLCzbkxUdQuqrDpIP8A6xd4vCxpFpN-SkSk5pAb51yUh3DJC3iwT7FBWy8P5kbkP4246N9teuDBg" title="Informace o parcele">1975/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=25RoMz3pLyVBMiNFpcGbeCNMBHJ9jOgtCIL07m6FnBV7PQNWoAV66CNaP4-ssVPdxiA_eTfdBn8ffCU8wxJS1rQi1B5GYBbsUEoH0nnqzbOsUAj2WMotpb8Af2MSvVky" title="Informace o parcele">1977</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=vkm-XDm7tecQRMMVvZXdAk_teWxVBt3M5QrnQDQ-a2ZPalnurcL-hrxNBUpKOKkw07CxFuTJtsSrhZiIR-NNkwSAYn9hAKxbIMamLPQaKjttys0ZTgRn1d2ZjBMnzil-" title="Informace o parcele">1978/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=_ybYcZev-ETaYDvveIpZzI0GaSeWL2uutr4OnGWMN5WM4wxcZX1eNCMYNZLepFEFsXvyha26k-i3x9F9hpT_EBzYrTKL8M03DPb68extclrmdctR9maz3BgiePYfI1Sr" title="Informace o parcele">1979/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=ersmkI3ptBsGcaN8reFU5m1ZAex4_zxkuPjHNGHMkpjMiArR8wurS5HvN7qjuoVKNfFbDCPqwW59q9gFZtgOci6dNL8kjrijEHidfg7jX1NZWpbdfBrpd7ImlI5XG6Sv" title="Informace o parcele">1984/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=5kWxTCZptdKTLKCX0CEBt2Y0SoiwcUsdh0S_HhX56hAHE2tyKtznerdBCQxsGkiOrjaA2gFCuE0RMxqge9HexzavjrTL6TTV6oGPff9YDCz4zw8YeH8R_zggVBOwKYWQ" title="Informace o parcele">1986/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=LOjKBtIHOgOjWi0cqpNfUWijISfRLFubpv3bJE7QYexpbbreAdiyKIKy2AMXbSKtiUjNbBmYR7NtQNEb1bCa0j2HCngv14e6ECAeooLUe5FFDZfFfJlFjfgiAK9FgWK9" title="Informace o parcele">1986/2</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=eiC8Cmp48M1RWXkx6YWb35lk_tDm2OX5V2bvq1_dlSUIZ24UxeavC4pKGnRolM6Qh1DD9rhizHqAogRMOFgX0r2W3NgXPwV_NLQecjUW3gJfJEILLrPX410U4fh4CP9E" title="Informace o parcele">1986/3</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=59DG1DLtvjQnVDjI79I_Clno0NwY-EBiRIdog-9vcnl2zwBkhlrqx-_ctqFH54xCDmryDeLfariUb2b6Djy0KIZ3PePOTP48rgpQicj48E0EgySbC4ym9DclHFU_YWWG" title="Informace o parcele">1987/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=zxsklz-gaAFbaJZPt0X76xK2Eou7EJA-jSb1i-cczMdXqA4tdh5zB0YHWO8s-58alPDexkHBo9BxLGCkXh3-JKCuUecNUy7MpCFgHh4PiOC4POKx6a7l42EUjZOwt5dP" title="Informace o parcele">1988/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=wvfWT9_1V1qz6XSyyjL0IOYG8qgOe19cTpcBHxWEpHtET7JRbKKGmxZwy4IcNWniyx9t3DOI9MVm3hetocfXMf7sfo60oD8mhPGhEo7fIXYvg8r4rcVd9eBP05LUaJd6" title="Informace o parcele">1988/2</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=ptAwDCiIwl5-QNVjCIqLeWRT1Kzca7KiS3IcZYCzunfE6OyAxDqJGS7yHvSaxiJH7UjzMSDuCW8YTwp7kAM9qvwtnWhNGkQYNjytFNPyMTetN1HKg0MJ6eNPoEmG9gyt" title="Informace o parcele">1989/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=pBr2naLMR7JppHNtcO3-JOXdtuilC7soJMOXmoBaplZtvm8X9pw1G6OzuoL0Wq6u_0jTNPSkDsaqRjWicRpW_sY4v5VNx-e1YAZlGZJ_LWDJKM53PETRfiMZE0KgAwXI" title="Informace o parcele">1989/3</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=ismEhqL2oFr--6tQ_zzqsZFWfNzgeap106UjdAw0RR4h9s-tX_HNcTAopOe2piweaY854NGmjoyLiXnN6Ps4od9kQB_mioo4zjqa654buf861hlfF4WOz6mU70bnxtos" title="Informace o parcele">1989/4</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=4Ano_bl5csPH-SN-telIy6KryEjCCQPL7-Djfjqjju0PFWuUhqz0kdwnhAJbJr4JsRLS51DhrTvX9DXEDBl58JvaQzxH_0mnr_m-zWmslMylvA85AMbA-IYR0a8VEmLX" title="Informace o parcele">1989/5</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=DdsQqYhieHsH2zSCey7Kkx1UPZ8W8cDoXNlh7775CjX9RkUk1ZwzCKC1B_6QeS2Mxmn9dw-VOa0sc6_pyF2yX2cssC28MS9HiiGWLb9w5dcSGlU35_4EJcyy1PnSXLiG" title="Informace o parcele">1989/6</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=7GBCzaxxNMRe-8pZOqaN95CY3GL5g_-BTLA_MR_D2TTVLo17A9oWC1pw5KiVsAmzfG_XhFghRGtVvjJQmdw2ilV-qtadvyOK79bsTxvm_gSspOxbLiIm8kWF_iAqs16V" title="Informace o parcele">1989/9</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=ONUb5kTK2h5S2vCRb9aLry4K1BDlFYoCBDSKcBQBmANExOS4IB2NojJk4yFw_F6uMH_mtu3_QFZebXlj1BUpRtN8Fvd0M0JbI5xMXg026ohfG3n4xfvrbq79NXtalOsf" title="Informace o parcele">1989/15</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=5PeD1b7OaYRsLYuuvVKP5unGBBbBdod69U3VhhfDPmJ-579fWeejlp2rxNqJ2eXbKLr50vOLt3-VSQ-Oa5g0BQxTuYDeBYD4fiseMHOipCAGE37ESfKU44-7daDP6t__" title="Informace o parcele">1989/22</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=KBnasbuZ4xqFsBtKbLWAc8k-Yyx9Lvmq_ne4FKej2Ix3KrZY0fKjeGwiDsMLCB8mteRIBKtYxt0BbfOrOeIj6Vt-NlacTQc7q3kta-dieEdJkwqNptnnMmR8JnYIQqxV" title="Informace o parcele">1989/24</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=Uh6t44J6xd0X124lkbDtj1Ke1RltbspmgjySIgPkIZPbw_Hwm3dq62NSPFULGT3Fx8V8TT1oOksKLwbNZaZfUskyuugXUiGZ7IAyr96ZByMIeVi639qeQbmtnaIxI6Jc" title="Informace o parcele">1989/25</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=V0T1zvfEaCAXWoBI1gDkXt670PJ7DhRfJw93w3FlNCQSq9cHpdhEh_sUrKdQi6SbmSJk5_YNPwKsIFmBcJln8tCx-4Qvhr6b4G4_0RvNurpEePpebETLewJf7wUTbdWS" title="Informace o parcele">1989/36</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=TL3NhuT-8n0V7vWPp-IIprLW5XMJVFdus2NBG0DEgFtGtN3DGJaq_OsJ4_sHa9q1lL4SlBq4ZCkcE2ocFMhqQUwJAlzKxV2joN5F8WhAuVEKTYOlvNX7Mkm7eC5FuB13" title="Informace o parcele">1996/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=S7qFZgnL7TNIP5cpoRln5--WsOKBdRobCIQ2lZEuOScVBIlXMa2J85ZymO4YCGwMAF_0HErljpLapCeWXf1r2ufQekLmE_uGyaBMu2jzs_Sdd9dIgcWX7onpyVe_JB6S" title="Informace o parcele">1996/2</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=tDz9yoF-oo6HLsky60g5fBaqT9qYyj6nVQelLtD0bxUDSeYiQjzBwb8hXzoXwIhAcYNThL_dO5N_X-1IMZStFjfpR5SZhNVV0RYNFQfWqEbZE9kEWOKiJn7jeHXEMx9q" title="Informace o parcele">1996/3</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=S-Owz3T0QXiY4CsZBoAIkcA5KvK2so4zso5DdDAggizdIjNpaBc5qrZEy27ETnrL2JX3x7KJ_hpqUcVngnIn9ATwvasC9oYaOKt-XdTbJNh_TVaVZ0aC0Lx8naRMoSte" title="Informace o parcele">1998/2</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=prwOhpLT6u8WVQ8M9Sm10pLtVWCs9V-6YWOlAGnEZeL_f-c4OptO8pahuKuAZfn90SfqaPCetEurDZ0Dxgar2ZDC6ycTKYUUwZjXTZqKvi3LWHUuI5yDMcqTIwTwlZhi" title="Informace o parcele">1999/2</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=v8EJGWx8jYrtScofx2aD4hct1f5m2s3Hng1EKkkKJyl-3iI9uDPxDz2VfldMvEMWNUuCybsQ__QdPA8N3g1ZQZbmPnV3E5UVnJrcnhJtC_gEMK_khqh51LdeGvLTCvUI" title="Informace o parcele">2000/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=gQqfHMU3MjSsh3Buax-5XJsatzQQW5SxUlQkSZtAGUb17UXQYRb-U1DnxjUaAuSTHgRTfN3lg_RREyzLaPsnkeV2qXIZL1iOlbknP-0JHbY07b7RpyVBZCHBao1veJY9" title="Informace o parcele">2002</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=0ZwdEzeRh7OYpYF70YvyHl-qElUT8fthXYUOVTdwxos-RlyQqMYNkfhCIERg6KvoZgc4ok85l6UxJ4ijYdktl_U9cFYPjJwcygi-HBZw7DdjAsc8F3-X9W64TWsMH4d5" title="Informace o parcele">2012/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=G7umzPGHm04CjEG8eOMRjLEQJUeg59bH7plsocufFcersGyVBL_8I7azWASTXxEIt-xYMoHp2WYG8r8OX5D6y00tkOLrb6qktLF7TkRzyBrZu4PMAw0PTJEurUxfUGEA" title="Informace o parcele">2012/2</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=MNf8MBNf6LgZXZ6cUeD-5UhfAvju1JA-Xi68y6e_pnhROHsJP6QZIe1Z1HwTt3rxH1Si01YQJ9xyXDcfukCR7fIUn5P8zO1009ipOIFGZQYsEsc3RzNaryf2FDTvIgGp" title="Informace o parcele">2013/8</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=N5eL1zJNohI3arntmEy0q3H0IQ1fie9ww2RlLB7ehWgxaZf7F7yC0UkdiopMrzF06XvF85cLDyqx4RZmpmmJAZjXkJha2N8d1FmDv9_YTHRDba17EZeNipEKs3H3ZS5J" title="Informace o parcele">2016</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=0B3sCzjhrvDAYkG1KYnoHW9U8Ek-Eza6U2-C7-jSeONw_9R23UmJFaEMFEEAuL1zFJuCkd03dlzJaXWI21cHIWSjeWpWYONYoIILZZmQc_CYuylAmb1ZzsI57q1NHnGn" title="Informace o parcele">2019</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=S8lnh29LIGqjWT5j_QJ0D_l0m7WwHaNj6zWnmuNk9tA8HE0xoE0xeI42rMfQnNlM7mBdz28FN095Zg4hyaX2PAHgltWYCtOARgFNOzsv2MK30Gi0JT2rTs1-WttJW9MN" title="Informace o parcele">2020</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=q6Uhx6n7HcOw15mCGDDUGoLLP3C2OwVgwpglWF69jFxzJEYrr_FV2ShHTQzRhnHpgMwgibdzeUyOEK2QtUH4qp40Q1OvhFxcyhKO3wlJFOnzhPUCaHAionbNtN_tr9u9" title="Informace o parcele">2021</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=U9xtFtuCiNhaqCm_3L6GIzwb12-BHWtVuafp2K4HXkwQhrtHzAYym-e9JhgnlV1jDHTv2C6o6xd4r_IImn5AUKbc3cqwf0uVNJXmMzxzjMte4f4NBic3jvZUavQA-ybQ" title="Informace o parcele">2023</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=CahO1q9DyKARFKSN1lWxa196jgbrnQOh2T8GLyhshMbFPinDlHvZjKKoLS3h_LDhIU53_GHbTDqo2QsywtqVwWVjab7BEWs-j2674ysW_Gcz_Eyn_6E76FTq8WmKFC6n" title="Informace o parcele">2039/1</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=OgLtaQul2xpEPHE4S1eEdHoIVl4odZW-7MwctZeSMwYp3fSW4-r3bMdSKhq-dv_eMZY_T4ttm1M6BTaiAr7NVzIoe-d5J88pkxQWm5EkPz8bZD8xlg5G0CKmPTEDXwtb" title="Informace o parcele">2046</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=13X14hGcmEYeWK8iAZfnbIo8hRyu2F1rZbDewcngnxW3Bdl5o9oYXt3dyuPUIwdAK0ppWu2Loa1m_XRAU_2P3E-5tGTj8a3X941hkY-EDwkSkOhTbZHwhMP_nnVCiSCX" title="Informace o parcele">2047/2</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=vwWpHUb8pmk3x86-CJSEAkaQtiD0yYEia6k-J9dDrcmXOzzginSZmMp3Erhr0L2AZ9o9aDGL37Ydi7nkzHVvHUEhYN_JCV3Ra1pjL_B58sCXKPFDG4Vn4LnjBX-5xWGK" title="Informace o parcele">2049</a></td>
+
+		 </tr>
+		 <tr>
+			 <td> <a href="ZobrazObjekt.aspx?encrypted=nAr4AJIQ7piwM67Jsv_AeKCs67j11Evk5R4JEhINoz5ZXB2xD_TbbicqKM-v31TlzdEw7ezSF_wpHIt9jFugZ1lvt8UPtR6_n0ziwcUlYTIddSk7viUq7HYdXWOWoPXG" title="Informace o parcele">2055/2</a></td>
+
+		 </tr>
+	 </tbody>
+</table>
+<h2>Stavby</h2>
+<table summary="Stavby" cellspacing="0" class="zarovnat stinuj  ">
+	 <thead>
+		 <tr>
+			 <th>Číslo</th>
+		 </tr>
+	 </thead>
+	 <tbody>
+		 <tr>
+			 <td><a href="ZobrazObjekt.aspx?encrypted=HsV4Jif_swjV3BKXEwcPofaqEvzdHpyyY2AhUXTY2Ak0cd1RYx6B6ZeTcsDdGZKrNoAUjrXZ5kaDHitQxkDqiZDOaTgdd_ndnGD4oUGmhUSCHSdWilEvig==" title="Informace o stavbě"> bez čp / č. ev., objekt občanské vybavenosti</a>, na pozemku p. č. <a href="ZobrazObjekt.aspx?encrypted=-SUckeIr3TxCsmxEAvx2tjk_nsBqRodGlQsYTJmboj4S3IZFZIZfSxn_yUzb8D57NXkC_cbrPkW4QOTyrWB-iDnpyRJoByUjZ5b2jASjnPGe0rMbtTTH2pBjg09Ek0c0" title="Informace o parcele">st. 753</a></td>
+
+		 </tr>
+	 </tbody>
+</table>
+<h2>Jednotky</h2>
+<div class="nenalezenydata">Na LV nejsou zapsány žádné jednotky.</div>
+<h2>Práva stavby</h2>
+<div class="nenalezenydata">Na LV nejsou zapsána žádná práva stavby.</div>
+<p>Nemovitost je v územním obvodu, kde státní správu katastru nemovitostí ČR vykonává <a href="http://www.cuzk.cz/kp/kvary" title="WWW stránky pracoviště">Katastrální úřad pro Karlovarský kraj, Katastrální pracoviště Karlovy Vary</a></p><p id="nemovitost-paticka">Zobrazené údaje mají informativní charakter. Platnost k 15.07.2018 21:00:00.</p>
+
+
+    
+    <script type="text/javascript">
+        $(document).ready(function ()
+        {
+            $(".accordion").accordion({
+                heightStyle: "content",
+                active: false,
+                collapsible: true,
+                icons: { 'header': 'ui-icon-circle-plus', 'activeHeader': 'ui-icon-circle-minus' }
+                //icons: { "header": "ui-icon-plus", "activeHeader": "ui-icon-minus" }
+            });
+
+            $(".accordion h3 a").click(function ()
+            {
+                window.location = $(this).attr('href');
+                return false;
+            });
+        });
+    </script>
+
+<!-- IE8 a nizsi -->
+<!--[if lt IE 9]>
+    <style type="text/css">
+        table.zarovnat td { white-space: normal;}
+    </style>
+
+    <script type="text/javascript">
+        $(document).ready(function ()
+        {
+            $("table[class~=stinuj] tr:odd").addClass("alternateRow");
+        });
+    </script>
+<![endif]-->
+
+
+                </div>
+            </div>
+
+            
+    <div id="ctl00_panelVerticalMenuPlaceHolder_panelKoupitMenu">
+	
+        <div id="menu-vertical" role="navigation" class='noPrint'>
+            <ul>
+                <li><span>
+                    <img src="Images/kosik_maly.png" />&nbsp;Koupit el. listinu</span>
+                    <ul>
+                        <div id="ctl00_panelVerticalMenuPlaceHolder_updatePanelLinky">
+		
+                                
+                                        <li>
+                                            <a id="ctl00_panelVerticalMenuPlaceHolder_seznamSestav_ctrl0_objednejLink" href="javascript:__doPostBack(&#39;ctl00$panelVerticalMenuPlaceHolder$seznamSestav$ctrl0$objednejLink&#39;,&#39;&#39;)">Výpis z KN (LV)</a><br />
+                                            Cena <a href='http://www.cuzk.cz/Katastr-nemovitosti/Poskytovani-udaju-z-KN/Dalkovy-pristup/Uctovani-vystupu-z-KN-poskytovanych-DP-A-WSDP.aspx' title="Odkaz na ceník, otevře se v novém okně" target="_wwwcuzkcz"> 50,- Kč/A4</a> 
+                                        </li>
+                                    
+                            
+	</div>
+                                        
+                        
+
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    
+</div>
+
+        </div>
+
+        <div id="footer-box">
+            <div id="footer" role="contentinfo">
+                <div class="copyright">
+                    &copy; 2004 - 2018 <a href="http://www.cuzk.cz" title="Stránky Českého úřadu zeměměřického a katastrálního">Český úřad zeměměřický a katastrální</a> , <a href="http://www.mapy.cz/#mm=ZTtTcP@sa=s@st=s@ssq=id%3Apremise%20166347@sss=1@ssp=121166956_118255308_149412972_149286604@x=133155136@y=136085504@z=15" title="Odkaz na mapu" target="_blank">Pod sídlištěm 1800/9, Kobylisy, 18211 Praha 8</a><br />Podání určená katastrálním úřadům a pracovištím zasílejte přímo na <a href="http://www.cuzk.cz/Urady/Katastralni-urady/Seznam-vsech-KU-a-KP.aspx" title="Seznam katastrálních úřadů a pracovišť">jejich e-mail adresu</a>.<br class="noPrint" /><span class="noPrint">Uživatelská podpora: <a href="https://helpdesk.cuzk.cz" tabindex="0" target="_helpdesk">https://helpdesk.cuzk.cz</a>, tel. +420 284 044  455</span>
+                </div>
+                <div class="verze">
+                    Verze aplikace:
+                    5.5.2 build 0<br class="noPrint"/>
+                    <a href="Napoveda/index.htm?id=idh_pristupnost" title="Prohlášení o přístupnosti, otevře nové okno" class="noPrint"   target="napoveda">Prohlášení o přístupnosti</a><br class="noPrint"/>
+                    <a href="Napoveda/index.htm?id=idh_podminkyuzivaniaplikace" title="Podmínky užívání aplikace, otevře nové okno" class="noPrint"   target="napoveda">Podmínky užívání aplikace</a>
+
+                </div>
+            </div>
+         </div>
+
+    </form>
+</body>
+</html>

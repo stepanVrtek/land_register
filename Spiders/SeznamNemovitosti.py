@@ -3,25 +3,23 @@ from scrapy.crawler import CrawlerProcess
 from urllib.parse import urljoin
 from Spiders.items import NextURL
 import json
+import pickle
 
 
 class SeznamNemovitosti(scrapy.Spider):
     name = "SeznamNemovitosti"
-    start_urls = ["http://nahlizenidokn.cuzk.cz/ZobrazObjekt.aspx?encrypted=6wCf7KhxP-YP6NrJmpLefYQXT9tsI0-CKVvDaw0RHZC1f0IuEeNFMLr4619wYYNBs9tgHz5DeVtqvIMkJbqVUryvGUq7yZUe4Eud9NSqL96bhVIjoDrSkw=="]
+    start_urls = [
+        "http://nahlizenidokn.cuzk.cz/ZobrazObjekt.aspx?encrypted=e7hd04PXsVGmAz0h5NDhBAfCTlzwXmc0i23fn3r6-g7IywYksooFB3_01qXCPjnuFAPjZlNdi-oE_-giU2wylKvTmiA3LcN08EFD46V4eCNKsc9R4gUacw=="]
 
     def parse(self, response):
         main_url = "http://nahlizenidokn.cuzk.cz/"
         next_url = NextURL()
 
-        for link in response.css(
-                "[summary=Pozemky]"):  # dalsi moznost k "table.zarovnat" je ziskat primo prvni tabulku a to: "[summary=Pozemky]"
-            next_url['url'] = link.css("a::attr(href)").extract()
-            # kazdy link ma tvar: ZobrazObjekt.aspx?encrypted=*shitloadkodu==* ktery se musi spojit s predponou "http://nahlizenidokn.cuzk.cz/"
+        for link in response.css("[summary=Pozemky]"):  # "table.zarovnat" = vsechny tabulky, prvni tabulka = "[summary=Pozemky]"
+            next_url['url'] = link.css("a::attr(href)").extract() #link: ZobrazObjekt.aspx?encrypted=*shitloadkodu==* ktery se musi spojit s predponou "http://nahlizenidokn.cuzk.cz/"
+            with open('urls.txt', 'w') as file:
+                file.write(json.dumps(next_url.__dict__)) #delete me, I am here just for debug
             yield next_url
-
-        #filename = "seznam nemovitosti.txt"
-        #with open(filename, 'wb') as outfile:
-        #   json.dump(response.body, outfile)
 
         next_page = response.css('table.zarovnat a::attr(href)').extract_first()
         if next_page is not None:
