@@ -2,39 +2,52 @@ import scrapy
 from pprint import pprint
 from scrapy.crawler import CrawlerProcess
 
+
+KU_INPUT_ELEMENT = 'ctl00$bodyPlaceHolder$vyberObecKU$vyberKU$txtKU'
+KU_SEARCH_BUTTON = 'ctl00$bodyPlaceHolder$vyberObecKU$vyberKU$btnKU'
+LV_INPUT_ELEMENT = 'ctl00$bodyPlaceHolder$txtLV'
+LV_SEARCH_BUTTON = 'ctl00$bodyPlaceHolder$btnVyhledat'
+SEARCH_TXT = 'Vyhledat'
+
+
 class LandRegisterListSpider(scrapy.Spider):
     name = "Land Register List Spider"
     start_urls = ['http://nahlizenidokn.cuzk.cz/VyberLV.aspx']
-    custom_settings = {
-        'AUTOTHROTTLE_ENABLED': True
-    }
+    # custom_settings = {
+    #     'AUTOTHROTTLE_ENABLED': True
+    # }
 
     def parse(self, response):
-        # print(response.xpath('//input[@id="__VIEWSTATE"]/@value').extract_first())
-
         yield scrapy.FormRequest.from_response(
             response,
             formdata = {
-                'ctl00$bodyPlaceHolder$vyberObecKU$vyberKU$txtKU': '600016',
-                'ctl00$bodyPlaceHolder$vyberObecKU$vyberKU$btnKU': 'Vyhledat'
+                KU_INPUT_ELEMENT: '6000564',
+                KU_SEARCH_BUTTON: SEARCH_TXT
             },
             callback=self.parse_second
         )
 
     def parse_second(self, response):
+        if self.is_error_message(response):
+            return
+
         ku_xpath = '//span[@id="ctl00_bodyPlaceHolder_vyberObecKU_vyberKU_lblKU"]/text()'
         print(response.xpath(ku_xpath).extract_first())
 
         yield scrapy.FormRequest.from_response(
             response,
             formdata = {
-                'ctl00$bodyPlaceHolder$txtLV': '1',
-                'ctl00$bodyPlaceHolder$btnVyhledat': 'Vyhledat'
+                LV_INPUT_ELEMENT: '1',
+                LV_SEARCH_BUTTON: SEARCH_TXT
             },
             callback = self.parse_content
         )
 
     def parse_content(self, response):
+        if self.is_error_message(response):
+            return
+
+        # owners
         owners = response.xpath('//table[@summary="Vlastníci, jiní oprávnění"]/tbody/tr')
 
         items = []
@@ -49,6 +62,12 @@ class LandRegisterListSpider(scrapy.Spider):
             })
 
         print(items)
+
+    def is_error_message(self, response):
+        error_message = response.xpath(
+            '//div[@id="ctl00_updatePanelHlaseniOnMasterPage"]').extract_first()
+        return error_message is not None
+
 
 
 process = CrawlerProcess({
