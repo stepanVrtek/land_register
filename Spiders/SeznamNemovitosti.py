@@ -22,7 +22,7 @@ class SeznamNemovitosti(scrapy.Spider):
                 file.write(json.dumps(next_url.__dict__))  # delete me, I am here just for debug
             yield next_url
 
-        # next_page = response.css('table.zarovnat a::attr(href)').extract_first()
+        next_page = response.css('table.zarovnat a::attr(href)').extract_first()
         if next_url is not None:
             next_page = urljoin(main_url, next_page)
             yield response.follow(next_page,
