@@ -14,6 +14,7 @@ class SeznamNemovitosti(scrapy.Spider):
         main_url = "http://nahlizenidokn.cuzk.cz/"
         next_url = NextURL()
 
+        #získávám odkazy na parcely, které chceme scrapovat
         for link in response.css(
                 "[summary=Pozemky]"):  # "table.zarovnat" = vsechny tabulky, prvni tabulka = "[summary=Pozemky]"
             next_url['url'] = link.css(
@@ -21,6 +22,11 @@ class SeznamNemovitosti(scrapy.Spider):
             with open('urls.txt', 'w') as file:
                 file.write(json.dumps(next_url.__dict__))  # delete me, I am here just for debug
             yield next_url
+
+        #z proměnné typu "dict" vytvořím list obsahující jednotlivé odkazy
+        list_of_urls = self.parse_me_url(next_url)
+
+
 
         next_page = response.css('table.zarovnat a::attr(href)').extract_first()
         if next_url is not None:
@@ -34,7 +40,7 @@ class SeznamNemovitosti(scrapy.Spider):
             list_of_urls = urls_as_string.split(",") #ze stringu parsujeme URL do listu
             return list_of_urls
 
-    def crawl_those_urls(self):
+    def scrap_this_page(self, url):
         r=0
         return r
 
