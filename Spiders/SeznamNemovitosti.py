@@ -14,25 +14,25 @@ class SeznamNemovitosti(scrapy.Spider):
     def parse(self, response):
         next_url = UrlItem()
 
+        #pokus o parsovani obsahu vrchni tabulky s nemovitostmi, nefunguje :(
+        nemovitosti = Nemovitosti()
+        nemovitosti['lv'] = response.xpath('//*[@id="content"]/table[1]/tbody/tr[1]/td[2]/strong/text()').extract()
+        #nemovitosti['ku'] = response.css('a::attr(href) a::text').extract_first()
+        print(nemovitosti)
+
         #získávám odkazy na parcely, které chceme scrapovat
         for link in response.css(
                 "[summary=Pozemky]"):  # "table.zarovnat" = vsechny tabulky, prvni tabulka = "[summary=Pozemky]"
             next_url['url'] = link.css(
                 "a::attr(href)").extract()  # link: ZobrazObjekt.aspx?encrypted=*shitloadkodu==* ktery se musi spojit s predponou "http://nahlizenidokn.cuzk.cz/"
-            with open('urls.txt', 'w') as file:
-                file.write(json.dumps(next_url.__dict__))  # delete me, I am here just for debug
             yield next_url
-
-        nemovitosti = Nemovitosti()
-        nemovitosti['lv'] = response.xpath('//*[@id="content"]/table[1]/tbody/tr[1]/td[2]/strong/text()').extract()
-        #nemovitosti['ku'] = response.css('a::attr(href) a::text').extract_first()
-        print(nemovitosti)
 
         #tímto loopem projedu každou další stránku a spustím nad ní další parser: scrap_this_page
         list_of_urls = self.parse_me_url(next_url)
         for x in list_of_urls:
             self.scrap_this_page(x)
 
+    #metoda pro převod dict/ itemu s value plne URL na list s jednotlivymi odkazy kompletovanymi s hlavni URL
     def parse_me_url(self, link_dict=UrlItem()):
         main_url = "http://nahlizenidokn.cuzk.cz/"
         complete_url = []
@@ -42,6 +42,7 @@ class SeznamNemovitosti(scrapy.Spider):
                 complete_url.append(urljoin(main_url, x))  # spojuji hlavni cast odkazu s vyparsovanou casti odkazu
         return complete_url
 
+    #Scraper pro další odkazy
     def scrap_this_page(self, url):
         r = scrapy.http.Request(url)
         return r
