@@ -1,5 +1,10 @@
 import scrapy
 
 
-class NextURL(scrapy.Item):
+class UrlItem(scrapy.Item):
     url = scrapy.Field()
+
+
+class Nemovitosti(scrapy.Item):
+    lv = scrapy.Field()
+    ku = scrapy.Field()
