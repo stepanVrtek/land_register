@@ -25,7 +25,7 @@ class SeznamNemovitosti(scrapy.Spider):
             yield next_url
 
         nemovitosti = Nemovitosti()
-        nemovitosti['lv'] = response.xpath('//table[1]/tbody/tr[1]/td[2]/text()').extract()
+        nemovitosti['lv'] = response.xpath('//table[1]/tbody/tr[1]/td[2]/strong[text()]').extract()
         #nemovitosti['ku'] = response.css('a::attr(href) a::text').extract_first()
         print("aha")
         print(nemovitosti)
