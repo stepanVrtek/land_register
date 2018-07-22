@@ -1,8 +1,9 @@
 import scrapy
+from urllib.parse import urljoin
 from pprint import pprint
 from scrapy.crawler import CrawlerProcess
 
-
+BASE_URL = 'http://nahlizenidokn.cuzk.cz/'
 KU_INPUT_ELEMENT = 'ctl00$bodyPlaceHolder$vyberObecKU$vyberKU$txtKU'
 KU_SEARCH_BUTTON = 'ctl00$bodyPlaceHolder$vyberObecKU$vyberKU$btnKU'
 LV_INPUT_ELEMENT = 'ctl00$bodyPlaceHolder$txtLV'
@@ -21,7 +22,7 @@ class LandRegisterListSpider(scrapy.Spider):
         yield scrapy.FormRequest.from_response(
             response,
             formdata = {
-                KU_INPUT_ELEMENT: '6000564',
+                KU_INPUT_ELEMENT: '600016',
                 KU_SEARCH_BUTTON: SEARCH_TXT
             },
             callback=self.parse_second
@@ -48,24 +49,41 @@ class LandRegisterListSpider(scrapy.Spider):
             return
 
         # owners
-        owners = response.xpath('//table[@summary="Vlastníci, jiní oprávnění"]/tbody/tr')
+        owners_table = response.xpath('//table[@summary="Vlastníci, jiní oprávnění"]/tbody/tr')
 
-        items = []
-        for row in owners:
+        owners = []
+        for row in owners_table:
             # header check
             if row.xpath('th/text()').extract_first() is not None:
                 continue
 
-            items.append({
+            owners.append({
                 'vlastnik': row.xpath('td[1]/text()').extract_first(),
                 'podil': row.xpath('td[2]/text()').extract_first()
             })
 
-        print(items)
+        print(owners)
+
+        # grounds
+        grounds_table = response.xpath('//table[@summary="Pozemky"]/tbody/tr')
+
+        for row in grounds_table:
+            ref = row.xpath('td/a/@href').extract_first()
+            url = urljoin(BASE_URL, ref)
+            print(url)
+            yield scrapy.Request(url, callback=self.parse_ground)
+
+    def parse_ground(self, response):
+        if self.is_error_message(response):
+            return
+
+        print("successful ground request")
+
 
     def is_error_message(self, response):
         error_message = response.xpath(
-            '//div[@id="ctl00_updatePanelHlaseniOnMasterPage"]').extract_first()
+            '//div[@id="ctl00_hlaseniOnMasterPage"]').extract_first() # ctl00_updatePanelHlaseniOnMasterPage
+        print(error_message)
         return error_message is not None
 
 

@@ -8,7 +8,6 @@ def get_ku_codes(file):
             if line_count == 0:
                 line_count += 1
                 continue
-
             yield row["KOD"]
             line_count += 1
 
