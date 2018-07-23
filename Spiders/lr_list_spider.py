@@ -10,8 +10,24 @@ LV_INPUT_ELEMENT = 'ctl00$bodyPlaceHolder$txtLV'
 LV_SEARCH_BUTTON = 'ctl00$bodyPlaceHolder$btnVyhledat'
 SEARCH_TXT = 'Vyhledat'
 
+DOWNLOADER_MIDDLEWARES = {
+        'scrapy.contrib.downloadermiddleware.retry.RetryMiddleware': 90,
+        'tutorial.randomproxy.RandomProxy': 100,
+        'scrapy.contrib.downloadermiddleware.httpproxy.HttpProxyMiddleware': 110,
+        'scrapy.contrib.downloadermiddleware.useragent.UserAgentMiddleware' : None,
+        'tutorial.spiders.rotate_useragent.RotateUserAgentMiddleware' :400,
+   	 }
+
 class LandRegisterListSpider(scrapy.Spider):
     name = "Land Register List Spider"
+
+    custom_settings = {
+	#'AWS_ACCESS_KEY_ID':'amazon_key',
+	#'AWS_SECRET_ACCESS_KEY':'amazon_secret',
+	#'BOT_NAME':'land_registrator',
+	#'CONCURRENT_REQUESTS_PER_DOMAIN':8,
+	#'DOWNLOADER_MIDDLEWARES':DOWNLOADER_MIDDLEWARES
+    }
 
     def __init__(self, start_url, *args, **kwargs):
         self.start_urls.append(start_url)
