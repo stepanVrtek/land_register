@@ -1,15 +1,18 @@
-import Spiders.SeznamNemovitosti
-import Spiders.lr_list_spider
-import requests
-import time
-from bs4 import BeautifulSoup
+from land_register.spiders.title_deed_spider import TitleDeedSpider
+from land_register import csv_reader
 from scrapy.crawler import CrawlerProcess
 
 
-process = CrawlerProcess({
-    'USER_AGENT': 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)'
-})
+if __name__ == '__main__':
+    process = CrawlerProcess({
+        'USER_AGENT': 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)'
+    })
 
-process.crawl(Spiders.lr_list_spider)
-process.start()
+    process.crawl(TitleDeedSpider, ku_code = '600016', lv_code = '4')
+    process.start()
 
+    # ku_codes = csv_reader.get_ku_codes('UI_KATASTRALNI_UZEMI.csv')
+    # for ku_code in ku_codes:
+    #     for i in range(20000)
+    #         process.crawl(TitleDeedSpider, ku_code = ku_code, lv_code = i)
+    #         process.start()

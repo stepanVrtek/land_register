@@ -12,6 +12,6 @@ def get_ku_codes(file):
             line_count += 1
 
 
-codes = get_ku_codes('UI_KATASTRALNI_UZEMI.csv')
-for code in codes:
-    print(code)
+# codes = get_ku_codes('UI_KATASTRALNI_UZEMI.csv')
+# for code in codes:
+#     print(code)
