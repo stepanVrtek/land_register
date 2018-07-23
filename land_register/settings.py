@@ -95,3 +95,6 @@ ROTATING_PROXY_LIST = [
     '127.0.0.1:8000',
     # ...
 ]
+
+# Export
+FEED_FORMAT = 'csv'

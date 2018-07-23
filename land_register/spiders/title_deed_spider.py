@@ -11,6 +11,14 @@ LV_INPUT_ELEMENT = 'ctl00$bodyPlaceHolder$txtLV'
 LV_SEARCH_BUTTON = 'ctl00$bodyPlaceHolder$btnVyhledat'
 SEARCH_TXT = 'Vyhledat'
 
+class TestItem(scrapy.Item):
+    ku_code = scrapy.Field()
+    lv_code = scrapy.Field()
+    request_type = scrapy.Field()
+    download_latency = scrapy.Field()
+    response_status = scrapy.Field()
+    valid_request = scrapy.Field()
+
 class TitleDeedSpider(scrapy.Spider):
     name = "Title Deed Spider"
 
@@ -21,9 +29,21 @@ class TitleDeedSpider(scrapy.Spider):
 
     start_urls = [START_URL]
 
+    def get_test_item(self, response):
+        item = TestItem()
+        item['ku_code'] = self.ku_code
+        item['lv_code'] = self.lv_code
+        item['download_latency'] = response.meta['download_latency']
+        item['response_status'] = response.status
+        item['valid_request'] = True
+
     def parse(self, response):
         """Parse KU code (kod katastralneho uzemia)"""
-        print('first')
+
+        test_item = self.get_test_item(response)
+        test_item['request_type'] = 'first page loading'
+        yield test_item
+
         yield scrapy.FormRequest.from_response(
             response,
             formdata = {
@@ -35,7 +55,15 @@ class TitleDeedSpider(scrapy.Spider):
 
     def parse_second(self, response):
         """Parse LV code (kod listu vlastnictva)"""
+        test_item = self.get_test_item(response)
+        test_item['request_type'] = 'KU input'
+
         if self.is_error_message(response):
+            test_item['valid_request'] = False
+
+        yield test_item
+
+        if test_item['valid_request'] = False:
             return
 
         # ku_xpath = '//span[@id="ctl00_bodyPlaceHolder_vyberObecKU_vyberKU_lblKU"]/text()'
@@ -52,7 +80,15 @@ class TitleDeedSpider(scrapy.Spider):
 
     def parse_content(self, response):
         """Parce content of LV"""
+        test_item = self.get_test_item(response)
+        test_item['request_type'] = 'LV input'
+
         if self.is_error_message(response):
+            test_item['valid_request'] = False
+
+        yield test_item
+
+        if test_item['valid_request'] = False:
             return
 
         # owners - data without ref, uncomment to parse this data
@@ -98,6 +134,10 @@ class TitleDeedSpider(scrapy.Spider):
         if self.is_error_message(response):
             return
 
+        test_item = self.get_test_item(response)
+        test_item['request_type'] = 'ground detail opened'
+        yield test_item
+
         print("ground detail opened")
 
         # TODO parsing data:
@@ -127,6 +167,10 @@ class TitleDeedSpider(scrapy.Spider):
         if self.is_error_message(response):
             return
 
+        test_item = self.get_test_item(response)
+        test_item['request_type'] = 'building detail opened'
+        yield test_item
+
         print("building detail opened")
 
         # TODO parsing data:
@@ -150,6 +194,10 @@ class TitleDeedSpider(scrapy.Spider):
     def parse_unit(self, response):
         if self.is_error_message(response):
             return
+
+        test_item = self.get_test_item(response)
+        test_item['request_type'] = 'unit detail opened'
+        yield test_item
 
         print("unit detail opened")
 
@@ -175,7 +223,11 @@ class TitleDeedSpider(scrapy.Spider):
         if self.is_error_message(response):
             return
 
-        print("operation opened")
+        test_item = self.get_test_item(response)
+        test_item['request_type'] = 'operation detail opened'
+        yield test_item
+
+        print("operation detail opened")
 
 
     def get_refs_from_detail_table(self, response, table_name):
