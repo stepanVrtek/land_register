@@ -36,6 +36,7 @@ class TitleDeedSpider(scrapy.Spider):
         item['download_latency'] = response.meta['download_latency']
         item['response_status'] = response.status
         item['valid_request'] = True
+        return item
 
     def parse(self, response):
         """Parse KU code (kod katastralneho uzemia)"""
