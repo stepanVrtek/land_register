@@ -65,9 +65,11 @@ DOWNLOADER_MIDDLEWARES = {
 
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'land_register.pipelines.LandRegisterPipeline': 300,
-#}
+
+ITEM_PIPELINES = {
+    'land_register.pipelines.LandRegisterPipeline': 300,
+    # 'land_register.pipelines.JsonWriterPipeline': 800,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
@@ -90,11 +92,12 @@ DOWNLOADER_MIDDLEWARES = {
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-ROTATING_PROXY_LIST = [
-    '127.0.0.1:8000',
-    '127.0.0.1:8000',
-    # ...
-]
+# ROTATING_PROXY_LIST = [
+#     'http://103.245.11.164:53281',
+#     # ...
+# ]
+
+ROTATING_PROXY_LIST_PATH = '/Users/stepanvrtek/Desktop/devmons/land_register/land_register/proxies_list.txt'
 
 # Export
 FEED_FORMAT = 'csv'

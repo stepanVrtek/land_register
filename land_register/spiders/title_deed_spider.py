@@ -20,7 +20,7 @@ class TestItem(scrapy.Item):
     valid_request = scrapy.Field()
 
 class TitleDeedSpider(scrapy.Spider):
-    name = "Title Deed Spider"
+    name = "TitleDeedSpider"
 
     def __init__(self, ku_code = '', lv_code = '', **kwargs):
         self.ku_code = ku_code
@@ -63,7 +63,7 @@ class TitleDeedSpider(scrapy.Spider):
 
         yield test_item
 
-        if test_item['valid_request'] = False:
+        if test_item['valid_request'] == False:
             return
 
         # ku_xpath = '//span[@id="ctl00_bodyPlaceHolder_vyberObecKU_vyberKU_lblKU"]/text()'
@@ -88,7 +88,7 @@ class TitleDeedSpider(scrapy.Spider):
 
         yield test_item
 
-        if test_item['valid_request'] = False:
+        if test_item['valid_request'] == False:
             return
 
         # owners - data without ref, uncomment to parse this data
