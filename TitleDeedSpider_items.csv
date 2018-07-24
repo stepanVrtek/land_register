@@ -1,0 +1,4 @@
+ku_code,lv_code,request_type,download_latency,response_status,valid_request
+600016,2,first page loading,0.201585054397583,200,True
+600016,2,KU input,0.04191088676452637,200,True
+600016,2,LV input,0.03381490707397461,200,False
