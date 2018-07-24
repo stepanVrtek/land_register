@@ -10,8 +10,12 @@ if __name__ == '__main__':
     process.crawl(TitleDeedSpider, ku_code = '600016', lv_code = '2')
     process.start()
 
-    # ku_codes = csv_reader.get_ku_codes('UI_KATASTRALNI_UZEMI.csv')
+    # ku_codes = csv_reader.get_ku_codes('land_register/UI_KATASTRALNI_UZEMI.csv')
     # for ku_code in ku_codes:
-    #     for i in range(20000)
+    #     for i in range(2):
+    #         process = CrawlerProcess({
+    #             'USER_AGENT': 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)'
+    #         })
+
     #         process.crawl(TitleDeedSpider, ku_code = ku_code, lv_code = i)
     #         process.start()
