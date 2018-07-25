@@ -2,6 +2,10 @@ import scrapy
 from urllib.parse import urljoin
 from pprint import pprint
 from scrapy.crawler import CrawlerProcess
+from urllib.request import Request, urlopen
+from bs4 import BeautifulSoup
+from fake_useragent import UserAgent
+import random
 
 BASE_URL = 'http://nahlizenidokn.cuzk.cz/'
 START_URL = 'http://nahlizenidokn.cuzk.cz/VyberLV.aspx'
@@ -43,6 +47,23 @@ class TitleDeedSpider(scrapy.Spider):
         item['response_status'] = response.status
         item['valid_request'] = True
         return item
+
+    def change_proxy(self):
+        ua = UserAgent() # From here we generate a random user agent
+        proxies_req = Request('https://www.sslproxies.org/')
+        proxies_req.add_header('User-Agent', ua.random)
+        proxies_doc = urlopen(proxies_req).read().decode('utf8')
+
+        soup = BeautifulSoup(proxies_doc, 'html.parser')
+        proxies_table = soup.find(id='proxylisttable')
+
+        proxies = [] # Will contain proxies [ip, port]
+        for row in proxies_table.tbody.find_all('tr'):
+            proxies.append({
+              'ip':   row.find_all('td')[0].string,
+              'port': row.find_all('td')[1].string
+            })
+        proxy = random.choice(proxies)
 
     def parse(self, response):
         """Parse KU code (kod katastralneho uzemia)"""
