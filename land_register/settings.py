@@ -98,7 +98,7 @@ ITEM_PIPELINES = {
 #     # ...
 # ]
 
-ROTATING_PROXY_LIST_PATH = '/Users/stepanvrtek/Desktop/devmons/land_register/land_register/proxies_list.txt'
+ROTATING_PROXY_LIST_PATH = 'land_register/proxies_list.txt'
 
 # Export
 FEED_FORMAT = 'csv'

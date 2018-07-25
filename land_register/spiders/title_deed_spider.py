@@ -33,11 +33,11 @@ class TitleDeedSpider(scrapy.Spider):
 
     start_urls = [START_URL]
 
-    custom_settings = {
-        'ITEM_PIPELINES': {
-            'land_register.pipelines.CSVPipeline': 100
-        }
-    }
+    # custom_settings = {
+    #     'ITEM_PIPELINES': {
+    #         'land_register.pipelines.CSVPipeline': 100
+    #     }
+    # }
 
     def get_test_item(self, response):
         item = TestItem()
