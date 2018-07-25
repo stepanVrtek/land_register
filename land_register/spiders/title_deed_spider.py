@@ -64,6 +64,7 @@ class TitleDeedSpider(scrapy.Spider):
               'port': row.find_all('td')[1].string
             })
         proxy = random.choice(proxies)
+        return proxy
 
     def parse(self, response):
         """Parse KU code (kod katastralneho uzemia)"""
