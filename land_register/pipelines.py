@@ -25,8 +25,8 @@ class CSVPipeline(object):
 
     def process_item(self, item, spider):
         self.file = open('KU_{}_LV_{}.csv'.format(item['ku_code'], item['lv_code']), 'w+b')
-        self.files[spider] = file
-        exporter = CsvItemExporter(file)
+        self.files[spider] = self.file
+        exporter = CsvItemExporter(self.file)
         exporter.fields_to_export = ['request_type', 'download_latency', 'response_status', 'valid_request']
         exporter.start_exporting()
         exporter.export_item(item)
