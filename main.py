@@ -13,7 +13,7 @@ if __name__ == '__main__':
         count += 1
         for i in range(1, 3, 1):
             process.crawl(TitleDeedSpider, ku_code = ku_code, lv_code = str(i))
-        if count == 10:
+        if count == 2:
             break
 
     process.start()
