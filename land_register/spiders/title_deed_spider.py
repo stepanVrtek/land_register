@@ -64,7 +64,7 @@ class TitleDeedSpider(scrapy.Spider):
               'port': row.find_all('td')[1].string
             })
         random_choice = random.choice(proxies)
-        proxy = 'http://'+ random_choice['ip'] + random_choice['port']
+        proxy = 'http://'+ random_choice['ip'] + ':' + random_choice['port']
         return proxy
 
     def parse(self, response):
