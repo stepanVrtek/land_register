@@ -29,6 +29,11 @@ class TitleDeedSpider(scrapy.Spider):
     def __init__(self, ku_code = '', lv_code = '', **kwargs):
         self.ku_code = ku_code
         self.lv_code = lv_code
+
+        self.change_proxy()
+        self.overall_counter = 0
+        self.proxy_counter = 0
+
         super().__init__(**kwargs)
 
     start_urls = [START_URL]
@@ -63,8 +68,15 @@ class TitleDeedSpider(scrapy.Spider):
               'ip':   row.find_all('td')[0].string,
               'port': row.find_all('td')[1].string
             })
-        proxy = random.choice(proxies)
-        return proxy
+        self.proxy = random.choice(proxies)
+
+    def increment_request_counters(self):
+        self.overall_counter += 1
+        self.proxy_counter += 1
+
+        if self.proxy_counter > 180:
+            self.change_proxy()
+            self.proxy_counter = 1
 
     def parse(self, response):
         """Parse KU code (kod katastralneho uzemia)"""
@@ -75,6 +87,7 @@ class TitleDeedSpider(scrapy.Spider):
 
         yield scrapy.FormRequest.from_response(
             response,
+            meta = {'proxy': self.proxy},
             formdata = {
                 KU_INPUT_ELEMENT: self.ku_code,
                 KU_SEARCH_BUTTON: SEARCH_TXT
@@ -100,6 +113,7 @@ class TitleDeedSpider(scrapy.Spider):
 
         yield scrapy.FormRequest.from_response(
             response,
+            meta = {'proxy': self.proxy},
             formdata = {
                 LV_INPUT_ELEMENT: self.lv_code,
                 LV_SEARCH_BUTTON: SEARCH_TXT
@@ -142,14 +156,14 @@ class TitleDeedSpider(scrapy.Spider):
         for row in grounds_table:
             ref = row.xpath('td/a/@href').extract_first()
             url = urljoin(BASE_URL, ref)
-            yield scrapy.Request(url, callback=self.parse_ground)
+            yield scrapy.Request(url, meta = {'proxy': self.proxy}, callback=self.parse_ground)
 
         # buildings
         buildings_table = response.xpath('//table[@summary="Stavby"]/tbody/tr')
         for row in buildings_table:
             ref = row.xpath('td/a/@href').extract_first()
             url = urljoin(BASE_URL, ref)
-            yield scrapy.Request(url, callback=self.parse_building)
+            yield scrapy.Request(url, meta = {'proxy': self.proxy}, callback=self.parse_building)
 
         # units
         # example: KU 733857, LV 2000
@@ -157,7 +171,7 @@ class TitleDeedSpider(scrapy.Spider):
         for row in units_table:
             ref = row.xpath('td/a/@href').extract_first()
             url = urljoin(BASE_URL, ref)
-            yield scrapy.Request(url, callback=self.parse_unit)
+            yield scrapy.Request(url, meta = {'proxy': self.proxy}, callback=self.parse_unit)
 
     def parse_ground(self, response):
         if self.is_error_message(response):
@@ -190,7 +204,7 @@ class TitleDeedSpider(scrapy.Spider):
         operation_refs = self.get_refs_from_detail_table(
             response, 'Řízení, v rámci kterých byl k nemovitosti zapsán cenový údaj')
         for ref in operation_refs:
-            yield scrapy.Request(ref, callback=self.parse_operation)
+            yield scrapy.Request(ref, meta = {'proxy': self.proxy}, callback=self.parse_operation)
 
     def parse_building(self, response):
         if self.is_error_message(response):
