@@ -70,7 +70,7 @@ class TitleDeedSpider(scrapy.Spider):
             })
 
         random_choice = random.choice(proxies)
-        self.proxy = 'http://'+ random_choice['ip'] + random_choice['port']
+        self.proxy = 'https://'+ random_choice['ip'] + random_choice['port']
 
     def increment_request_counters(self):
         self.overall_counter += 1
