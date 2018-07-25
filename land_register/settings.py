@@ -67,7 +67,8 @@ DOWNLOADER_MIDDLEWARES = {
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
 ITEM_PIPELINES = {
-    'land_register.pipelines.CSVPipeline': 100,
+    'land_register.pipelines.WriteToCsv': 100,
+    # 'land_register.pipelines.CSVPipeline': 100,
     'land_register.pipelines.LandRegisterPipeline': 300,
     # 'land_register.pipelines.JsonWriterPipeline': 800,
 }

@@ -48,7 +48,6 @@ class TitleDeedSpider(scrapy.Spider):
         return item
 
     def change_proxy(self):
-        print('_____________________________________________________________')
         ua = UserAgent() # From here we generate a random user agent
         proxies_req = Request('https://www.sslproxies.org/')
         proxies_req.add_header('User-Agent', ua.random)
