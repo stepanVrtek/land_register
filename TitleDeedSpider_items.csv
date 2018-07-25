@@ -1,0 +1,4 @@
+request_type,download_latency,response_status,valid_request
+first page loading,0.6836352348327637,200,True
+KU input,0.2657816410064697,200,True
+LV input,0.4245002269744873,200,False

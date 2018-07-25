@@ -23,6 +23,6 @@ for row in proxies_table.tbody.find_all('tr'):
 text_file = open("proxies_list.txt", "w")
 
 for proxy in proxies:
-    text_file.write('http://' + proxy['ip'] + ':' + proxy['port'] + '\n')
+    text_file.write('https://' + proxy['ip'] + ':' + proxy['port'] + '\n')
 
 text_file.close()

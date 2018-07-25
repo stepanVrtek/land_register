@@ -7,8 +7,8 @@ from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
 import random
 
-BASE_URL = 'http://nahlizenidokn.cuzk.cz/'
-START_URL = 'http://nahlizenidokn.cuzk.cz/VyberLV.aspx'
+BASE_URL = 'https://nahlizenidokn.cuzk.cz/'
+START_URL = 'https://nahlizenidokn.cuzk.cz/VyberLV.aspx'
 KU_INPUT_ELEMENT = 'ctl00$bodyPlaceHolder$vyberObecKU$vyberKU$txtKU'
 KU_SEARCH_BUTTON = 'ctl00$bodyPlaceHolder$vyberObecKU$vyberKU$btnKU'
 LV_INPUT_ELEMENT = 'ctl00$bodyPlaceHolder$txtLV'
@@ -30,19 +30,13 @@ class TitleDeedSpider(scrapy.Spider):
         self.ku_code = ku_code
         self.lv_code = lv_code
 
-        self.change_proxy()
+        # self.change_proxy()
         self.overall_counter = 0
         self.proxy_counter = 0
 
         super().__init__(**kwargs)
 
     start_urls = [START_URL]
-
-    # custom_settings = {
-    #     'ITEM_PIPELINES': {
-    #         'land_register.pipelines.CSVPipeline': 100
-    #     }
-    # }
 
     def get_test_item(self, response):
         item = TestItem()
@@ -54,6 +48,7 @@ class TitleDeedSpider(scrapy.Spider):
         return item
 
     def change_proxy(self):
+        print('_____________________________________________________________')
         ua = UserAgent() # From here we generate a random user agent
         proxies_req = Request('https://www.sslproxies.org/')
         proxies_req.add_header('User-Agent', ua.random)
@@ -89,7 +84,7 @@ class TitleDeedSpider(scrapy.Spider):
 
         yield scrapy.FormRequest.from_response(
             response,
-            meta = {'proxy': self.proxy},
+            # meta = {'proxy': self.proxy},
             formdata = {
                 KU_INPUT_ELEMENT: self.ku_code,
                 KU_SEARCH_BUTTON: SEARCH_TXT
@@ -115,7 +110,7 @@ class TitleDeedSpider(scrapy.Spider):
 
         yield scrapy.FormRequest.from_response(
             response,
-            meta = {'proxy': self.proxy},
+            # meta = {'proxy': self.proxy},
             formdata = {
                 LV_INPUT_ELEMENT: self.lv_code,
                 LV_SEARCH_BUTTON: SEARCH_TXT
@@ -158,14 +153,14 @@ class TitleDeedSpider(scrapy.Spider):
         for row in grounds_table:
             ref = row.xpath('td/a/@href').extract_first()
             url = urljoin(BASE_URL, ref)
-            yield scrapy.Request(url, meta = {'proxy': self.proxy}, callback=self.parse_ground)
+            yield scrapy.Request(url, callback=self.parse_ground) # meta = {'proxy': self.proxy}
 
         # buildings
         buildings_table = response.xpath('//table[@summary="Stavby"]/tbody/tr')
         for row in buildings_table:
             ref = row.xpath('td/a/@href').extract_first()
             url = urljoin(BASE_URL, ref)
-            yield scrapy.Request(url, meta = {'proxy': self.proxy}, callback=self.parse_building)
+            yield scrapy.Request(url, callback=self.parse_building)
 
         # units
         # example: KU 733857, LV 2000
@@ -173,7 +168,7 @@ class TitleDeedSpider(scrapy.Spider):
         for row in units_table:
             ref = row.xpath('td/a/@href').extract_first()
             url = urljoin(BASE_URL, ref)
-            yield scrapy.Request(url, meta = {'proxy': self.proxy}, callback=self.parse_unit)
+            yield scrapy.Request(url, callback=self.parse_unit)
 
     def parse_ground(self, response):
         if self.is_error_message(response):
@@ -206,7 +201,7 @@ class TitleDeedSpider(scrapy.Spider):
         operation_refs = self.get_refs_from_detail_table(
             response, 'Řízení, v rámci kterých byl k nemovitosti zapsán cenový údaj')
         for ref in operation_refs:
-            yield scrapy.Request(ref, meta = {'proxy': self.proxy}, callback=self.parse_operation)
+            yield scrapy.Request(ref, callback=self.parse_operation)
 
     def parse_building(self, response):
         if self.is_error_message(response):
