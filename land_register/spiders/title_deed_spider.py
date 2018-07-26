@@ -38,6 +38,9 @@ class TitleDeedSpider(scrapy.Spider):
 
     start_urls = [START_URL]
 
+    def response_is_ban(self, request, response):
+        return response.status == 403
+
     def get_test_item(self, response):
         item = TestItem()
         item['ku_code'] = self.ku_code
@@ -47,32 +50,32 @@ class TitleDeedSpider(scrapy.Spider):
         item['valid_request'] = True
         return item
 
-    def change_proxy(self):
-        ua = UserAgent() # From here we generate a random user agent
-        proxies_req = Request('https://www.sslproxies.org/')
-        proxies_req.add_header('User-Agent', ua.random)
-        proxies_doc = urlopen(proxies_req).read().decode('utf8')
+    # def change_proxy(self):
+    #     ua = UserAgent() # From here we generate a random user agent
+    #     proxies_req = Request('https://www.sslproxies.org/')
+    #     proxies_req.add_header('User-Agent', ua.random)
+    #     proxies_doc = urlopen(proxies_req).read().decode('utf8')
 
-        soup = BeautifulSoup(proxies_doc, 'html.parser')
-        proxies_table = soup.find(id='proxylisttable')
+    #     soup = BeautifulSoup(proxies_doc, 'html.parser')
+    #     proxies_table = soup.find(id='proxylisttable')
 
-        proxies = [] # Will contain proxies [ip, port]
-        for row in proxies_table.tbody.find_all('tr'):
-            proxies.append({
-              'ip':   row.find_all('td')[0].string,
-              'port': row.find_all('td')[1].string
-            })
+    #     proxies = [] # Will contain proxies [ip, port]
+    #     for row in proxies_table.tbody.find_all('tr'):
+    #         proxies.append({
+    #           'ip':   row.find_all('td')[0].string,
+    #           'port': row.find_all('td')[1].string
+    #         })
 
-        random_choice = random.choice(proxies)
-        self.proxy = 'https://'+ random_choice['ip'] + ':' + random_choice['port']
+    #     random_choice = random.choice(proxies)
+    #     self.proxy = 'https://'+ random_choice['ip'] + ':' + random_choice['port']
 
-    def increment_request_counters(self):
-        self.overall_counter += 1
-        self.proxy_counter += 1
+    # def increment_request_counters(self):
+    #     self.overall_counter += 1
+    #     self.proxy_counter += 1
 
-        if self.proxy_counter > 180:
-            self.change_proxy()
-            self.proxy_counter = 1
+    #     if self.proxy_counter > 180:
+    #         self.change_proxy()
+    #         self.proxy_counter = 1
 
     def parse(self, response):
         """Parse KU code (kod katastralneho uzemia)"""
@@ -279,7 +282,6 @@ class TitleDeedSpider(scrapy.Spider):
     def is_error_message(self, response):
         error_message = response.xpath(
             '//div[@id="ctl00_hlaseniOnMasterPage"]').extract_first() # ctl00_updatePanelHlaseniOnMasterPage
-        print(error_message)
 
         # TODO distinguish between 'not found' and 'session expired' message
 
