@@ -8,12 +8,13 @@ if __name__ == '__main__':
 
     count = 0
 
-    ku_codes = csv_reader.get_ku_codes('land_register/UI_KATASTRALNI_UZEMI.csv')
+    ku_codes = csv_reader.get_ku_codes(
+        'land_register/UI_KATASTRALNI_UZEMI.csv')
     for ku_code in ku_codes:
         count += 1
-        for i in range(1, 3, 1):
-            process.crawl(TitleDeedSpider, ku_code = ku_code, lv_code = str(i))
-        if count == 2:
+        for i in range(1, 10, 1):
+            process.crawl(TitleDeedSpider, ku_code=ku_code, lv_code=str(i))
+        if count == 10:
             break
 
     process.start()

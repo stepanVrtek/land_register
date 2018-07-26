@@ -130,7 +130,7 @@ class TitleDeedSpider(scrapy.Spider):
         if test_item['valid_request'] == False:
             return
 
-        # owners - data without ref, uncomment to parse this data
+        # owners - data without ref, uncomment to parse this
         # example: KU 733857, LV: 275
         # owners_table = response.xpath('//table[@summary="Vlastníci, jiní oprávnění"]/tbody/tr')
         #
