@@ -21,7 +21,7 @@ NEWSPIDER_MODULE = 'land_register.spiders'
 ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-#CONCURRENT_REQUESTS = 32
+CONCURRENT_REQUESTS = 32
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://doc.scrapy.org/en/latest/topics/settings.html#download-delay
@@ -103,3 +103,5 @@ ROTATING_PROXY_LIST_PATH = 'land_register/proxies_list.txt'
 
 # Export
 FEED_FORMAT = 'csv'
+
+TELNETCONSOLE_PORT = None

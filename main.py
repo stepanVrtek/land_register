@@ -12,7 +12,7 @@ if __name__ == '__main__':
         'land_register/UI_KATASTRALNI_UZEMI.csv')
     for ku_code in ku_codes:
         count += 1
-        for i in range(1, 10, 1):
+        for i in range(1, 200, 1):
             process.crawl(TitleDeedSpider, ku_code=ku_code, lv_code=str(i))
         if count == 10:
             break
