@@ -6,7 +6,7 @@ import time
 
 start_time = time.time()
 
-OVERALL_MAX = 1000000
+OVERALL_MAX = 200
 LV_MAX = 50
 BATCH_COUNT = 20
 
@@ -37,8 +37,9 @@ if __name__ == '__main__':
 
             if process_count % BATCH_COUNT == 0:
                 process.start(stop_after_crawl=False)
+                process_count = 0
                 print_stats()
-                process = get_process()
+                # process = get_process()
 
         if overall_count >= OVERALL_MAX:
             break
