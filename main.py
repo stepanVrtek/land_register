@@ -8,7 +8,7 @@ start_time = time.time()
 
 OVERALL_MAX = 200
 LV_MAX = 50
-BATCH_COUNT = 20
+BATCH_COUNT = 200
 
 process_count = 0
 overall_count = 0

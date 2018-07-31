@@ -10,27 +10,22 @@ import time
 
 start_time = time.time()
 
-OVERALL_MAX = 300
-BATCH_MAX = 20
-LV_MAX = 3
+OVERALL_MAX = 20
+BATCH_MAX = 10
 overall_count = 0
 batch_count = 0
 
 
 def print_stats():
     e = int(time.time() - start_time)
-    elapsed_time = print('{:02d}:{:02d}:{:02d}'.format(
-        e // 3600, (e % 3600 // 60), e % 60))
-    print('time: {}'.format(e))
-    print("Processed {} requests in {}".format(overall_count, elapsed_time))
+    print("Processed {} requests in {} seconds.".format(overall_count, e))
 
 
 def run_spider(batch):
     generate_proxies.generate()
     process = CrawlerProcess(get_project_settings())
     for b in batch:
-        process.crawl(TitleDeedSpider,
-                      ku_code=b['ku_code'], lv_code=b['lv_code'])
+        process.crawl(TitleDeedSpider, ku_code=b['ku_code'])
 
     process.start()
     print_stats()
@@ -43,20 +38,20 @@ if __name__ == '__main__':
     batch = []
 
     for ku_code in ku_codes:
-        for i in range(1, LV_MAX, 1):
-            overall_count += 1
-            batch_count += 1
-            batch.append({
-                'ku_code': ku_code,
-                'lv_code': str(i)
-            })
+        overall_count += 1
+        batch_count += 1
+        batch.append({
+            'ku_code': ku_code,
+        })
 
-            if batch_count == BATCH_MAX:
-                p1 = Process(target=run_spider, args=(batch.copy(),))
-                p1.start()
-                p1.join()
-                batch_count = 0
-                batch.clear()
+        if batch_count == BATCH_MAX:
+            p1 = Process(target=run_spider, args=(batch.copy(),))
+            p1.start()
+            p1.join()
+            batch_count = 0
+            batch.clear()
 
-        if overall_count >= OVERALL_MAX:
+            break
+
+        if overall_count == OVERALL_MAX:
             break

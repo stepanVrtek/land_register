@@ -16,7 +16,8 @@ class LandRegisterPipeline(object):
 
 
 def write_to_csv(item):
-    writer = csv.writer(open('KU_{}_LV_{}_export.csv'.format(item['ku_code'], item['lv_code']), 'a'), lineterminator='\n')
+    # writer = csv.writer(open('analysis/export.csv', 'a'), lineterminator='\n')
+    writer = csv.writer(open('analysis/KU_{}_export.csv'.format(item['cislo_ku']), 'a'), lineterminator='\n')
     writer.writerow([item[key] for key in item.keys()])
 
 class WriteToCsv(object):
