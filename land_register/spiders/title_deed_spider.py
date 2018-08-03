@@ -28,7 +28,7 @@ class TitleDeedSpider(scrapy.Spider):
         super().__init__(**kwargs)
 
     def response_is_ban(self, request, response):
-        return response.status == 403
+        return response.status == 403 or response.status == 500
 
 
     def parse(self, response):
