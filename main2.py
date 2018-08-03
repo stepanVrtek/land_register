@@ -10,8 +10,8 @@ import time
 
 start_time = time.time()
 
-OVERALL_MAX = 20
-BATCH_MAX = 10
+OVERALL_MAX = 10000
+BATCH_MAX = 20
 overall_count = 0
 batch_count = 0
 
@@ -51,7 +51,5 @@ if __name__ == '__main__':
             batch_count = 0
             batch.clear()
 
-            break
-
-        if overall_count == OVERALL_MAX:
+        if overall_count >= OVERALL_MAX:
             break
