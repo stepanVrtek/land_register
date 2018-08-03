@@ -51,5 +51,5 @@ if __name__ == '__main__':
             batch_count = 0
             batch.clear()
 
-        if overall_count == OVERALL_MAX:
+        if overall_count >= OVERALL_MAX:
             break
