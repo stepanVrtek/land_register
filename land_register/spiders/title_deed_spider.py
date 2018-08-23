@@ -21,7 +21,6 @@ MAX_LV_NOT_FOUND_IN_ROW = 100
 class TitleDeedSpider(scrapy.Spider):
     name = "TitleDeedSpider"
     start_urls = [START_URL]
-    user_agent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/22.0.1207.1 Safari/537.1"
 
     def __init__(self, ku_code='', **kwargs):
         self.ku_code = ku_code
