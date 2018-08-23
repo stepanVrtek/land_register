@@ -57,6 +57,7 @@ class TitleDeedSpider(scrapy.Spider):
 
         # print('-----------------PARSE method')
         print('cislo lv: {}, cislo ku: {}'.format(response.meta.get('cislo_lv', 1), self.ku_code))
+        # print('velkost requestu: {}'.format(response.headers['Content-Length']))
 
         yield scrapy.FormRequest.from_response(
             self.resp, # response,
