@@ -11,7 +11,7 @@ import time
 start_time = time.time()
 
 OVERALL_MAX = 200000
-BATCH_MAX = 10
+BATCH_MAX = 50
 overall_count = 0
 batch_count = 0
 

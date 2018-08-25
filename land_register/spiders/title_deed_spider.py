@@ -25,6 +25,7 @@ class TitleDeedSpider(scrapy.Spider):
     def __init__(self, ku_code='', **kwargs):
         self.ku_code = ku_code
         self.invalid_in_row = 0
+        self.total_count = 0
         super().__init__(**kwargs)
 
     def response_is_ban(self, request, response):
@@ -95,10 +96,12 @@ class TitleDeedSpider(scrapy.Spider):
     def parse_lv_content(self, response):
         """Parse content of LV"""
 
-        if self.is_error_message(response):
-            self.invalid_in_row += 1
-        else:
-            self.invalid_in_row = 0
+        self.total_count += 1
+        if self.total_count >= 20000:
+            if self.is_error_message(response):
+                self.invalid_in_row += 1
+            else:
+                self.invalid_in_row = 0
 
         lv_item = {}
         lv_item['cislo_ku'] = self.ku_code
@@ -191,7 +194,8 @@ class TitleDeedSpider(scrapy.Spider):
             'grounds': grounds,
             'building_objects': building_objects,
             'buildings': buildings,
-            'units': units
+            'units': units,
+            'time': response.meta['download_latency']
         }
 
         if self.is_error_message(response):
