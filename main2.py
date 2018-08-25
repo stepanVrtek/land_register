@@ -37,11 +37,11 @@ if __name__ == '__main__':
 
     batch = []
 
-    for ku_code in ku_codes[]:
+    for ku_code in ku_codes:
         overall_count += 1
         if overall_count < 50:
             continue
-            
+
         batch_count += 1
         batch.append({
             'ku_code': ku_code,
