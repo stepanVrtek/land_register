@@ -39,7 +39,7 @@ if __name__ == '__main__':
 
     for ku_code in ku_codes:
         overall_count += 1
-        if overall_count < 50:
+        if overall_count < 100:
             continue
 
         batch_count += 1
