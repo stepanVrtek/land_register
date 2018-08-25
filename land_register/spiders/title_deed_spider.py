@@ -78,6 +78,8 @@ class TitleDeedSpider(scrapy.Spider):
         if self.is_error_message(response):
             return
 
+        self.ku_response = response
+
         # ku_xpath = '//span[@id="ctl00_bodyPlaceHolder_vyberObecKU_vyberKU_lblKU"]/text()'
         # print(response.xpath(ku_xpath).extract_first())
 
@@ -209,13 +211,22 @@ class TitleDeedSpider(scrapy.Spider):
         if self.invalid_in_row >= MAX_LV_NOT_FOUND_IN_ROW:
             return
 
-        print('-----------------call next')
+        # yield scrapy.Request(
+        #     START_URL,
+        #     meta = {'cislo_lv': response.meta['cislo_lv'] + 1},
+        #     callback=self.parse_again,
+        #     dont_filter=True
+        # )
 
-        yield scrapy.Request(
-            START_URL,
-            meta = {'cislo_lv': response.meta['cislo_lv'] + 1},
-            callback=self.parse_again,
-            dont_filter=True
+        yield scrapy.FormRequest.from_response(
+            self.ku_response,
+            meta={'cislo_lv': response.meta['cislo_lv'] + 1},
+            formdata={
+                LV_INPUT_ELEMENT: str(response.meta['cislo_lv'] + 1),
+                LV_SEARCH_BUTTON: SEARCH_TXT
+            },
+            callback=self.parse_lv_content,
+            dont_filter = True
         )
 
 
