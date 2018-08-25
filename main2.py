@@ -11,7 +11,7 @@ import time
 start_time = time.time()
 
 OVERALL_MAX = 200000
-BATCH_MAX = 50
+BATCH_MAX = 300
 overall_count = 0
 batch_count = 0
 
@@ -39,7 +39,7 @@ if __name__ == '__main__':
 
     for ku_code in ku_codes:
         overall_count += 1
-        if overall_count < 100:
+        if overall_count < 1000:
             continue
 
         batch_count += 1
