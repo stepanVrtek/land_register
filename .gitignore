@@ -33,3 +33,5 @@ db
 dbs/
 eggs/
 logs/
+setup.py
+twistd.pid
