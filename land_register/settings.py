@@ -15,20 +15,20 @@ SPIDER_MODULES = ['land_register.spiders']
 NEWSPIDER_MODULE = 'land_register.spiders'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-USER_AGENT = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/22.0.1207.1 Safari/537.1'
+# USER_AGENT = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/22.0.1207.1 Safari/537.1'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-CONCURRENT_REQUESTS = 400
+CONCURRENT_REQUESTS = 150
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://doc.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
 # DOWNLOAD_DELAY = 3
 # The download delay setting will honor only one of:
-#CONCURRENT_REQUESTS_PER_DOMAIN = 16
+CONCURRENT_REQUESTS_PER_DOMAIN = 150
 #CONCURRENT_REQUESTS_PER_IP = 16
 
 # Disable cookies (enabled by default)
@@ -55,6 +55,8 @@ DOWNLOADER_MIDDLEWARES = {
     'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
     'rotating_proxies.middlewares.BanDetectionMiddleware': 620,
     'land_register.middlewares.LandRegisterDownloaderMiddleware': 543,
+    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+    'scrapy_fake_useragent.middleware.RandomUserAgentMiddleware': 800
 }
 
 # Enable or disable extensions
@@ -67,19 +69,18 @@ DOWNLOADER_MIDDLEWARES = {
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
 ITEM_PIPELINES = {
-    'land_register.pipelines.WriteToCsv': 100,
-    # 'land_register.pipelines.CSVPipeline': 100,
-    'land_register.pipelines.LandRegisterPipeline': 300,
+    'land_register.pipelines.SQLPipeline': 100,
+    # 'land_register.pipelines.LandRegisterPipeline': 300
     # 'land_register.pipelines.JsonWriterPipeline': 800,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
-AUTOTHROTTLE_ENABLED = True
+AUTOTHROTTLE_ENABLED = False
 # The initial download delay
-#AUTOTHROTTLE_START_DELAY = 5
+AUTOTHROTTLE_START_DELAY = 1 #5
 # The maximum download delay to be set in case of high latencies
-#AUTOTHROTTLE_MAX_DELAY = 60
+AUTOTHROTTLE_MAX_DELAY = 3 #60
 # The average number of requests Scrapy should be sending in parallel to
 # each remote server
 #AUTOTHROTTLE_TARGET_CONCURRENCY = 1.0
@@ -95,19 +96,19 @@ AUTOTHROTTLE_DEBUG = True
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 ROTATING_PROXY_LIST = [
-    'http://95.211.175.167:13401',
-    'http://95.211.175.225:13401'
+    '95.211.175.167:13151',
+    '95.211.175.225:13151'
 ]
 
 # ROTATING_PROXY_LIST_PATH = 'land_register/proxies_list.txt'
 
-# Export
-FEED_FORMAT = 'csv'
+# # Export
+# FEED_FORMAT = 'csv'
 
 TELNETCONSOLE_PORT = None
 
 LOG_LEVEL = 'DEBUG'
 
-RETRY_HTTP_CODES = [403, 500, 502, 503, 504, 408]
+RETRY_HTTP_CODES = [500, 502, 503, 504, 403, 404, 408]
 
-RETRY_TIMES = 100
+RETRY_TIMES = 20
