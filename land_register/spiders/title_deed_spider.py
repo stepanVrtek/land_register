@@ -1,11 +1,7 @@
 import scrapy
+from pprint import pprint
 from urllib.parse import urljoin
 from unidecode import unidecode
-# from pprint import pprint
-# from scrapy.crawler import CrawlerProcess
-# from urllib.request import Request, urlopen
-# import random
-
 
 BASE_URL = 'https://nahlizenidokn.cuzk.cz/'
 START_URL = 'https://nahlizenidokn.cuzk.cz/VyberLV.aspx'
@@ -14,15 +10,15 @@ KU_SEARCH_BUTTON = 'ctl00$bodyPlaceHolder$vyberObecKU$vyberKU$btnKU'
 LV_INPUT_ELEMENT = 'ctl00$bodyPlaceHolder$txtLV'
 LV_SEARCH_BUTTON = 'ctl00$bodyPlaceHolder$btnVyhledat'
 SEARCH_TXT = 'Vyhledat'
-MAX_LV_NOT_FOUND_IN_ROW = 100
+MAX_LV_NOT_FOUND_IN_ROW = 500
 
 
 class TitleDeedSpider(scrapy.Spider):
     name = "TitleDeedSpider"
     start_urls = [START_URL]
 
-    def __init__(self, ku_code='', **kwargs):
-        self.ku_code = '600016'
+    def __init__(self, ku_code, **kwargs):
+        self.ku_code = ku_code
         self.invalid_in_row = 0
         self.total_count = 0
         super().__init__(**kwargs)
@@ -34,7 +30,8 @@ class TitleDeedSpider(scrapy.Spider):
     def parse(self, response):
         """Enter KU code (kod katastralneho uzemia) to form."""
 
-        cislo_lv = response.meta.get('cislo_lv', 1)
+        cislo_lv = response.meta.get('cislo_lv', 55)
+
         yield scrapy.FormRequest.from_response(
             response,
             meta = {
@@ -76,13 +73,7 @@ class TitleDeedSpider(scrapy.Spider):
             return
 
         self.ku_response = response
-        self.process_lv(response)
-
-
-    def process_lv(response, next=False):
         cislo_lv = response.meta['cislo_lv']
-        if next:
-            cislo_lv += 1
 
         yield scrapy.FormRequest.from_response(
             self.ku_response,
@@ -97,60 +88,49 @@ class TitleDeedSpider(scrapy.Spider):
             dont_filter = True
         )
 
-        # yield scrapy.Request(
-        #     START_URL,
-        #     meta = {
-        #       'cislo_lv': next_lv
-        #     },
-        #     callback = self.parse_again,
-        #     dont_filter = True
-        # )
-
-
     def parse_lv_content(self, response):
         """Parse content of LV. If lv code doesn't exist,
         note it and continue."""
 
-        # check if LV is valid
+        # check if LV is valid or if has been reached maximum number
+        # of not existed LVs
         self.total_count += 1
         if self.is_error_message(response):
             self.invalid_in_row += 1
 
-            if self.invalid_in_row >= MAX_LV_NOT_FOUND_IN_ROW:
-                pass
-            else:
-                self.process_lv(response, next=True)
+            if self.invalid_in_row < MAX_LV_NOT_FOUND_IN_ROW:
+
+                cislo_lv = response.meta['cislo_lv'] + 1
+                yield scrapy.FormRequest.from_response(
+                    self.ku_response,
+                    meta = {
+                        'cislo_lv': cislo_lv
+                    },
+                    formdata = {
+                        LV_INPUT_ELEMENT: str(cislo_lv),
+                        LV_SEARCH_BUTTON: SEARCH_TXT
+                    },
+                    callback = self.parse_lv_content,
+                    dont_filter = True
+                )
 
             return
-
         else:
             self.invalid_in_row = 0
 
 
-        # LV zakladne data
+        # LV
         lv_item = {
             'cislo_ku': self.ku_code,
             'cislo_lv': response.meta['cislo_lv'],
-            'item_type': 'lv'
+            'item_type': 'LV'
         }
 
-        # TODO
-        building_rights_table = response.xpath(
-            '//table[@summary="Práva stavby"]/tbody/tr')
-        if building_rights_table:
-            lv_item['prava_stavby'] = 'TO DO field!'
-        else:
-            lv_item['prava_stavby'] = None
+        lv_item['prava_stavby'] = self.parse_building_rights(response)
+        lv_item['vlastnici'] = self.parse_owners(response)
 
+        pprint(lv_item)
         yield lv_item
-
-
-        # vlastnici
-        # priklad: KU 733857, LV: 275
-        owners_item = self.parse_owners_table(response)
-        owners_item['typ_ref'] = 'LV'
-        owners_item.update(lv_item)
-        yield owners_item
 
 
         # pozemky
@@ -201,11 +181,29 @@ class TitleDeedSpider(scrapy.Spider):
                 callback = self.parse_unit
             )
 
+        #################################################
+        return
+
+
         # next LV
-        self.process_lv(response, next=True)
+        cislo_lv = response.meta['cislo_lv'] + 1
+        yield scrapy.FormRequest.from_response(
+            self.ku_response,
+            meta = {
+                'cislo_lv': cislo_lv
+            },
+            formdata = {
+                LV_INPUT_ELEMENT: str(cislo_lv),
+                LV_SEARCH_BUTTON: SEARCH_TXT
+            },
+            callback = self.parse_lv_content,
+            dont_filter = True
+        )
 
 
     def parse_ground(self, response):
+        """Ground parsing."""
+
         if self.is_error_message(response):
             return
 
@@ -213,13 +211,15 @@ class TitleDeedSpider(scrapy.Spider):
 
         ground_item = {
             'lv_item': lv_item,
-            'item_type': 'pozemek'
+            'item_type': 'POZEMEK'
         }
 
         # atributy
-        general_table = response.xpath(
-            '//table[@summary="Atributy parcely"]/tbody/tr')
-        for index, row in enumerate(general_table):
+        ground_table = response.xpath(
+            '//table[@summary="Atributy parcely"]/tr')
+        for index, row in enumerate(ground_table):
+            name = row.xpath('td[1]/text()').extract_first()
+
             name = {
                 0: 'parcelni_cislo',
                 1: 'obec',
@@ -228,43 +228,63 @@ class TitleDeedSpider(scrapy.Spider):
                 8: 'druh_pozemku'
             }.get(index)
 
-            if name:
-                value = row.xpath('td[2]/text()').extract_first()
-                ground_item[name] = value
+            # name = {
+            #     'Parcelní číslo:': 'parcelni_cislo',
+            #     'Obec:': 'obec',
+            #     'Výměra [m2]:': 'vymera',
+            #     'Typ parcely:': 'typ_parcely',
+            #     'Druh pozemku:': 'druh_pozemku'
+            # }.get(name)
 
-        parsed_data = self.parse_string_w_num(ground_item['obec'])
-        ground_item['obec'], ground_item['cislo_obce'] = parsed_data
+            if not name:
+                continue
 
-        ground_item['id_parcely'] = self.get_id_from_link(
-            ground_item['parcelni_cislo'])
+            value = row.xpath('td[2]/text()').extract_first()
+            if index in [0, 1, 2, 3, 9]:
+                value = row.xpath('td[2]/a/text()').extract_first()
+
+            if index == 0:
+                ref = row.xpath('td[2]/a/@href').extract_first()
+                ground_item['ext_id_parcely'] = self.get_id_from_link(ref)
+
+            ground_item[name] = value
+
+        if ground_item.get('obec'):
+            parsed_data = self.parse_string_w_num(ground_item['obec'])
+            ground_item['obec'], ground_item['cislo_obce'] = parsed_data
 
         ground_item['zpusob_ochrany_nemovitosti'] = self.parse_zom(response)
         ground_item['omezeni_vlastnickeho_prava'] = self.parse_ovp(response)
         # ground_item['jine_zapisy'] = self.parse_other_notes(response)
+        ground_item['vlastnici'] = self.parse_owners(response)
 
-        yield ground_item
+        # parse operations only from separated spider
+        # ground_item['rizeni'] = self.parse_operations(response)
 
 
         # stavebni objekt
         building_object_table = response.xpath(
-            '//table[@summary="Atributy stavby"]/tbody/tr')
+            '//table[@summary="Atributy stavby"]/tr')
         for index, row in enumerate(building_object_table):
             name = row.xpath('td[1]/text()').extract_first()
 
             if name == 'Budova bez čísla popisného nebo evidenčního:':
-                # building_object_item['bez_cisel'] = True
-                #TODO?
-                print('---------> Budova bez čísel. KU: {}, LV: {}, parcelné číslo: {}'.format(
-                    lv_item['cislo_ku'], lv_item['cislo_lv'], ground_item['parcelni_cislo'] ))
+                building_object_item = {
+                    'lv_item': lv_item,
+                    'item_type': 'STAVEBNI_OBJEKT',
+                    'cisla_popis_evid': 'BEZ_CISEL'
+                }
+                pprint(building_object_item)
+                yield building_object_item
                 break
 
             if name == 'Stavební objekt:':
-                ref = row.xpath('td[2]/a/@href').extract_first()
+                url = row.xpath('td[2]/a/@href').extract_first()
 
                 ground_item['cislo_stavebniho_objektu'] = row.xpath(
                     'td[2]/text()').extract_first()
 
-                ground_item['id_stavebniho_objektu'] = self.get_id_from_link(ref)
+                ground_item['ext_id_stavebniho_objektu'] = self.get_id_from_link(url)
 
                 yield scrapy.Request(
                     url,
@@ -276,39 +296,34 @@ class TitleDeedSpider(scrapy.Spider):
                 )
                 break
 
-
-        # rizeni
-        operation_refs = self.get_refs_from_detail_table(
-            response, 'Řízení, v rámci kterých byl k nemovitosti zapsán cenový údaj')
-        for ref in operation_refs:
-            yield scrapy.Request(
-                ref,
-                meta = {
-                    'lv_item': lv_item
-                },
-                callback = self.parse_operation
-            )
+        pprint(ground_item)
+        yield ground_item
 
 
     def parse_building_object(self, response):
+        """Building object parsing."""
+
         lv_item = response.meta['lv_item']
         ground_item = response.meta['ground_item']
 
         building_object_item = {
             'lv_item': lv_item,
-            'item_type': 'stavebni_objekt',
-            'id_stavebniho_objektu': ground_item.get('id_stavebniho_objektu')
+            'item_type': 'STAVEBNI_OBJEKT',
+            'ext_id_parcely': ground_item.get('ext_id_parcely'),
+            'ext_id_stavebniho_objektu': ground_item.get(
+                'ext_id_stavebniho_objektu')
         }
 
         # atributy
         detail_table1 = response.xpath(
-            '//table[@class="detail detail2columns"]/tbody/tr')
+            '(//table[@class="detail detail2columns"])[2]/tr')
         for index, row in enumerate(detail_table1):
+            name = row.xpath('td[1]/text()').extract_first()
             name = {
-                0: 'cisla_popis_evid',
-                1: 'typ',
-                2: 'zpusob_vyuziti'
-            }.get(index)
+                'Čísla popisná nebo evidenční:': 'cisla_popis_evid',
+                'Typ:': 'typ',
+                'Způsob využití:': 'zpusob_vyuziti'
+            }.get(name)
 
             if name is None:
                 continue
@@ -316,7 +331,7 @@ class TitleDeedSpider(scrapy.Spider):
             value = row.xpath('td[2]/text()').extract_first()
             building_object_item[name] = value
 
-        detail_table2 = response.xpath('//table[@class="detail"]/tbody/tr')
+        detail_table2 = response.xpath('//table[@class="detail"]/tr')
         for index, row in enumerate(detail_table2):
             name = {
                 0: 'datum_dokonceni',
@@ -332,24 +347,25 @@ class TitleDeedSpider(scrapy.Spider):
             value = row.xpath('td[2]/text()').extract_first()
             building_object_item[name] = value
 
+        pprint(building_object_item)
         yield building_object_item
 
 
     def parse_building(self, response):
+        """Building parsing."""
+
         if self.is_error_message(response):
             return
 
-        lv_item = response.meta['lv_item']
-
         building_item = {
-            'lv_item': lv_item,
-            'item_type': 'stavba'
+            'lv_item': response.meta['lv_item'],
+            'item_type': 'STAVBA'
         }
 
         # atributy
         building_table = response.xpath(
-            '//table[@class="Atributy stavby"]/tbody/tr')
-        for index, row in enumerate(building_table):
+            '//table[@summary="Atributy stavby"]/tbody/tr')
+        for row in building_table:
             name = row.xpath('td[1]/text()').extract_first()
             name = {
                 'Obec:': 'obec',
@@ -363,12 +379,14 @@ class TitleDeedSpider(scrapy.Spider):
                 building_item[name] = value
 
         # obec, cislo obce
-        parsed_data = self.parse_string_w_num(building_item['obec'])
-        building_item['obec'], building_item['cislo_obce'] = parsed_data
+        if building_item.get('obec'):
+            parsed_data = self.parse_string_w_num(building_item['obec'])
+            building_item['obec'], building_item['cislo_obce'] = parsed_data
 
         # cast obce, cislo casti obce
-        parsed_data = self.parse_string_w_num(building_item['cast_obce'])
-        building_item['cast_obce'], building_item['cislo_casti_obce'] = parsed_data
+        if building_item.get('cast_obce'):
+            parsed_data = self.parse_string_w_num(building_item['cast_obce'])
+            building_item['cast_obce'], building_item['cislo_casti_obce'] = parsed_data
 
         # id stavebniho objektu
         ruian_table = response.xpath(
@@ -378,27 +396,32 @@ class TitleDeedSpider(scrapy.Spider):
 
             if name == 'Stavební objekt:':
                 ref = row.xpath('td[2]/a/@href').extract_first()
-                building_item['id_stavebniho_objektu'] = self.get_id_from_link(ref)
+                building_item['ext_id_stavebniho_objektu'] = self.get_id_from_link(ref)
                 break
+
+        building_item['vlastnici'] = self.parse_owners(response)
+
+        # parse operations only from separated spider
+        # building_item['rizeni'] = self.parse_operations(response)
 
         yield building_item
 
 
     def parse_unit(self, response):
+        """Unit parsing."""
+
         if self.is_error_message(response):
             return
 
-        lv_item = response.meta['lv_item']
-
         unit_item = {
-            'lv_item': lv_item,
-            'item_type': 'jednotka'
+            'lv_item': response.meta['lv_item'],
+            'item_type': 'JEDNOTKA'
         }
 
         # atributy
         unit_table = response.xpath(
-            '//table[@class="Atributy jednotky"]/tbody/tr')
-        for index, row in enumerate(unit_table):
+            '//table[@summary="Atributy jednotky"]/tbody/tr')
+        for row in unit_table:
             name = row.xpath('td[1]/text()').extract_first()
             name = {
                 'Číslo jednotky:': 'cislo_jednotky',
@@ -415,132 +438,57 @@ class TitleDeedSpider(scrapy.Spider):
         unit_item['zpusob_ochrany_nemovitosti'] = self.parse_zom(response)
         unit_item['omezeni_vlastnickeho_prava'] = self.parse_ovp(response)
         unit_item['jine_zapisy'] = self.parse_other_notes(response)
+        unit_item['vlastnici'] = self.parse_owners(response)
+
+        # parse operations only from separated spider
+        # unit_item['rizeni'] = self.parse_operations(response)
 
         yield unit_item
 
 
-    def parse_operation(self, response):
-        if self.is_error_message(response):
-            return
-
-        lv_item = response.meta['lv_item']
-        typ_ref = ?????
-
-        operation_item = {
-            'lv_item': lv_item,
-            'item_type': 'rizeni',
-            'typ_ref': typ_ref
-        }
-
-        # atributy
-        operation_table = response.xpath(
-            '//table[@class="Atributy jednotky"]/tbody/tr')
-        for row in operation_table:
-            name = row.xpath('td[1]/text()').extract_first()
-            name = {
-                'Číslo řízení:': 'cislo_rizeni',
-                'Datum přijetí:': 'datum_prijeti',
-                'Stav řízení:': 'stav_rizeni'
-            }.get(name)
-
-            if name:
-                value = row.xpath('td[2]/text()').extract_first()
-                operation_item[name] = value
-
-        yield operation_item
-
-
-        # ucastnici rizeni
-        participants_item = {
-            'lv_item': lv_item,
-            'item_type': 'ucastnici_rizeni',
-            'cislo_rizeni': operation_item['cislo_rizeni'],
-            'ucastnici': []
-        }
-
-        participants_table = response.xpath(
-            '//table[@class="Účastníci řízení"]/tbody/tr')
-        for index, row in enumerate(participants_table):
-            participant = {
-                'poradove_cislo': index
-                'jmeno': row.xpath('td[1]/text()').extract_first(),
-                'typ': row.xpath('td[2]/text()').extract_first()
-            }
-            participants_item['ucastnici'].append(participant)
-
-        yield participants_item
-
-
-        # provedene operace
-        performed_ops_item = {
-            'lv_item': lv_item,
-            'item_type': 'provedene_operace_rizeni',
-            'cislo_rizeni': operation_item['cislo_rizeni'],
-            'provedene_operace': []
-        }
-
-        performed_ops_table = response.xpath(
-            '//table[@class="Provedené operace"]/tbody/tr')
-        for index, row in enumerate(participants_table):
-            performed_op = {
-                'poradove_cislo': index
-                'operace': row.xpath('td[1]/text()').extract_first(),
-                'datum': row.xpath('td[2]/text()').extract_first()
-            }
-            performed_ops_item['provedene_operace'].append(performed_op)
-
-        yield performed_ops
-
-
-        # seznam nemovitosti
-        property_list_item = {
-            'lv_item': lv_item,
-            'item_type': 'seznam_nemovitosti_rizeni',
-            'cislo_rizeni': operation_item['cislo_rizeni'],
-            'seznam_nemovitosti': []
-        }
-
-        property_list_table = response.xpath(
-            '//table[@class="Seznam nemovitostí, ke kterým byl v rámci řízení zapsán cenový údaj"]/tbody/tr')
-        type = 'NEZNAMY'
-        index = 1
-        for index in property_list_table:
-            type_name = row.xpath('th[1]/text()').extract_first()
-            if type_name:
-                type = {
-                    'Parcely': 'PARCELA',
-                    'Jednotky': 'JEDNOTKA'
-                }.get(type_name)
-                continue
-
-            property = {
-                'poradove_cislo': index,
-                'typ': type,
-                'cislo': row.xpath('td[1]/text()').extract_first()
-            }
-            property_list_item['seznam_nemovitosti'].append(property)
-            index += 1
-
-        yield property_list_item
-
-
-    def parse_owners_table(self, response):
+    def parse_owners(self, response):
         owners_table = response.xpath(
             '//table[@summary="Vlastníci, jiní oprávnění"]/tbody/tr')
 
-        owners_item['vlastnici'] = []
+        owners =[]
         for row in owners_table:
             # header check
             if row.xpath('th/text()').extract_first() is not None:
                 continue
 
             owner = {}
-            owner['vlastnik'] = row.xpath('td[1]/text()').extract_first()
+            owner_string = row.xpath('td[1]/text()').extract_first()
+            owner['vlastnicke_pravo'] = owner_string
+            owner['jmeno'], owner['adresa'] = self.parse_owner_string(owner_string)
             owner['podil'] = row.xpath('td[2]/text()').extract_first()
+            owners.append(owner)
 
-            owners_item['vlastnici'].append(owner)
+        return owners
 
-        return owners_item
+    def parse_owner_string(self, owner_string):
+        comma_idx = owner_string.find(',')
+        name = owner_string[:comma_idx].strip()
+        address = owner_string[comma_idx + 1:].strip()
+        return (name, address)
+
+    def parse_operations(self, response):
+        """Parse operations.
+        NOT USED, OPERATIONS ARE SCRAPED ONLY FROM SEPARATED SPIDER."""
+        pass
+        # operations_table = response.xpath(
+        #     '//table[@summary="Řízení, v rámci kterých byl k nemovitosti zapsán cenový údaj"]/tbody/tr')
+        #
+        # operations = []
+        # for row in operations_table:
+        #     # header check
+        #     if row.xpath('th/text()').extract_first() is not None:
+        #         continue
+        #
+        #     operation = {}
+        #     operation['cislo_rizeni'] = row.xpath('td[1]/text()').extract_first()
+        #     operations.append(operation)
+        #
+        # return operations
 
 
     def parse_zom(self, response):
@@ -552,6 +500,8 @@ class TitleDeedSpider(scrapy.Spider):
                 zom += ';'
             zom += row.xpath('td[1]/text()').extract_first()
 
+        return zom
+
     def parse_ovp(self, response):
         ovp_table = response.xpath(
             '//table[@summary="Omezení vlastnického práva"]/tbody/tr')
@@ -561,6 +511,8 @@ class TitleDeedSpider(scrapy.Spider):
                 ovp += ';'
             ovp += row.xpath('td[1]/text()').extract_first()
 
+        return ovp
+
     def parse_other_notes(self, response):
         on_table = response.xpath(
             '//table[@summary="Jiné zápisy"]/tbody/tr')
@@ -569,6 +521,29 @@ class TitleDeedSpider(scrapy.Spider):
             if on:
                 on += ';'
             on += row.xpath('td[1]/text()').extract_first()
+
+        return on
+
+    def parse_building_rights(self, response):
+        rights_table = response.xpath(
+            '//table[@summary="Práva stavby"]/tbody/tr')
+        rights = ''
+        for row in rights_table:
+            if rights:
+                rights += ';'
+            rights += row.xpath('td[1]/text()').extract_first()
+
+        return rights
+
+    def parse_table_as_string(self, response, table_xpath, delimiter=';'):
+        table = response.xpath(table_xpath)
+        string = ''
+        for row in table:
+            if string:
+                string += delimiter
+            string += row.xpath('td[1]/text()').extract_first()
+
+        return string
 
 
     def parse_string_w_num(self, input):
@@ -593,10 +568,11 @@ class TitleDeedSpider(scrapy.Spider):
             '//div[@id="ctl00_hlaseniOnMasterPage"]').extract_first()  # ctl00_updatePanelHlaseniOnMasterPage
 
         # TODO distinguish between 'not found' and 'session expired' message
-        # print(error_message)
+        if error_message:
+            print(error_message)
         return error_message is not None
 
 
-def get_simple_string(str):
-    """ Remove diacritics and punctation and replace spaces with underscores"""
-    return unidecode(str).translate(None, string.punctuation)
+# def get_simple_string(str):
+#     """ Remove diacritics and punctation and replace spaces with underscores"""
+#     return unidecode(str).translate(None, string.punctuation)
