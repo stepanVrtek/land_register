@@ -361,6 +361,9 @@ def is_operation_updated(operation_number, wp, state):
         cursor.close()
         connection.close()
 
+    if not result:
+        return False
+    
     if result[0] == 1:
         return True
     return False
