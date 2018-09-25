@@ -28,3 +28,8 @@ db
 
 # IDE data
 .idea/
+
+# Scrapy distributed
+dbs/
+eggs/
+logs/
