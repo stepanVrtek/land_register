@@ -25,13 +25,15 @@ class OperationsSpider(scrapy.Spider):
     name = "OperationsSpider"
     start_urls = [START_URL]
 
-    def __init__(self, date=None, workplace=None, **kwargs):
-        if date is None:
-            self.date = datetime.now().strftime('%d.%m.%Y')
-        else:
-            self.date = date
-
+    def __init__(self, workplace, type, date=None, **kwargs):
+        self.workplace = int(workplace)
+        self.type = type
+        self.date = date if date else self.today()
         super().__init__(**kwargs)
+
+    def today(self):
+        return datetime.now().strftime('%d.%m.%Y')
+
 
     def response_is_ban(self, request, response):
         return response.status == 403 or response.status == 500
@@ -48,47 +50,21 @@ class OperationsSpider(scrapy.Spider):
         )
 
     def open_operations_lists(self, response):
-        """Open lists of operations for all posibilities: type, WP."""
+        """Open lists of operations for input WP and type."""
 
-        workplaces = self.get_workplaces(response)
-
-        for type in ['V', 'Z']:
-            for wp in workplaces:
-
-                wp_string = str(wp)
-                yield scrapy.FormRequest.from_response(
-                    response,
-                    meta = {
-                        'cislo_pracoviste': wp
-                    },
-                    formdata = {
-                        OPERATION_TYPE: type,
-                        DATE_INPUT : self.date,
-                        WORKPLACE: wp_string,
-                        SEARCH_BTN: SEARCH_BTN_TXT
-                    },
-                    callback = self.process_operations_list
-                )
-
-                # _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
-                # break
-            # break
-
-    def get_workplaces(self, response):
-        """Load list of available KPs."""
-
-        wp_options = response.xpath(
-            """//select[@name="ctl00$bodyPlaceHolder$vyberPracoviste$listPracoviste"]
-            //option[not(@disabled="Disabled") and not(contains(text(),"zrušeno"))]""")
-
-        list = []
-        for wp in wp_options:
-            code = wp.xpath('@value').extract_first()
-            # text = kp.xpath('text()').extract_first()
-            list.append(code)
-
-        list = [101]
-        return list
+        yield scrapy.FormRequest.from_response(
+            response,
+            meta = {
+                'cislo_pracoviste': self.workplace
+            },
+            formdata = {
+                OPERATION_TYPE: self.type,
+                DATE_INPUT : self.date,
+                WORKPLACE: str(self.workplace),
+                SEARCH_BTN: SEARCH_BTN_TXT
+            },
+            callback = self.process_operations_list
+        )
 
     def process_operations_list(self, response):
         """Process all operations items."""
@@ -151,8 +127,9 @@ class OperationsSpider(scrapy.Spider):
 
         ku_string = response.xpath(
             '//p[contains(text(), "Řízení se týká nemovitostí v k.ú.")]').extract_first()
-        ku_code = get_string_between_brackets(ku_string)
-        operation_item['cislo_ku'] = ku_code
+        if ku_string:
+            ku_code = get_string_between_brackets(ku_string)
+            operation_item['cislo_ku'] = ku_code
 
         # _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
         # return
@@ -261,7 +238,7 @@ class OperationsSpider(scrapy.Spider):
         """Parse LV references from ground - for uperation purposes."""
 
         ground_ref_item = {
-            'item_type': 'REF_RIZENI',
+            'item_type': 'REF_PARCELA_RIZENI',
             'cislo_rizeni': response.meta['cislo_rizeni'],
             'cislo_pracoviste': response.meta['cislo_pracoviste']
         }
@@ -281,12 +258,13 @@ class OperationsSpider(scrapy.Spider):
                 value = row.xpath('td[2]/a/text()').extract_first()
                 ground_ref_item[name] = value
 
-        _, ground_ref_item['cislo_ku'] = self.parse_string_w_num(
-            ground_ref_item['cislo_ku'])
+        if ground_ref_item.get('cislo_ku'):
+            _, ground_ref_item['cislo_ku'] = self.parse_string_w_num(
+                ground_ref_item['cislo_ku'])
 
         ground_ref_item['lv_item'] = {
-            'cislo_lv': ground_ref_item['cislo_lv'],
-            'cislo_ku': ground_ref_item['cislo_ku']
+            'cislo_lv': ground_ref_item.get('cislo_lv'),
+            'cislo_ku': ground_ref_item.get('cislo_ku')
         }
 
         pprint(ground_ref_item)
@@ -297,7 +275,7 @@ class OperationsSpider(scrapy.Spider):
         """Parse LV references from unit - for operation purposes."""
 
         unit_ref_item = {
-            'item_type': 'REF_RIZENI',
+            'item_type': 'REF_JEDNOTKA_RIZENI',
             'cislo_rizeni': response.meta['cislo_rizeni'],
             'cislo_pracoviste': response.meta['cislo_pracoviste']
         }
@@ -325,12 +303,13 @@ class OperationsSpider(scrapy.Spider):
 
             unit_ref_item[name] = value
 
-        _, unit_ref_item['cislo_ku'] = self.parse_string_w_num(
-            unit_ref_item['cislo_ku'])
+        if unit_ref_item.get('cislo_ku'):
+            _, unit_ref_item['cislo_ku'] = self.parse_string_w_num(
+                unit_ref_item['cislo_ku'])
 
         unit_ref_item['lv_item'] = {
-            'cislo_lv': unit_ref_item['cislo_lv'],
-            'cislo_ku': unit_ref_item['cislo_ku']
+            'cislo_lv': unit_ref_item.get('cislo_lv'),
+            'cislo_ku': unit_ref_item.get('cislo_ku')
         }
 
         pprint(unit_ref_item)
@@ -375,6 +354,7 @@ def is_operation_updated(operation_number, wp, state):
 
         cursor.execute(query, values)
         result = cursor.fetchone()
+        connection.commit()
     except Exception as e:
         print(e)
     finally:
