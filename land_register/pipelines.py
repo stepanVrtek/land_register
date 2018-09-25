@@ -472,7 +472,7 @@ def process_ref_jednotka_rizeni(item):
     number = item.get('cislo_jednotky')
     process_ref_rizeni(item, number, 'JEDNOTKA')
 
-def process_ref_rizeni(item, num, typ):
+def process_ref_rizeni(item, number, typ):
     id_lv = get_id_lv(item)
     id_rizeni = load_id_rizeni(item)
 
