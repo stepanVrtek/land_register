@@ -17,9 +17,10 @@ class LandRegisterPipeline(object):
 
 def get_connection():
     return mariadb.connect(
-        user='user',
-        password='password',
-        database='katastr')
+        host='katastr-db.csnbslf6zcko.eu-central-1.rds.amazonaws.com'
+        user='devmons',
+        password='NG1MMUGuZBgT7rxvnpYq',
+        database='katastr_db')
 
 
 def insert_or_update(query, values=None):

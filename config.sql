@@ -1,6 +1,6 @@
-CREATE DATABASE IF NOT EXISTS katastr;
+CREATE DATABASE IF NOT EXISTS katastr_db;
 
-USE katastr;
+USE katastr_db;
 
 -- SELECT CONCAT('DROP TABLE ', GROUP_CONCAT(table_name), ';') AS query
 --   FROM INFORMATION_SCHEMA.TABLES
