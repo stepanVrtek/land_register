@@ -336,7 +336,7 @@ def get_string_between_brackets(string):
 
 def get_connection():
     return mariadb.connect(
-        host='katastr-db.csnbslf6zcko.eu-central-1.rds.amazonaws.com'
+        host='katastr-db.csnbslf6zcko.eu-central-1.rds.amazonaws.com',
         user='devmons',
         password='NG1MMUGuZBgT7rxvnpYq',
         database='katastr_db')
@@ -364,7 +364,7 @@ def is_operation_updated(operation_number, wp, state):
 
     if not result:
         return False
-    
+
     if result[0] == 1:
         return True
     return False
