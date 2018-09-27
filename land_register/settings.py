@@ -76,7 +76,7 @@ ITEM_PIPELINES = {
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
-AUTOTHROTTLE_ENABLED = False
+AUTOTHROTTLE_ENABLED = True
 # The initial download delay
 AUTOTHROTTLE_START_DELAY = 1 #5
 # The maximum download delay to be set in case of high latencies
