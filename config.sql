@@ -1,4 +1,5 @@
-CREATE DATABASE IF NOT EXISTS katastr_db;
+CREATE DATABASE IF NOT EXISTS katastr_db
+  CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 USE katastr_db;
 
