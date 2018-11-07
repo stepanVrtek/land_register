@@ -25,12 +25,12 @@ CREATE OR REPLACE TABLE ku (
 
 
 CREATE OR REPLACE TABLE pozemek (
-  ext_id_parcely INT NOT NULL PRIMARY KEY,
+  ext_id_parcely BIGINT NOT NULL PRIMARY KEY,
   id_lv INT NOT NULL,
   parcelni_cislo VARCHAR(100), -- nemusi byt cislo
   obec VARCHAR(100),
   cislo_obce INT UNSIGNED,
-  vymera SMALLINT,
+  vymera MEDIUMINT UNSIGNED,
   typ_parcely VARCHAR(100),
   druh_pozemku VARCHAR(100),
   cislo_stavebniho_objektu INT,
@@ -41,16 +41,16 @@ CREATE OR REPLACE TABLE pozemek (
 
 CREATE OR REPLACE TABLE stavebni_objekt (
   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  ext_id_parcely INT UNSIGNED NOT NULL,
+  ext_id_parcely BIGINT UNSIGNED NOT NULL,
   cisla_popis_evid VARCHAR(50),
   typ VARCHAR(50),
   zpusob_vyuziti VARCHAR(100),
   datum_dokonceni VARCHAR(20),
   pocet_bytu SMALLINT UNSIGNED,
-  zastavena_plocha SMALLINT UNSIGNED,
-  podlahova_plocha SMALLINT UNSIGNED,
-  pocet_podlazi TINYINT,
-  ext_id_stavebniho_objektu INT
+  zastavena_plocha MEDIUMINT UNSIGNED,
+  podlahova_plocha MEDIUMINT UNSIGNED,
+  pocet_podlazi SMALLINT UNSIGNED,
+  ext_id_stavebniho_objektu BIGINT
 );
 
 CREATE OR REPLACE TABLE stavba (
@@ -62,7 +62,7 @@ CREATE OR REPLACE TABLE stavba (
   cislo_casti_obce INT UNSIGNED,
   typ_stavby VARCHAR(100),
   zpusob_vyuziti VARCHAR(100),
-  ext_id_stavebniho_objektu INT
+  ext_id_stavebniho_objektu BIGINT
 );
 
 CREATE OR REPLACE TABLE jednotka (
@@ -81,7 +81,7 @@ CREATE OR REPLACE TABLE jednotka (
 CREATE OR REPLACE TABLE vlastnici (
   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   id_lv INT NOT NULL,
-  id_ref INT UNSIGNED NOT NULL,
+  id_ref BIGINT UNSIGNED NOT NULL,
   typ_ref VARCHAR(20) NOT NULL,
   vlastnicke_pravo VARCHAR(400),
   jmeno VARCHAR(200),

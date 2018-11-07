@@ -17,9 +17,11 @@ class LandRegisterPipeline(object):
 
 def get_connection():
     return mariadb.connect(
-        host='katastr-db.csnbslf6zcko.eu-central-1.rds.amazonaws.com',
-        user='devmons',
-        password='NG1MMUGuZBgT7rxvnpYq',
+        # host='katastr-db.csnbslf6zcko.eu-central-1.rds.amazonaws.com',
+        # user='devmons',
+        # password='NG1MMUGuZBgT7rxvnpYq',
+        user='user',
+        password='password',
         database='katastr_db')
 
 
@@ -231,7 +233,7 @@ def process_stavebni_objekt(item):
 def process_stavba(item):
     id_lv = get_id_lv(item)
 
-    query = """INSERT INTO pozemek(id_lv, obec, cislo_obce,
+    query = """INSERT INTO stavba(id_lv, obec, cislo_obce,
                 cast_obce, cislo_casti_obce, typ_stavby,
                 zpusob_vyuziti, ext_id_stavebniho_objektu)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"""

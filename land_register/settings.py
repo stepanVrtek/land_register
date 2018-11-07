@@ -95,12 +95,12 @@ AUTOTHROTTLE_DEBUG = True
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-ROTATING_PROXY_LIST = [
-    '95.211.175.167:13151',
-    '95.211.175.225:13151'
-]
+# ROTATING_PROXY_LIST = [
+#     '95.211.175.167:13151',
+#     '95.211.175.225:13151'
+# ]
 
-# ROTATING_PROXY_LIST_PATH = 'land_register/proxies_list.txt'
+ROTATING_PROXY_LIST_PATH = 'land_register/proxies_list.txt'
 
 # # Export
 # FEED_FORMAT = 'csv'
