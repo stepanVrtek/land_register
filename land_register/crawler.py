@@ -13,7 +13,7 @@ class LandRegisterCrawler():
     @staticmethod
     def run():
         scrapyd = get_scrapyd()
-        for ku_code in ['608211', '602655', '602825', '602663', '602701']
+        for ku_code in ['608211', '602655', '602825', '602663', '602701']:
             scrapyd.schedule(
                 LandRegisterCrawler._project_name,
                 LandRegisterCrawler._spider_name,
