@@ -479,10 +479,11 @@ class TitleDeedSpider(scrapy.Spider):
 
             owner = {}
             owner_string = row.xpath('td[1]/text()').extract_first()
-            owner['vlastnicke_pravo'] = owner_string
-            owner['jmeno'], owner['adresa'] = self.parse_owner_string(owner_string)
-            owner['podil'] = row.xpath('td[2]/text()').extract_first()
-            owners.append(owner)
+            if owner_string:
+                owner['vlastnicke_pravo'] = owner_string
+                owner['jmeno'], owner['adresa'] = self.parse_owner_string(owner_string)
+                owner['podil'] = row.xpath('td[2]/text()').extract_first()
+                owners.append(owner)
 
         return owners
 
