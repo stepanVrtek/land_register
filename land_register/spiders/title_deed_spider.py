@@ -92,10 +92,20 @@ class TitleDeedSpider(scrapy.Spider):
         """Parse content of LV. If lv code doesn't exist,
         note it and continue."""
 
+        # prepare item for log
+        log_item = {
+            'cislo_ku': self.ku_code,
+            'cislo_lv': response.meta['cislo_lv'],
+            'item_type': 'LOG'
+        }
+
         # check if LV is valid or if has been reached maximum number
         # of not existed LVs
         self.total_count += 1
         if self.is_error_message(response):
+            log_item['existuje'] = False
+            yield log_item
+
             self.invalid_in_row += 1
 
             if self.invalid_in_row < MAX_LV_NOT_FOUND_IN_ROW:
@@ -116,6 +126,9 @@ class TitleDeedSpider(scrapy.Spider):
 
             return
         else:
+            log_item['existuje'] = True
+            yield log_item
+
             self.invalid_in_row = 0
 
 

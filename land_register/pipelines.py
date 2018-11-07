@@ -141,6 +141,9 @@ class SQLPipeline():
     def process_item(self, item, spider):
         type = item.get('item_type')
 
+        if type == 'LOG':
+            process_log(item)
+
         if type == 'LV':
             process_lv(item)
         elif type == 'POZEMEK':
@@ -160,6 +163,17 @@ class SQLPipeline():
             process_ref_parcela_rizeni(item)
         else:
             pass
+
+
+def process_log(item):
+    query = """INSERT INTO log(cislo_lv, cislo_ku, existuje)
+                 VALUES (%s, %s, %s)"""
+    values = (
+        item.get('cislo_lv'),
+        item.get('cislo_ku'),
+        item.get('existuje')
+    )
+    insert_or_update(query, values)
 
 def process_lv(item):
     update_lv(item)
