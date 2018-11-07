@@ -182,9 +182,6 @@ class TitleDeedSpider(scrapy.Spider):
                 callback = self.parse_unit
             )
 
-        #################################################
-        return
-
 
         # next LV
         cislo_lv = response.meta['cislo_lv'] + 1

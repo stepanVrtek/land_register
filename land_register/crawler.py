@@ -8,6 +8,17 @@ def get_scrapyd():
 
 class LandRegisterCrawler():
     _project_name = 'land_register'
+    _spider_name = 'TitleDeedSpider'
+
+    @staticmethod
+    def run():
+        scrapyd = get_scrapyd()
+        for ku_code in ['608211', '602655', '602825', '602663', '602701']
+            scrapyd.schedule(
+                LandRegisterCrawler._project_name,
+                LandRegisterCrawler._spider_name,
+                ku_code = ku_code
+            )
 
 
 class OperationCrawler(LandRegisterCrawler):
@@ -47,4 +58,5 @@ class OperationCrawler(LandRegisterCrawler):
             date -= timedelta(days = 1)
 
 if __name__ == '__main__':
-    OperationCrawler.run()
+    # OperationCrawler.run()
+    LandRegisterCrawler.run()
