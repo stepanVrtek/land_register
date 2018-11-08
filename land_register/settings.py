@@ -55,8 +55,8 @@ DOWNLOADER_MIDDLEWARES = {
     'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
     'rotating_proxies.middlewares.BanDetectionMiddleware': 620,
     'land_register.middlewares.LandRegisterDownloaderMiddleware': 543,
-    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
-    'scrapy_fake_useragent.middleware.RandomUserAgentMiddleware': 800
+    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None
+    # 'scrapy_fake_useragent.middleware.RandomUserAgentMiddleware': 800
 }
 
 # Enable or disable extensions
@@ -107,8 +107,18 @@ ROTATING_PROXY_LIST_PATH = 'land_register/proxies_list.txt'
 
 TELNETCONSOLE_PORT = None
 
-LOG_LEVEL = 'DEBUG'
+LOG_LEVEL = 'WARNING'
 
 RETRY_HTTP_CODES = [500, 502, 503, 504, 403, 404, 408]
 
 RETRY_TIMES = 20
+
+
+
+# Settings for land_register project
+
+# Maximum number of invalid items in a row, which we want to check
+MAX_INVALID_ITEMS_IN_ROW = 500
+
+# Number of KUs in batch (in single spider)
+MAX_PROCESSES_IN_BATCH = 30

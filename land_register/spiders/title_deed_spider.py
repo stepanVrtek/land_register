@@ -17,8 +17,9 @@ class TitleDeedSpider(scrapy.Spider):
     name = "TitleDeedSpider"
     start_urls = [START_URL]
 
-    def __init__(self, ku_code, **kwargs):
+    def __init__(self, ku_code, start_index=1, **kwargs):
         self.ku_code = ku_code
+        self.start_index = start_index
         self.invalid_in_row = 0
         self.total_count = 0
         super().__init__(**kwargs)
@@ -30,7 +31,7 @@ class TitleDeedSpider(scrapy.Spider):
     def parse(self, response):
         """Enter KU code (kod katastralneho uzemia) to form."""
 
-        cislo_lv = response.meta.get('cislo_lv', 1)
+        cislo_lv = response.meta.get('cislo_lv', self.start_index)
 
         yield scrapy.FormRequest.from_response(
             response,
@@ -587,10 +588,10 @@ class TitleDeedSpider(scrapy.Spider):
 
     def is_error_message(self, response):
         error_message = response.xpath(
-            '//div[@id="ctl00_hlaseniOnMasterPage"]').extract_first()  # ctl00_updatePanelHlaseniOnMasterPage
+            '//div[@id="ctl00_hlaseniOnMasterPage"]/span/text()').extract_first()  # ctl00_updatePanelHlaseniOnMasterPage
 
         # TODO distinguish between 'not found' and 'session expired' message
-        if error_message:
+        if error_message and error_message != 'Zadaný LV nebyl nalezen!':
             print(error_message)
         return error_message is not None
 

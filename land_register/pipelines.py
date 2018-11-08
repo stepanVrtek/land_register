@@ -166,7 +166,7 @@ class SQLPipeline():
 
 
 def process_log(item):
-    query = """INSERT INTO log(cislo_lv, cislo_ku, existuje)
+    query = """INSERT INTO log_lv(cislo_lv, cislo_ku, existuje)
                  VALUES (%s, %s, %s)"""
     values = (
         item.get('cislo_lv'),
@@ -521,3 +521,16 @@ def string_to_int(string):
     if isinstance(string, str):
         return int(string)
     return None
+
+def get_unique_elements(t1, t2, num_of_ignored_pairs=0):
+    if len(t1) != len(t2):
+        print('Rozdielne dlzky zaznamov')
+
+    length = len(t1)
+
+    for i in range(length):
+        if t1[i] == t2[i]:
+            t2[i] = None
+
+def is_change(t1, t2):
+    return any(t1[i] != t2[i] for i in range(len(t1)))
