@@ -28,6 +28,7 @@ db
 
 # IDE data
 .idea/
+.vscode/
 
 # Scrapy distributed
 dbs/
