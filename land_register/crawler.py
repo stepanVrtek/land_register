@@ -21,6 +21,10 @@ class LandRegisterCrawler():
     def run():
         scraping_batch = ScrapingBatch()
         scraping_batch.create()
+        if not scraping_batch.batch_content:
+            print('Vsetky procesy su vytazene. Dalsie KU nebudu pridane.')
+            return
+
         scraping_batch.save_batch_log()
 
         scrapyd = get_scrapyd()
