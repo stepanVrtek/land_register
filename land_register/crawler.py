@@ -24,6 +24,9 @@ class LandRegisterCrawler():
         if not scraping_batch.batch_content:
             print('Vsetky procesy su vytazene. Dalsie KU nebudu pridane.')
             return
+        else:
+            print('Bude pridanych {} novych KU pre spracovanie.'.format(
+                len(scraping_batch.batch_content)))
 
         scraping_batch.save_batch_log()
 
