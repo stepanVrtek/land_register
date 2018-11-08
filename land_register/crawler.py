@@ -88,6 +88,7 @@ class ScrapingBatch():
 
         settings = get_project_settings()
         ku_in_batch = settings['MAX_PROCESSES_IN_BATCH']
+        print('ku in batch: {}'.format(ku_in_batch))
         ku_in_batch -= len(pending)
         ku_in_batch -= len(running)
         return ku_in_batch
