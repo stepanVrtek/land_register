@@ -154,19 +154,19 @@ def get_uncompleted_ku(scraping_number=None):
         print('KU: {}, neuspesne pokusy hladania platnych LV: {}'.format(
             ku, invalid_lvs_in_row))
 
-    # get only non running and non pending jobs
-    scrapyd = get_scrapyd()
-    jobs = scrapyd.list_jobs(LandRegisterCrawler.project_name)
-
-    active_jobs = [j['id'] for j in jobs['pending']
-        if j['spider'] == LandRegisterCrawler.spider_name]
-    active_jobs += [j['id'] for j in jobs['running']
-        if j['spider'] == LandRegisterCrawler.spider_name]
-
-    # exclude active ku (if exist)
-    if active_jobs:
-        active_ku = load_ku_codes_by_job_ids(active_jobs)
-        uncompleted_ku = [u for u in uncompleted_ku if u not in active_ku]
+    # # get only non running and non pending jobs
+    # scrapyd = get_scrapyd()
+    # jobs = scrapyd.list_jobs(LandRegisterCrawler.project_name)
+    #
+    # active_jobs = [j['id'] for j in jobs['pending']
+    #     if j['spider'] == LandRegisterCrawler.spider_name]
+    # active_jobs += [j['id'] for j in jobs['running']
+    #     if j['spider'] == LandRegisterCrawler.spider_name]
+    #
+    # # exclude active ku (if exist)
+    # if active_jobs:
+    #     active_ku = load_ku_codes_by_job_ids(active_jobs)
+    #     uncompleted_ku = [u for u in uncompleted_ku if u not in active_ku]
 
     return uncompleted_ku
 
