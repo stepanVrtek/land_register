@@ -21,14 +21,14 @@ NEWSPIDER_MODULE = 'land_register.spiders'
 ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-CONCURRENT_REQUESTS = 30
+CONCURRENT_REQUESTS = 50
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://doc.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
 # DOWNLOAD_DELAY = 3
 # The download delay setting will honor only one of:
-CONCURRENT_REQUESTS_PER_DOMAIN = 30
+CONCURRENT_REQUESTS_PER_DOMAIN = 50
 #CONCURRENT_REQUESTS_PER_IP = 16
 
 # Disable cookies (enabled by default)
@@ -121,4 +121,4 @@ RETRY_TIMES = 20
 MAX_INVALID_ITEMS_IN_ROW = 500
 
 # Number of KUs in batch (in single spider)
-MAX_PROCESSES_IN_BATCH = 30
+MAX_PROCESSES_IN_BATCH = 50
