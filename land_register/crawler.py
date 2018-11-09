@@ -88,7 +88,6 @@ class ScrapingBatch():
 
         settings = get_project_settings()
         ku_in_batch = settings['MAX_PROCESSES_IN_BATCH']
-        print('ku in batch: {}'.format(ku_in_batch))
         ku_in_batch -= len(pending)
         ku_in_batch -= len(running)
         return ku_in_batch
@@ -137,8 +136,8 @@ def get_uncompleted_ku(scraping_number=None):
 
     uncompleted_ku = []
     for ku, _ in valid_lvs.items():
-        highest_valid_lv = valid_lvs[ku]
-        highest_invalid_lv = invalid_lvs[ku]
+        highest_valid_lv = valid_lvs.get(ku, 0)
+        highest_invalid_lv = invalid_lvs.get(ku, 0)
 
         invalid_lvs_in_row = highest_invalid_lv - highest_valid_lv
         if invalid_lvs_in_row < 0:
