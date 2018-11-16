@@ -52,11 +52,11 @@ CONCURRENT_REQUESTS_PER_DOMAIN = 50
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
-    'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
-    'rotating_proxies.middlewares.BanDetectionMiddleware': 620,
+    # 'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
+    # 'rotating_proxies.middlewares.BanDetectionMiddleware': 620,
     'land_register.middlewares.LandRegisterDownloaderMiddleware': 543,
-    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
-    'scrapy_fake_useragent.middleware.RandomUserAgentMiddleware': 800
+    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None
+    # 'scrapy_fake_useragent.middleware.RandomUserAgentMiddleware': 800
 }
 
 # Enable or disable extensions
@@ -69,9 +69,8 @@ DOWNLOADER_MIDDLEWARES = {
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
 ITEM_PIPELINES = {
-    'land_register.pipelines.SQLPipeline': 100,
-    # 'land_register.pipelines.LandRegisterPipeline': 300
-    # 'land_register.pipelines.JsonWriterPipeline': 800,
+    # 'land_register.pipelines.SQLPipeline': 100,
+    'land_register.pipelines2.CollectionPipeline': 100
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -117,8 +116,18 @@ RETRY_TIMES = 20
 
 # Settings for land_register project
 
+# DB connection
+DB_CONNECTION = 'mysql://user:password@localhost/katastr_db'
+# DB_CONNECTION = 'mysql://devmons:NG1MMUGuZBgT7rxvnpYq@katastr-db.csnbslf6zcko.eu-central-1.rds.amazonaws.com/katastr_db'
+
+# Scraping of LV
+# Number of KUs in batch
+MAX_KU_IN_BATCH = 50
 # Maximum number of invalid items in a row, which we want to check
 MAX_INVALID_ITEMS_IN_ROW = 500
 
-# Number of KUs in batch (in single spider)
-MAX_PROCESSES_IN_BATCH = 50
+# Scraping of 'rizeni'
+# Number of 'rizeni' in batch
+MAX_RIZENI_IN_BATCH = 30
+# Number of days in past to scrape 'rizeni'
+MAX_DAYS_IN_PAST_TO_SCRAPE_RIZENI = 7

@@ -1,9 +1,8 @@
 import scrapy
 from urllib.parse import urljoin
-from pprint import pprint
 from datetime import datetime
-
-import mysql.connector as mariadb
+from land_register import db_handler
+from pprint import pprint
 
 
 BASE_URL = 'https://nahlizenidokn.cuzk.cz/'
@@ -22,14 +21,26 @@ SEARCH_BTN_TXT = 'Vyhledat'
 
 
 class OperationsSpider(scrapy.Spider):
+    """Spider of all operations (rizeni) in workplace (katastralni pracoviste)
+    and with selected type and date."""
+
     name = "OperationsSpider"
     start_urls = [START_URL]
 
-    def __init__(self, workplace, type, date=None, **kwargs):
+
+    def __init__(self, workplace, type, job_id=None, date=None, **kwargs):
         self.workplace = int(workplace)
         self.type = type
+        self.job_id = job_id
         self.date = date if date else self.today()
+
+        # we consider spider as finished, doesn't matter about result
+        # there are lot of processes, that can add missing items in next runs
+        if self.job_id:
+            self.update_rizeni_log(status)
+
         super().__init__(**kwargs)
+
 
     def today(self):
         return datetime.now().strftime('%d.%m.%Y')
@@ -37,6 +48,13 @@ class OperationsSpider(scrapy.Spider):
 
     def response_is_ban(self, request, response):
         return response.status == 403 or response.status == 500
+
+
+    def update_rizeni_log(self, status):
+        db = db_handler.get_dataset()
+        db['log_rizeni'].update(
+            dict(id=self.job_id, stav=status), ['id'])
+
 
     def parse(self, response):
         """Select 'Seznam podle rizeni' radio button."""
@@ -48,6 +66,7 @@ class OperationsSpider(scrapy.Spider):
             },
             callback = self.open_operations_lists
         )
+
 
     def open_operations_lists(self, response):
         """Open lists of operations for input WP and type."""
@@ -65,6 +84,7 @@ class OperationsSpider(scrapy.Spider):
             },
             callback = self.process_operations_list
         )
+
 
     def process_operations_list(self, response):
         """Process all operations items."""
@@ -92,17 +112,18 @@ class OperationsSpider(scrapy.Spider):
                 callback = self.parse_operation
             )
 
-            # _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
-            # break
 
     def parse_operation(self, response):
         """Parse and save operation item."""
 
-        if self.is_error_message(response):
+        if is_error_message(response):
             return
 
         operation_item = {
             'item_type': 'RIZENI',
+            'data': {}
+        }
+        operation_data = {
             'cislo_pracoviste': response.meta['cislo_pracoviste']
         }
 
@@ -123,16 +144,16 @@ class OperationsSpider(scrapy.Spider):
             }.get(name)
 
             if name:
-                operation_item[name] = value
+                operation_data[name] = value
 
         ku_string = response.xpath(
             '//p[contains(text(), "Řízení se týká nemovitostí v k.ú.")]').extract_first()
         if ku_string:
             ku_code = get_string_between_brackets(ku_string)
-            operation_item['cislo_ku'] = ku_code
+            operation_data['cislo_ku'] = ku_code
 
-        # _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
-        # return
+        operation_item['data'] = operation_data
+
 
         # ------------------------------------------------------------------
         # ucastnici rizeni
@@ -227,7 +248,6 @@ class OperationsSpider(scrapy.Spider):
 
 
         # finally yield operation item and reference items
-        pprint(operation_item)
         yield operation_item
 
         for r in ref_requests:
@@ -235,7 +255,7 @@ class OperationsSpider(scrapy.Spider):
 
 
     def parse_ground_refs(self, response):
-        """Parse LV references from ground - for uperation purposes."""
+        """Parse LV references from ground - for operation purposes."""
 
         ground_ref_item = {
             'item_type': 'REF_PARCELA_RIZENI',
@@ -259,7 +279,7 @@ class OperationsSpider(scrapy.Spider):
                 ground_ref_item[name] = value
 
         if ground_ref_item.get('cislo_ku'):
-            _, ground_ref_item['cislo_ku'] = self.parse_string_w_num(
+            _, ground_ref_item['cislo_ku'] = parse_string_w_num(
                 ground_ref_item['cislo_ku'])
 
         ground_ref_item['lv_item'] = {
@@ -267,7 +287,6 @@ class OperationsSpider(scrapy.Spider):
             'cislo_ku': ground_ref_item.get('cislo_ku')
         }
 
-        pprint(ground_ref_item)
         yield ground_ref_item
 
 
@@ -304,7 +323,7 @@ class OperationsSpider(scrapy.Spider):
             unit_ref_item[name] = value
 
         if unit_ref_item.get('cislo_ku'):
-            _, unit_ref_item['cislo_ku'] = self.parse_string_w_num(
+            _, unit_ref_item['cislo_ku'] = parse_string_w_num(
                 unit_ref_item['cislo_ku'])
 
         unit_ref_item['lv_item'] = {
@@ -312,59 +331,38 @@ class OperationsSpider(scrapy.Spider):
             'cislo_ku': unit_ref_item.get('cislo_ku')
         }
 
-        pprint(unit_ref_item)
         yield unit_ref_item
 
 
-    def parse_string_w_num(self, input):
-        num = input[input.find('[') + 1:input.find(']')]
-        string = input.replace('[' + num + ']', '').strip()
-        return (string, num)
+
+def is_error_message(self, response):
+    """Checks if error message appeared on a page."""
+
+    error_message = response.xpath(
+        '//div[@id="ctl00_hlaseniOnMasterPage"]/span/text()').extract_first()
+
+    if error_message and error_message != 'Zadaný LV nebyl nalezen!':
+        print(error_message)
+    return error_message is not None
 
 
-    def is_error_message(self, response):
-        error_message = response.xpath(
-            '//div[@id="ctl00_hlaseniOnMasterPage"]').extract_first()  # ctl00_updatePanelHlaseniOnMasterPage
+def is_operation_updated(operation_number, wp, state):
+    """Checks if operation has been updated already."""
 
-        # TODO distinguish between 'not found' and 'session expired' message
-        # print(error_message)
-        return error_message is not None
+    db = db_handler.get_dataset()
+    result = db.find_one(
+        cislo_rizeni=operation_number,
+        cislo_pracoviste=wp,
+        stav_rizeni=state
+    )
+    return True if result else False
 
 
 def get_string_between_brackets(string):
     return string[string.find("(")+1:string.find(")")]
 
-def get_connection():
-    return mariadb.connect(
-        host='katastr-db.csnbslf6zcko.eu-central-1.rds.amazonaws.com',
-        user='devmons',
-        password='NG1MMUGuZBgT7rxvnpYq',
-        database='katastr_db')
 
-def is_operation_updated(operation_number, wp, state):
-    query = """SELECT EXISTS(
-                SELECT 1 FROM rizeni
-                WHERE cislo_rizeni = %s AND
-                      cislo_pracoviste = %s AND
-                      stav_rizeni = %s)"""
-    values = (operation_number, wp, state)
-    result = None
-    try:
-        connection = get_connection()
-        cursor = connection.cursor(buffered=True)
-
-        cursor.execute(query, values)
-        result = cursor.fetchone()
-        connection.commit()
-    except Exception as e:
-        print(e)
-    finally:
-        cursor.close()
-        connection.close()
-
-    if not result:
-        return False
-
-    if result[0] == 1:
-        return True
-    return False
+def parse_string_w_num(self, input):
+    num = input[input.find('[') + 1:input.find(']')]
+    string = input.replace('[' + num + ']', '').strip()
+    return (string, num)

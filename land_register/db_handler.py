@@ -1,4 +1,11 @@
 import mysql.connector as mariadb
+import dataset
+from scrapy.utils.project import get_project_settings
+
+
+def get_dataset():
+    settings = get_project_settings()
+    return dataset.connect(settings['DB_CONNECTION'])
 
 
 def get_connection():
@@ -41,12 +48,14 @@ def load(query, values=None, single_item=False, with_col_names=True):
         cursor.execute(query, values)
 
         result = cursor.fetchall()
+
         if with_col_names:
             columns = cursor.description
             result = [{columns[index][0]:column for index, column
                 in enumerate(value)} for value in result]
 
         connection.commit()
+
     except Exception as e:
         print(e)
     finally:
@@ -56,3 +65,19 @@ def load(query, values=None, single_item=False, with_col_names=True):
     if result:
         return result[0] if single_item else result
     return result
+
+
+def delete(query, values=None):
+    try:
+        connection = get_connection()
+        cursor = connection.cursor()
+        if values:
+            cursor.execute(query, values)
+        else:
+            cursor.execute(query)
+        connection.commit()
+    except Exception as e:
+         print(e)
+    finally:
+        cursor.close()
+        connection.close()

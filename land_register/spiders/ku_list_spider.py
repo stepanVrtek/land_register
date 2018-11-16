@@ -2,6 +2,7 @@ import scrapy
 from pprint import pprint
 from urllib.parse import urljoin
 
+
 BASE_URL = 'https://www.cuzk.cz/'
 START_URL = 'https://www.cuzk.cz/Katastr-nemovitosti/Digitalizace-a-vedeni-katastralnich-map/Digitalizace-katastralnich-map/Seznam-katastralnich-uzemi-bez-parcel-v-ZE.aspx'
 

@@ -6,13 +6,112 @@
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
 import mysql.connector as mariadb
+import land_register.db_handler as db_handler
+import dataset
 from datetime import datetime
+from pprint import pprint
+
+
+class CollectionPipeline():
+    def __init__(self):
+        self.collection = {}
+
+    def open_spider(self, spider):
+        self.collection = {}
+
+    def close_spider(self, spider):
+        save_all_items()
+
+    def process_item(self, item, spider):
+        cislo_lv = (item['cislo_lv'] if 'cislo_lv' in item
+                    else item.get('data', {}).get('cislo_lv'))
+
+        if cislo_lv not in self.collection:
+            self.init_item(cislo_lv)
+        self.add_item(cislo_lv, item)
+
+        self.save_gradually(cislo_lv)
+
+        return item
+
+    def init_item(self, cislo_lv):
+        self.collection[cislo_lv] = {
+            'lv': {},
+            'pozemky': [],
+            'stavebni_objekty': [],
+            'stavby': [],
+            'jednotky': []
+        }
+
+    def add_item(self, cislo_lv, item):
+        item_type = item.get('type')
+        item_data = item.get('data')
+
+        if item_type == 'LV':
+            self.collection[cislo_lv]['lv'] = item_data
+        elif item_type == 'POZEMEK':
+            self.collection[cislo_lv]['pozemky'].append(item_data)
+        elif item_type == 'STAVEBNI_OBJEKT':
+            self.collection[cislo_lv]['stavebni_objekty'].append(item_data)
+        elif item_type == 'STAVBA':
+            self.collection[cislo_lv]['stavby'].append(item_data)
+        elif item_type == 'JEDNOTKA':
+            self.collection[cislo_lv]['jednotky'].append(item_data)
+
+    def save_gradually(self, cislo_lv):
+        """Saves only some items, based on gradual processing.
+        Parts of items can be processed in different order (parallel
+        processing). It means that whole item may not be loaded immadiately.
+        So item will be processed after some items have been loaded already."""
+
+        from_lv = cislo_lv - 20
+        to_lv = cislo_lv
+        if from_lv < 0:
+            from_lv = 1
+
+        for i in range(from_lv, to_lv):
+            if lv_candidate in self.collection:
+                item = self.collection.pop(lv_candidate)
+                save_whole_item(item)
+
+    def save_all_items(self):
+        for _, item in self.collection:
+            save_whole_item(item)
+
+
+def save_whole_item(item):
+    """Saves all parts of item separately."""
+
+    lv = item['lv']
+    id_lv = save_single_item('lv', lv)
+
+    save_grounds(id_lv, item['pozemky']):
+
+    for so in item['stavebni_objekty']:
+        save_item('stavebni_objekt', so)
+
+    for s in item['stavby']:
+        save_item('stavba', s)
+
+    for j in item['jednotky']:
+        save_item('jednotka', j)
+
+
+
+
+
 
 
 class LandRegisterPipeline(object):
     def process_item(self, item, spider):
         return item
 
+
+
+def get_dataset():
+    # testing
+    return dataset.connect(
+        'mysql://user:password@localhost/katastr_db')
 
 
 def get_connection():
@@ -139,12 +238,17 @@ def load_id_rizeni(item):
 
 class SQLPipeline():
     def process_item(self, item, spider):
+        pprint(item)
+        return
+
         type = item.get('item_type')
 
-        if type == 'LOG':
-            process_log(item)
+        if type == 'LOG_LV':
+            process_log_lv(item)
+        elif type == 'LOG_ULOHY':
+            process_log_ulohy(item)
 
-        if type == 'LV':
+        elif type == 'LV':
             process_lv(item)
         elif type == 'POZEMEK':
             process_pozemek(item)
@@ -165,7 +269,7 @@ class SQLPipeline():
             pass
 
 
-def process_log(item):
+def process_log_lv(item):
     query = """INSERT INTO log_lv(cislo_lv, cislo_ku, existuje)
                  VALUES (%s, %s, %s)"""
     values = (
@@ -175,145 +279,109 @@ def process_log(item):
     )
     insert_or_update(query, values)
 
+
+def process_log_ulohy(item):
+    query = """UPDATE log_uloha SET dokonceno = %s
+                WHERE id_ulohy = %s"""
+    values = (
+        item.get('dokonceno'),
+        item.get('id_ulohy')
+    )
+    insert_or_update(query, values)
+
+
 def process_lv(item):
     update_lv(item)
     id_lv = load_id_lv(item)
 
     type = item.get('item_type')
     vlastnici = item.get('vlastnici')
-    process_vlastnici(vlastnici, id_lv, id_lv, type)
+    if vlastnici:
+        process_vlastnici(vlastnici, id_lv, id_lv, type)
+
 
 def process_pozemek(item):
     id_lv = get_id_lv(item)
+
+    # save item
+    new_data = item.get('pozemek')
+    new_data['id_lv'] = id_lv
+    save_item('pozemek', new_data)
+
+    # save owners
     ext_id_parcely = item.get('ext_id_parcely')
-
-    query = """INSERT INTO pozemek(ext_id_parcely, id_lv, parcelni_cislo,
-                obec, cislo_obce, vymera, typ_parcely, druh_pozemku,
-                cislo_stavebniho_objektu, zpusob_ochrany_nemovitosti,
-                omezeni_vlastnickeho_prava)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
-    values = (
-        ext_id_parcely,
-        id_lv,
-        item.get('parcelni_cislo'),
-        item.get('obec'),
-        item.get('cislo_obce'),
-        item.get('vymera'),
-        item.get('typ_parcely'),
-        item.get('druh_pozemku'),
-        item.get('cislo_stavebniho_objektu'),
-        item.get('zpusob_ochrany_nemovitosti'),
-        item.get('omezeni_vlastnickeho_prava')
-    )
-    insert_or_update(query, values)
-
     type = item.get('item_type')
+    vlastnici = item.get('vlastnici')
+    if vlastnici:
+        process_vlastnici(vlastnici, id_lv, ext_id_parcely, type)
 
-    if item.get('vlastnici'):
-        process_vlastnici(item.get('vlastnici'), id_lv, ext_id_parcely, type)
+    # # save operations
+    # rizeni = item.get('rizeni')
+    # if rizeni:
+    #     process_seznam_rizeni(rizeni, id_lv, ext_id_parcely, type)
 
-    # if item.get('rizeni'):
-    #     process_seznam_rizeni(item.get('rizeni'), id_lv, ext_id_parcely, type)
 
 def process_stavebni_objekt(item):
-    query = """INSERT INTO stavebni_objekt(ext_id_parcely,
-                cisla_popis_evid, typ, zpusob_vyuziti, datum_dokonceni,
-                pocet_bytu, zastavena_plocha, podlahova_plocha,
-                pocet_podlazi, ext_id_stavebniho_objektu)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+    id_lv = get_id_lv(item)
 
-    datum = item.get('datum_dokonceni')
-    datum_dokonceni = format_date(datum) if datum else datum
+    # prepare item and save
+    new_data = item.get('stavebni_objekt')
+    new_data['id_lv'] = id_lv
 
-    pocet_bytu = string_to_int(item.get('pocet_bytu'))
-    zastavena_plocha = string_to_int(item.get('zastavena_plocha'))
-    podlahova_plocha = string_to_int(item.get('podlahova_plocha'))
-    pocet_podlazi = string_to_int(item.get('pocet_podlazi'))
+    datum = new_data.get('datum_dokonceni')
+    new_data['datum_dokonceni'] = format_date(datum) if datum else datum
+    new_data['pocet_bytu'] = string_to_int(new_data.get('pocet_bytu'))
+    new_data['zastavena_plocha'] = string_to_int(new_data.get('zastavena_plocha'))
+    new_data['podlahova_plocha'] = string_to_int(new_data.get('podlahova_plocha'))
+    new_data['pocet_podlazi'] = string_to_int(new_data.get('pocet_podlazi'))
 
-    values = (
-        item.get('ext_id_parcely'),
-        item.get('cisla_popis_evid'),
-        item.get('typ'),
-        item.get('zpusob_vyuziti'),
-        datum_dokonceni,
-        pocet_bytu,
-        zastavena_plocha,
-        podlahova_plocha,
-        pocet_podlazi,
-        item.get('ext_id_stavebniho_objektu')
-    )
-    insert_or_update(query, values)
+    save_item('stavebni_objekt', new_data)
+
 
 def process_stavba(item):
     id_lv = get_id_lv(item)
 
-    query = """INSERT INTO stavba(id_lv, obec, cislo_obce,
-                cast_obce, cislo_casti_obce, typ_stavby,
-                zpusob_vyuziti, ext_id_stavebniho_objektu)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"""
-    values = (
-        id_lv,
-        item.get('obec'),
-        item.get('cislo_obce'),
-        item.get('cast_obce'),
-        item.get('cislo_casti_obce'),
-        item.get('typ_stavby'),
-        item.get('zpusob_vyuziti'),
-        item.get('ext_id_stavebniho_objektu')
-    )
-    id_stavby = insert_or_update(query, values)
+    # save item
+    new_data = item.get('stavba')
+    new_data['id_lv'] = id_lv
+    id_stavby = save_item('stavba', new_data)
 
+    # save owners
     type = item.get('item_type')
+    vlastnici = item.get('vlastnici')
+    if vlastnici:
+        process_vlastnici(vlastnici, id_lv, id_stavby, type)
 
-    if item.get('vlastnici'):
-        process_vlastnici(item.get('vlastnici'), id_lv, id_stavby, type)
-
-    # if item.get('rizeni'):
-    #     process_seznam_rizeni(item.get('rizeni'), id_lv, id_stavby, type)
+    # # save operation
+    # rizeni = item.get('rizeni')
+    # if rizeni:
+    #     process_seznam_rizeni(rizeni, id_lv, id_stavby, type)
 
 def process_jednotka(item):
     id_lv = get_id_lv(item)
 
-    query = """INSERT INTO jednotka(id_lv, cislo_jednotky, typ_jednotky,
-                zpusob_vyuziti, podil_na_spol_castech, zpusob_ochrany_nemovitosti,
-                omezeni_vlastnickeho_prava, jine_zapisy)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"""
-    values = (
-        id_lv,
-        item.get('cislo_jednotky'),
-        item.get('typ_jednotky'),
-        item.get('zpusob_vyuziti'),
-        item.get('podil_na_spol_castech'),
-        item.get('zpusob_ochrany_nemovitosti'),
-        item.get('omezeni_vlastnickeho_prava'),
-        item.get('jine_zapisy')
-    )
-    id_jednotky = insert_or_update(query, values)
+    # save item
+    new_data = item.get('jednotka')
+    new_data['id_lv'] = id_lv
+    id_jednotky = save_item('jednotka', new_data)
 
+    # save owners
     type = item.get('item_type')
+    vlastnici = item.get('vlastnici')
+    if vlastnici:
+        process_vlastnici(vlastnici, id_lv, id_jednotky, type)
 
-    if item.get('vlastnici'):
-        process_vlastnici(item.get('vlastnici'), id_lv, id_jednotky, type)
-
-    # if item.get('rizeni'):
-    #     process_seznam_rizeni(item.get('rizeni'), id_lv, id_jednotky, type)
+    # # save operation
+    # rizeni = item.get('rizeni')
+    # if rizeni:
+    #     process_seznam_rizeni(rizeni, id_lv, id_jednotky, type)
 
 
 def process_vlastnici(vlastnici, id_lv, id_ref, typ_ref):
-    if not vlastnici:
-        return
-
-    values_list = []
     for v in vlastnici:
-        values_list.append((
-            id_lv,
-            id_ref,
-            typ_ref,
-            v.get('vlastnicke_pravo'),
-            v.get('jmeno'),
-            v.get('adresa'),
-            v.get('podil')
-        ))
+        v['id_lv'] = id_lv
+        v['id_ref'] = id_ref
+        v['typ_ref'] = typ_ref
 
     values = ', '.join(map(str, values_list)).replace('None', "'NULL'")
     query = """INSERT INTO vlastnici(id_lv, id_ref, typ_ref,
@@ -321,30 +389,6 @@ def process_vlastnici(vlastnici, id_lv, id_ref, typ_ref):
                 VALUES {}""".format(values)
 
     insert_or_update(query)
-
-# def process_seznam_rizeni(rizeni, id_lv, id_ref, typ_ref):
-#     if not rizeni:
-#         return
-#
-#     values_list = []
-#     for r in rizeni:
-#         values_list.append((
-#             r.get('cislo_rizeni'),
-#             id_lv,
-#             id_ref,
-#             typ_ref
-#         ))
-#
-#     values = ', '.join(map(str, values_list)).replace('None', "'NULL'")
-#     query = """INSERT INTO rizeni(cislo_rizeni, id_lv, id_ref, typ_ref)
-#                 VALUES {}
-#                 ON DUPLICATE KEY UPDATE
-#                     id_lv = VALUES(id_lv),
-#                     id_ref = VALUES(id_ref),
-#                     typ_ref = VALUES(typ_ref)""".format(values)
-#
-#     insert_or_update(query)
-
 
 
 ############## ŘÍZENÍ ##############
@@ -509,6 +553,7 @@ def process_ref_rizeni(item, number, typ):
     insert_or_update(query, values)
 
 
+
 def format_date(date):
     date_obj = datetime.strptime(date, '%d.%m.%Y')
     return date_obj.strftime('%Y-%m-%d')
@@ -522,15 +567,94 @@ def string_to_int(string):
         return int(string)
     return None
 
-def get_unique_elements(t1, t2, num_of_ignored_pairs=0):
-    if len(t1) != len(t2):
-        print('Rozdielne dlzky zaznamov')
 
-    length = len(t1)
 
-    for i in range(length):
-        if t1[i] == t2[i]:
-            t2[i] = None
+def save_item(table_name, new_item):
+    """Save new item, but only if there are any changes
+    compared to current item."""
 
-def is_change(t1, t2):
-    return any(t1[i] != t2[i] for i in range(len(t1)))
+    search_key = get_item_search_key(table_name, new_item)
+    get_new_item_diff(table_name, new_item, search_key)
+
+    # save item only if there were any changes
+    if new_item:
+        db = get_dataset()
+        return db[table_name].insert(new_item)
+
+    return None
+
+
+def get_item_search_key(table_name, item):
+    """Returns search key of item, based on table name. It's not a primary
+    key of item, but it should be a unique set of fields."""
+
+    fields = None
+    if table_name == 'pozemek':
+        fields = ('ext_id_parcely', 'id_lv')
+
+    elif table_name == 'stavebni_objekt':
+        fields = ('id_lv', 'ext_id_parcely', 'cisla_popis_evid')
+
+    elif table_name == 'stavba':
+        fields = ('id_lv', 'stoji_na_pozemku', 'ext_id_stavebniho_objektu')
+
+    elif table_name == 'jednotka':
+        fields = ('id_lv', 'cislo_jednotky')
+
+    elif table_name == 'vlastnici':
+        fields = ('id_lv', 'id_ref', 'typ_ref', 'cislo_vlastnika')
+
+    if not fields:
+        return
+
+    search_key = {k: item.get(k) for k in fields}
+    return search_key
+
+
+def get_new_item_diff(table_name, new_item, search_key):
+    """Get new item, but only fields that have been changed compared
+    to the last item."""
+
+    db = get_dataset()
+    # first, get all items of this object
+    all_items = db[table_name].find(search_key, order_by=poradove_cislo)
+    # second, get current item (intersection of previous changes on item)
+    current_item = get_current_item(all_items)
+    # third, get only difference on new and current item
+    get_changed_fields(current_item, new_item)
+
+    # finally, if there is any change in item, return it, otherwise None
+    if is_changed(new_item):
+        return item
+    return None
+
+
+def get_current_item(all_items):
+    """Use all historical items and returns items with current valid data.
+    In newer versions are only fields that have been changed, so we have to
+    mix items (do intersection) from the oldest to newest."""
+
+    latest = {}
+    for item in all_items:
+        latest.update((k,v) for k,v in item.items() if v is not None)
+    return latest
+
+
+def get_changed_fields(old_item, new_item):
+    """Get only fields that have been changed, otherwise None."""
+
+    for key, value in old_item.items():
+        # new value may not exist, it can be key or seqnr
+        new_value = new_item.get(key)
+        if value == new_value:
+            new_item[key] = None
+
+
+def is_changed(item):
+    """Check for non None values in item, if exist return True,
+    otherwise False."""
+
+    for _, value in item.items():
+        if value:
+            return True
+    return False

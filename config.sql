@@ -10,22 +10,31 @@ USE katastr_db;
 
 -- CREATE TABLE IF NOT EXISTS
 
-CREATE OR REPLACE TABLE lv (
-  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  cislo_lv MEDIUMINT UNSIGNED NOT NULL,
-  cislo_ku MEDIUMINT UNSIGNED NOT NULL,
-  prava_stavby TEXT,
-  UNIQUE KEY unikatni_lv (cislo_lv, cislo_ku)
-);
 
 CREATE OR REPLACE TABLE ku (
   cislo_ku MEDIUMINT UNSIGNED NOT NULL PRIMARY KEY,
-  nazev_ku VARCHAR(100) NOT NULL
+  nazev_ku VARCHAR(100) NOT NULL,
+  cislo_obce VARCHAR(100),
+  plati_od DATE,
+  plati_do DATE
 );
 
 
+CREATE OR REPLACE TABLE lv (
+  id INT NOT NULL AUTO_INCREMENT,
+  cislo_zaznamu INT NOT NULL,
+  cislo_lv MEDIUMINT UNSIGNED NOT NULL,
+  cislo_ku MEDIUMINT UNSIGNED NOT NULL,
+  prava_stavby TEXT,
+  datum_zmeny DATETIME DEFAULT CURRENT_TIMESTAMP,
+  bylo_vymazano BOOLEAN,
+  UNIQUE KEY unikatni_lv (cislo_lv, cislo_ku),
+  CONSTRAINT PK_lv PRIMARY KEY (id,cislo_zaznamu)
+);
+
 CREATE OR REPLACE TABLE pozemek (
-  ext_id_parcely BIGINT NOT NULL PRIMARY KEY,
+  ext_id_parcely BIGINT NOT NULL,
+  cislo_zaznamu INT NOT NULL,
   id_lv INT NOT NULL,
   parcelni_cislo VARCHAR(100), -- nemusi byt cislo
   obec VARCHAR(100),
@@ -35,26 +44,35 @@ CREATE OR REPLACE TABLE pozemek (
   druh_pozemku VARCHAR(100),
   cislo_stavebniho_objektu INT,
   zpusob_ochrany_nemovitosti TEXT,
-  omezeni_vlastnickeho_prava TEXT
-  -- jine_zapisy TEXT
+  omezeni_vlastnickeho_prava TEXT,
+  jine_zapisy TEXT,
+  datum_zmeny DATETIME DEFAULT CURRENT_TIMESTAMP,
+  bylo_vymazano BOOLEAN,
+  CONSTRAINT PK_pozemek PRIMARY KEY (ext_id_parcely,cislo_zaznamu)
 );
 
 CREATE OR REPLACE TABLE stavebni_objekt (
-  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  id INT NOT NULL AUTO_INCREMENT,
+  cislo_zaznamu INT NOT NULL,
+  id_lv INT NOT NULL,
   ext_id_parcely BIGINT UNSIGNED NOT NULL,
   cisla_popis_evid VARCHAR(50),
   typ VARCHAR(50),
   zpusob_vyuziti VARCHAR(100),
-  datum_dokonceni VARCHAR(20),
+  datum_dokonceni DATE,
   pocet_bytu SMALLINT UNSIGNED,
   zastavena_plocha MEDIUMINT UNSIGNED,
   podlahova_plocha MEDIUMINT UNSIGNED,
   pocet_podlazi SMALLINT UNSIGNED,
-  ext_id_stavebniho_objektu BIGINT
+  ext_id_stavebniho_objektu BIGINT,
+  datum_zmeny DATETIME DEFAULT CURRENT_TIMESTAMP,
+  bylo_vymazano BOOLEAN,
+  CONSTRAINT PK_stavebni_objekt PRIMARY KEY (id,cislo_zaznamu)
 );
 
 CREATE OR REPLACE TABLE stavba (
-  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  id INT NOT NULL AUTO_INCREMENT,
+  cislo_zaznamu INT NOT NULL,
   id_lv INT NOT NULL,
   obec VARCHAR(100),
   cislo_obce INT UNSIGNED,
@@ -62,11 +80,16 @@ CREATE OR REPLACE TABLE stavba (
   cislo_casti_obce INT UNSIGNED,
   typ_stavby VARCHAR(100),
   zpusob_vyuziti VARCHAR(100),
-  ext_id_stavebniho_objektu BIGINT
+  stoji_na_pozemku VARCHAR(100),
+  ext_id_stavebniho_objektu BIGINT,
+  datum_zmeny DATETIME DEFAULT CURRENT_TIMESTAMP,
+  bylo_vymazano BOOLEAN,
+  CONSTRAINT PK_stavba PRIMARY KEY (id,cislo_zaznamu)
 );
 
 CREATE OR REPLACE TABLE jednotka (
-  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  id INT NOT NULL AUTO_INCREMENT,
+  cislo_zaznamu INT NOT NULL,
   id_lv INT NOT NULL,
   cislo_jednotky VARCHAR(30),
   typ_jednotky VARCHAR(100),
@@ -74,19 +97,26 @@ CREATE OR REPLACE TABLE jednotka (
   podil_na_spol_castech VARCHAR(20),
   zpusob_ochrany_nemovitosti TEXT,
   omezeni_vlastnickeho_prava TEXT,
-  jine_zapisy TEXT
+  jine_zapisy TEXT,
+  datum_zmeny DATETIME DEFAULT CURRENT_TIMESTAMP,
+  bylo_vymazano BOOLEAN,
+  CONSTRAINT PK_jednotka PRIMARY KEY (id,cislo_zaznamu)
 );
 
 
 CREATE OR REPLACE TABLE vlastnici (
-  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  id INT NOT NULL AUTO_INCREMENT,
+  cislo_zaznamu INT NOT NULL,
   id_lv INT NOT NULL,
   id_ref BIGINT UNSIGNED NOT NULL,
   typ_ref VARCHAR(20) NOT NULL,
   vlastnicke_pravo VARCHAR(400),
   jmeno VARCHAR(200),
   adresa VARCHAR(200),
-  podil VARCHAR(20)
+  podil VARCHAR(20),
+  datum_zmeny DATETIME DEFAULT CURRENT_TIMESTAMP,
+  bylo_vymazano BOOLEAN,
+  CONSTRAINT PK_vlastnici PRIMARY KEY (id,cislo_zaznamu)
 );
 
 
@@ -134,33 +164,37 @@ CREATE OR REPLACE TABLE seznam_nemovitosti (
   CONSTRAINT PK_seznam_nemovitosti PRIMARY KEY (id_rizeni,poradove_cislo)
 );
 
--- CREATE OR REPLACE TABLE zmeny_rizeni (
---     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
---     cislo_rizeni VARCHAR(15) NOT NULL,
---     datum_zmeny TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
---     stav_rizeni VARCHAR(50)
--- )
 
-
-CREATE OR REPLACE TABLE log_davky (
+CREATE OR REPLACE TABLE log_scraping (
   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  cislo_scrapingu INT, -- poradove cislo iteracie scrapingu
-  cislo_davky INT,
-  davka TEXT,
-  datum DATETIME DEFAULT CURRENT_TIMESTAMP
+  datum_zacatku DATETIME DEFAULT CURRENT_TIMESTAMP,
+  nazev VARCHAR(100)
 );
 
-CREATE OR REPLACE TABLE log_ulohy (
-  id_ulohy VARCHAR(32) NOT NULL PRIMARY KEY,
-  id_davky INT NOT NULL,
+CREATE OR REPLACE TABLE log_uloha (
+  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  id_scrapingu INT NOT NULL,
   cislo_ku MEDIUMINT UNSIGNED NOT NULL,
-  datum DATETIME DEFAULT CURRENT_TIMESTAMP
+  hash_ulohy CHAR(32),
+  stav CHAR(1), -- W (waiting to process), R (running), F (finished), E (error)
+  datum DATETIME DEFAULT CURRENT_TIMESTAMP,
+  datum_konce DATETIME
 );
 
 CREATE OR REPLACE TABLE log_lv (
   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  id_ulohy INT,
   cislo_lv MEDIUMINT UNSIGNED NOT NULL,
   cislo_ku MEDIUMINT UNSIGNED NOT NULL,
   datum DATETIME DEFAULT CURRENT_TIMESTAMP,
   existuje BOOLEAN
+);
+
+CREATE OR REPLACE TABLE log_rizeni (
+  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  pracoviste INT,
+  typ CHAR(1),
+  datum DATE,
+  stav CHAR(1), -- R (running), F (finished)
+  datum_zalozeni DATETIME DEFAULT CURRENT_TIMESTAMP
 );
