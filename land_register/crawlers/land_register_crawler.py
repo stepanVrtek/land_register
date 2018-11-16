@@ -4,7 +4,7 @@ from scrapy.utils.project import get_project_settings
 
 
 class LandRegisterCrawler():
-    """Class for scraping all data in land register."""
+    """Class for scheduling of scraping all data in land register."""
 
     project_name = 'land_register'
     spider_name = 'LVSpider'

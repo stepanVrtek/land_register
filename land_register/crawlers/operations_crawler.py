@@ -7,6 +7,7 @@ from scrapy.utils.project import get_project_settings
 
 
 class OperationsCrawler():
+    """Class for scheduling of scraping operations (rizeni)."""
 
     project_name = 'land_register'
     spider_name = 'OperationsSpider'

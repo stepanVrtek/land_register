@@ -52,11 +52,11 @@ CONCURRENT_REQUESTS_PER_DOMAIN = 50
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
-    # 'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
-    # 'rotating_proxies.middlewares.BanDetectionMiddleware': 620,
+    'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
+    'rotating_proxies.middlewares.BanDetectionMiddleware': 620,
     'land_register.middlewares.LandRegisterDownloaderMiddleware': 543,
     'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None
-    # 'scrapy_fake_useragent.middleware.RandomUserAgentMiddleware': 800
+    'scrapy_fake_useragent.middleware.RandomUserAgentMiddleware': 800
 }
 
 # Enable or disable extensions
@@ -68,10 +68,11 @@ DOWNLOADER_MIDDLEWARES = {
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
-ITEM_PIPELINES = {
-    # 'land_register.pipelines.SQLPipeline': 100,
-    'land_register.pipelines2.CollectionPipeline': 100
-}
+# Pipelins are defined in spiders as custom settings
+# ITEM_PIPELINES = {
+#     'land_register.pipelines.land_register_pipeline.LandRegisterPipeline': 100,
+#     'land_register.pipelines.land_register_pipeline.OperationsPipeline': 200
+# }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
