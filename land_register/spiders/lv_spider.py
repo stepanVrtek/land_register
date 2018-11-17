@@ -1,5 +1,6 @@
 import scrapy
 from urllib.parse import urljoin
+from datetime import datetime
 from scrapy.utils.project import get_project_settings
 from land_register import db_handler
 from pprint import pprint
@@ -19,7 +20,11 @@ class LVSpider(scrapy.Spider):
 
     name = "LVSpider"
     start_urls = [START_URL]
-
+    custom_settings = {
+        'ITEM_PIPELINES': {
+            'land_register.pipelines.land_register_pipeline.LandRegisterPipeline': 100
+        }
+    }
 
     def __init__(self, ku_code, job_id=None, starting_lv=1, **kwargs):
         self.ku_code = ku_code
@@ -120,13 +125,16 @@ class LVSpider(scrapy.Spider):
         """Save overall status for KU job."""
 
         db = db_handler.get_dataset()
-        db['log_uloha'].update(
-            dict(id=self.job_id, stav=status), ['id'])
+        db['log_uloha'].update(dict(
+            id=self.job_id,
+            stav=status,
+            datum_konce=datetime.now()
+        ), ['id'])
 
-    def set_lv_erasure(lv_code):
+    def set_lv_erasure(self, lv_code):
         """Check if not existing LV existed before. If yes, mark erasure."""
 
-        db = get_dataset()
+        db = db_handler.get_dataset()
         query = dict(cislo_ku=self.ku_code, cislo_lv=lv_code)
 
         result = db['lv'].find(**query, order_by='datum_zmeny', _limit=1)
@@ -647,22 +655,7 @@ class LVSpider(scrapy.Spider):
 
 
 
-def parse_string_w_num(self, input):
-    """Parses string in format '$some_string$ [$some_number$]' into
-    separated string and number."""
-
-    num = input[input.find('[') + 1:input.find(']')]
-    string = input.replace('[' + num + ']', '').strip()
-    return (string, num)
-
-
-def get_id_from_link(self, link):
-    """Simply returns last substring after '/' from link."""
-
-    return link.rsplit('/', 1)[-1]
-
-
-def is_error_message(self, response):
+def is_error_message(response):
     """Checks if error message appeared on a page."""
 
     error_message = response.xpath(
@@ -671,3 +664,18 @@ def is_error_message(self, response):
     if error_message and error_message != 'Zadaný LV nebyl nalezen!':
         print(error_message)
     return error_message is not None
+
+
+def parse_string_w_num(input):
+    """Parses string in format '$some_string$ [$some_number$]' into
+    separated string and number."""
+
+    num = input[input.find('[') + 1:input.find(']')]
+    string = input.replace('[' + num + ']', '').strip()
+    return (string, num)
+
+
+def get_id_from_link(link):
+    """Simply returns last substring after '/' from link."""
+
+    return link.rsplit('/', 1)[-1]

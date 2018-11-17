@@ -55,7 +55,7 @@ DOWNLOADER_MIDDLEWARES = {
     'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
     'rotating_proxies.middlewares.BanDetectionMiddleware': 620,
     'land_register.middlewares.LandRegisterDownloaderMiddleware': 543,
-    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None
+    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
     'scrapy_fake_useragent.middleware.RandomUserAgentMiddleware': 800
 }
 
@@ -71,7 +71,7 @@ DOWNLOADER_MIDDLEWARES = {
 # Pipelins are defined in spiders as custom settings
 # ITEM_PIPELINES = {
 #     'land_register.pipelines.land_register_pipeline.LandRegisterPipeline': 100,
-#     'land_register.pipelines.land_register_pipeline.OperationsPipeline': 200
+#     'land_register.pipelines.operations_pipeline.OperationsPipeline': 200
 # }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

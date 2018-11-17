@@ -3,7 +3,6 @@ from urllib.parse import urljoin
 from pprint import pprint
 from datetime import datetime
 
-import mysql.connector as mariadb
 
 START_URL = 'https://nahlizenidokn.cuzk.cz/VyberRizeni.aspx'
 

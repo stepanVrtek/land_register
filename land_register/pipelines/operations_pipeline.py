@@ -82,12 +82,12 @@ def process_seznam_nemovitosti(seznam_nemovitosti, id_rizeni):
 
 def process_ref_parcela_rizeni(item):
     number = item.get('parcelni_cislo')
-    process_ref_rizeni(item, number, 'PARCELA')
+    process_ref_rizeni(item, number, 'parcela')
 
 
 def process_ref_jednotka_rizeni(item):
     number = item.get('cislo_jednotky')
-    process_ref_rizeni(item, number, 'JEDNOTKA')
+    process_ref_rizeni(item, number, 'jednotka')
 
 
 def process_ref_rizeni(item, number, type):
@@ -99,12 +99,13 @@ def process_ref_rizeni(item, number, type):
         return
 
     db = db_handler.get_dataset()
-    db['seznam_nemovitosti'].update({
-        'id_lv': id_lv,
-        'id_rizeni': id_rizeni,
-        'typ': type,
-        'cislo': number
-    }, ['id_rizeni', 'typ', 'cislo'])
+    db['seznam_nemovitosti'].update(dict(
+        id_lv=id_lv,
+        id_rizeni=id_rizeni,
+        typ=type,
+        cislo=number),
+        ['id_rizeni', 'typ', 'cislo']
+    )
 
 
 def get_id_lv(item):

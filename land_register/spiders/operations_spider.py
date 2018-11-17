@@ -26,7 +26,11 @@ class OperationsSpider(scrapy.Spider):
 
     name = "OperationsSpider"
     start_urls = [START_URL]
-
+    custom_settings = {
+        'ITEM_PIPELINES': {
+            'land_register.pipelines.operations_pipeline.OperationsPipeline': 200
+        }
+    }
 
     def __init__(self, workplace, type, job_id=None, date=None, **kwargs):
         self.workplace = int(workplace)
@@ -37,7 +41,7 @@ class OperationsSpider(scrapy.Spider):
         # we consider spider as finished, doesn't matter about result
         # there are lot of processes, that can add missing items in next runs
         if self.job_id:
-            self.update_rizeni_log(status)
+            self.update_rizeni_log(status='F')
 
         super().__init__(**kwargs)
 
@@ -52,8 +56,11 @@ class OperationsSpider(scrapy.Spider):
 
     def update_rizeni_log(self, status):
         db = db_handler.get_dataset()
-        db['log_rizeni'].update(
-            dict(id=self.job_id, stav=status), ['id'])
+        db['log_rizeni'].update(dict(
+            id=self.job_id,
+            stav=status,
+            datum_konce=datetime.now()
+        ), ['id'])
 
 
     def parse(self, response):
@@ -147,7 +154,8 @@ class OperationsSpider(scrapy.Spider):
                 operation_data[name] = value
 
         ku_string = response.xpath(
-            '//p[contains(text(), "Řízení se týká nemovitostí v k.ú.")]').extract_first()
+            '//p[contains(text(), "Řízení se týká nemovitostí v k.ú.")]'
+            ).extract_first()
         if ku_string:
             ku_code = get_string_between_brackets(ku_string)
             operation_data['cislo_ku'] = ku_code
@@ -335,7 +343,7 @@ class OperationsSpider(scrapy.Spider):
 
 
 
-def is_error_message(self, response):
+def is_error_message(response):
     """Checks if error message appeared on a page."""
 
     error_message = response.xpath(
@@ -350,7 +358,7 @@ def is_operation_updated(operation_number, wp, state):
     """Checks if operation has been updated already."""
 
     db = db_handler.get_dataset()
-    result = db.find_one(
+    result = db['rizeni'].find_one(
         cislo_rizeni=operation_number,
         cislo_pracoviste=wp,
         stav_rizeni=state
@@ -362,7 +370,7 @@ def get_string_between_brackets(string):
     return string[string.find("(")+1:string.find(")")]
 
 
-def parse_string_w_num(self, input):
+def parse_string_w_num(input):
     num = input[input.find('[') + 1:input.find(']')]
     string = input.replace('[' + num + ']', '').strip()
     return (string, num)

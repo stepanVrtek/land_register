@@ -128,7 +128,7 @@ CREATE OR REPLACE TABLE rizeni (
   -- id_lv INT, referencia na LV je priamo v sezname nemovitosti
   datum_prijeti DATETIME,
   stav_rizeni VARCHAR(50),
-  datum_upravy TIMESTAMP,
+  datum_upravy DATETIME DEFAULT CURRENT_TIMESTAMP,
   UNIQUE KEY unikatni_rizeni (cislo_pracoviste, cislo_rizeni)
 );
 
@@ -167,8 +167,9 @@ CREATE OR REPLACE TABLE seznam_nemovitosti (
 
 CREATE OR REPLACE TABLE log_scraping (
   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  datum_zacatku DATETIME DEFAULT CURRENT_TIMESTAMP,
-  nazev VARCHAR(100)
+  nazev VARCHAR(100),
+  datum_zacatku DATETIME,
+  datum_konce DATETIME
 );
 
 CREATE OR REPLACE TABLE log_uloha (
@@ -177,7 +178,7 @@ CREATE OR REPLACE TABLE log_uloha (
   cislo_ku MEDIUMINT UNSIGNED NOT NULL,
   hash_ulohy CHAR(32),
   stav CHAR(1), -- W (waiting to process), R (running), F (finished), E (error)
-  datum DATETIME DEFAULT CURRENT_TIMESTAMP,
+  datum_zacatku DATETIME,
   datum_konce DATETIME
 );
 
@@ -196,5 +197,6 @@ CREATE OR REPLACE TABLE log_rizeni (
   typ CHAR(1),
   datum DATE,
   stav CHAR(1), -- R (running), F (finished)
-  datum_zalozeni DATETIME DEFAULT CURRENT_TIMESTAMP
+  datum_zacatku DATETIME,
+  datum_konce DATETIME
 );

@@ -1,4 +1,5 @@
 from datetime import timedelta
+from datetime import datetime
 from datetime import date as datetime_date
 
 import utils
@@ -89,9 +90,7 @@ def get_last_process():
         SELECT MAX(id) as id, pracoviste, typ, datum FROM log_rizeni"""
     )
     for r in result:
-        if r.pop('id'):
-            return r
-    return None
+        return r if r.pop('id') else None
 
 
 def create_all_process_possibilities():
@@ -121,9 +120,9 @@ def create_all_process_possibilities():
 
 def save_operation_log(process_item, status):
 
-    process_item['stav'] = status
     db = db_handler.get_dataset()
-    job_id = db['log_rizeni'].insert(process_item)
+    fields = dict(stav=status, datum_zacatku=datetime.now())
+    job_id = db['log_rizeni'].insert(fields)
     return job_id
 
 
