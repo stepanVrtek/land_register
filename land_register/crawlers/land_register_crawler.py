@@ -1,6 +1,7 @@
-import utils
 from datetime import datetime
 from datetime import date
+
+from land_register.crawlers import utils
 from land_register import db_handler
 from scrapy.utils.project import get_project_settings
 

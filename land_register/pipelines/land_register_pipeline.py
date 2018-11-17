@@ -6,7 +6,7 @@
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
 from land_register import db_handler
-import common
+from land_register.pipelines import common
 from pprint import pprint
 
 

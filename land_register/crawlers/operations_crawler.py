@@ -2,7 +2,7 @@ from datetime import timedelta
 from datetime import datetime
 from datetime import date as datetime_date
 
-import utils
+from land_register.crawlers import utils
 from land_register import db_handler
 from scrapy.utils.project import get_project_settings
 
