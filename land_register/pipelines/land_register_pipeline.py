@@ -44,7 +44,8 @@ class LandRegisterPipeline():
         item_type = item.get('item_type')
         item_data = item.get('data')
 
-        self.format_item(item_data)
+        if item_data:
+            self.format_item(item_data)
 
         if item_type == 'LV':
             self.collection[cislo_lv]['lv'] = item_data
