@@ -67,10 +67,12 @@ class LandRegisterPipeline():
                 'pocet_bytu', 'zastavena_plocha', 'podlahova_plocha',
                 'pocet_podlazi', 'ext_id_stavebniho_objektu'
             ]:
-                item[key] = common.string_to_int(value)
+                if value:
+                    item[key] = common.string_to_int(value)
 
             elif key in ['datum_dokonceni']:
-                item[key] = common.get_date_from_string(value)
+                if value:
+                    item[key] = common.get_date_from_string(value)
 
     def save_gradually(self, cislo_lv):
         """Saves only some items, based on gradual processing.
