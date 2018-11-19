@@ -26,7 +26,7 @@ def process_rizeni(item):
     data = item.get('data')
 
     datum = data.get('datum_prijeti')
-    item['datum_prijeti'] = common.get_datetime_from_string(
+    data['datum_prijeti'] = common.get_datetime_from_string(
                                 datum) if datum else datum
 
     db = db_handler.get_dataset()

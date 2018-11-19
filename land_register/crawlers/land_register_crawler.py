@@ -10,7 +10,7 @@ class LandRegisterCrawler():
     """Class for scheduling of scraping all data in land register."""
 
     project_name = 'land_register'
-    spider_name = 'LVSpider'
+    spider_name = 'LandRegisterSpider'
 
     @staticmethod
     def run():

@@ -15,10 +15,10 @@ LV_SEARCH_BUTTON = 'ctl00$bodyPlaceHolder$btnVyhledat'
 SEARCH_TXT = 'Vyhledat'
 
 
-class LVSpider(scrapy.Spider):
-    """Scraping of land register.  KU (katastralni uzemi)."""
+class LandRegisterSpider(scrapy.Spider):
+    """Scraping of land register."""
 
-    name = "LVSpider"
+    name = "LandRegisterSpider"
     start_urls = [START_URL]
     custom_settings = {
         'ITEM_PIPELINES': {
@@ -366,8 +366,10 @@ class LVSpider(scrapy.Spider):
                     # 'lv_item': lv_item,
                     'cislo_lv': response.meta['cislo_lv'],
                     'item_type': 'STAVEBNI_OBJEKT',
-                    'ext_id_parcely': ground_data.get('ext_id_parcely'),
-                    'cisla_popis_evid': 'BEZ_CISEL'
+                    'data': {
+                        'ext_id_parcely': ground_data.get('ext_id_parcely'),
+                        'cisla_popis_evid': 'BEZ_CISEL'
+                    }
                 }
 
                 yield building_object_item
@@ -384,7 +386,6 @@ class LVSpider(scrapy.Spider):
                 yield scrapy.Request(
                     url,
                     meta = {
-                        # 'lv_item': lv_item,
                         'cislo_lv': response.meta['cislo_lv'],
                         'ground_item': ground_data
                     },
