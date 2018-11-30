@@ -118,8 +118,7 @@ RETRY_TIMES = 20
 # Settings for land_register project
 
 # DB connection
-DB_CONNECTION = 'mysql://user:password@localhost/katastr_db'
-# DB_CONNECTION = 'mysql://devmons:NG1MMUGuZBgT7rxvnpYq@katastr-db.csnbslf6zcko.eu-central-1.rds.amazonaws.com/katastr_db'
+DB_CONNECTION = 'mysql://scraper:8ZQ8Mpfu@localhost/katastr_db'
 
 # Scraping of LV
 # Number of KUs in batch
