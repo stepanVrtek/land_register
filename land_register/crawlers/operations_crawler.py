@@ -122,6 +122,7 @@ def save_operation_log(process_item, status):
 
     db = db_handler.get_dataset()
     fields = dict(stav=status, datum_zacatku=datetime.now())
+    fields.update(process_item)
     job_id = db['log_rizeni'].insert(fields)
     return job_id
 
