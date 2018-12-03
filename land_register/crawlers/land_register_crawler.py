@@ -134,7 +134,7 @@ def init_new_scraping():
     for ku in ku_list:
         ku_jobs.append({
             'id_scrapingu': scraping_id,
-            'cislo_ku': ku['cislo_ku'],
+            'cislo_ku': ku,
             'stav': 'W'
         })
 
