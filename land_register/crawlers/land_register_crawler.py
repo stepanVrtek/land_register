@@ -94,7 +94,7 @@ class ScrapingBatch():
 
         # add error and new jobs to batch
         for ku_job in error_ku_jobs:
-            last_processed_lv = get_last_processed_lv(ku_job['id_ulohy'])
+            last_processed_lv = get_last_processed_lv(ku_job['id'])
 
             # last processed lv may not be downloaded completely, we have to
             # delete all the data which are connected with this lv
