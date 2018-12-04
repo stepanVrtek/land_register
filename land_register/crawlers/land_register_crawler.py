@@ -219,7 +219,7 @@ def delete_whole_lv_item(lv, ku):
     db = db_handler.get_dataset()
     result = db['lv'].find_one(cislo_lv=lv, cislo_ku=ku)
 
-    id_lv = lv['id'] if lv else None
+    id_lv = result['id'] if result else None
 
     if not id_lv:
         return
