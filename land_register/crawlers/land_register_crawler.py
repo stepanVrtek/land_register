@@ -40,6 +40,8 @@ class ScrapingBatch():
         self.batch_content = []
         self.batch_id = None
 
+        self._create_new_scraping = False
+
     def create(self):
         """ Create scraping batch - multiple scraping processes."""
 
@@ -52,7 +54,7 @@ class ScrapingBatch():
         # if batch content wasn't created, it means that all scraping data
         # have been scraped and we have to create next scraping and start from
         # the beginning
-        if not self.batch_content:
+        if self._create_new_scraping:
             close_scraping(self.scraping_id)
             self.scraping_id = init_new_scraping()
             self.prepare_batch_content()
@@ -75,7 +77,6 @@ class ScrapingBatch():
         error_ku_jobs = get_ku_jobs(self.scraping_id, 'E')
         # slice list of error jobs only for allowed number of ku
         error_ku_jobs = error_ku_jobs[:ku_to_add]
-        # decrease number of allowed ku
         ku_to_add -= len(error_ku_jobs)
 
         # get list of new ku which are waiting to process
@@ -84,7 +85,12 @@ class ScrapingBatch():
         if ku_to_add:
             waiting_ku_codes = get_ku_jobs(
                 self.scraping_id, 'W', limit=ku_to_add)
-            ku_to_add = 0
+            ku_to_add -= len(waiting_ku_codes)
+
+        # if there are no ku jobs to add, create new scraping
+        if not error_ku_jobs and not waiting_ku_codes:
+            self._create_new_scraping = True
+            return
 
         # add error and new jobs to batch
         for ku_job in error_ku_jobs:
