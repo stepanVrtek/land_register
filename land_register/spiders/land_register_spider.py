@@ -100,7 +100,7 @@ class LandRegisterSpider(scrapy.Spider):
 
 
     def closed(self, reason):
-        """Called when spider is closed due to any error."""
+        """Called when spider is closed due to any error or success."""
 
         # F (Finished) if success, E (Error) if error
         status = 'F' if self.success else 'E'
@@ -139,7 +139,10 @@ class LandRegisterSpider(scrapy.Spider):
 
         result = db['lv'].find(**query, order_by='datum_zmeny', _limit=1)
         for r in result:
-            db['lv'].insert(dict(id=r['id'], bylo_vymazano=True))
+            r['cislo_zaznamu'] += 1
+            r['bylo_vymazano'] = True
+            r['prava_stavby'] = None
+            db['lv'].insert(r)
             break
 
 
