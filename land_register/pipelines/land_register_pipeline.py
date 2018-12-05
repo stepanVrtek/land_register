@@ -80,7 +80,7 @@ class LandRegisterPipeline():
         processing). It means that whole item may not be loaded immadiately.
         So item will be processed after some items have been loaded already."""
 
-        to_lv = cislo_lv - 20
+        to_lv = cislo_lv - 50
         from_lv = to_lv - 10
         if from_lv < 0:
             from_lv = 1
