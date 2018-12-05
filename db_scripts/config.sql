@@ -21,7 +21,6 @@ CREATE OR REPLACE TABLE lv (
   prava_stavby TEXT,
   datum_zmeny DATETIME DEFAULT CURRENT_TIMESTAMP,
   bylo_vymazano BOOLEAN,
-  UNIQUE KEY unikatni_lv (cislo_lv, cislo_ku),
   CONSTRAINT PK_lv PRIMARY KEY (id,cislo_zaznamu)
 );
 
