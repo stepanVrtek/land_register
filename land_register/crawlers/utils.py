@@ -5,27 +5,29 @@ def get_scrapyd():
     return ScrapydAPI('http://localhost:6800')
 
 
-def cancel_all_jobs():
+def cancel_all_jobs(jobs_statuses=['running', 'pending', 'finished']):
     scrapyd = get_scrapyd()
     projects = scrapyd.list_projects()
 
     for project in projects['projects']:
-        cancel_jobs(project)
+        cancel_jobs(project, jobs_statuses)
 
 
-def cancel_jobs(project, spider=None):
+def cancel_jobs(project, spider=None, jobs_statuses=['running', 'pending']):
     scrapyd = get_scrapyd()
     jobs = scrapyd.list_jobs(project)
 
-    active_jobs = jobs['running'] + jobs['pending']
+    jobs_to_cancel = []
+    for s in jobs_statuses:
+        jobs_to_cancel += jobs[s]
 
     if spider:
-        active_jobs = [j['id'] for j in active_jobs
+        jobs_to_cancel = [j['id'] for j in jobs_to_cancel
             if j['spider'] == spider]
     else:
-        active_jobs = [j['id'] for j in active_jobs]
+        jobs_to_cancel = [j['id'] for j in jobs_to_cancel]
 
-    for job_id in active_jobs:
+    for job_id in jobs_to_cancel:
         cancel_job(project, job_id)
 
 
