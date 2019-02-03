@@ -6,6 +6,9 @@
 # https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
 from scrapy import signals
+from scrapy.utils.project import get_project_settings
+
+import random
 
 
 class LandRegisterSpiderMiddleware(object):
@@ -101,3 +104,11 @@ class LandRegisterDownloaderMiddleware(object):
 
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
+
+
+class RandomProxyMiddleware(object):
+
+    def process_request(self, request, spider):
+        settings = get_project_settings()
+        proxies = settings['ROTATING_PROXY_LIST']
+        request.meta['proxy'] = 'https://' + random.choice(proxies)

@@ -52,11 +52,14 @@ CONCURRENT_REQUESTS_PER_DOMAIN = 50
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
-    'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
-    'rotating_proxies.middlewares.BanDetectionMiddleware': 620,
+    # 'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
+    # 'rotating_proxies.middlewares.BanDetectionMiddleware': 620,
+    'land_register.middlewares.RandomProxyMiddleware': 350,
+    'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 400,
+
     'land_register.middlewares.LandRegisterDownloaderMiddleware': 543,
-    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
-    'scrapy_fake_useragent.middleware.RandomUserAgentMiddleware': 800
+    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None
+    # 'scrapy_fake_useragent.middleware.RandomUserAgentMiddleware': 800
 }
 
 # Enable or disable extensions
@@ -111,7 +114,7 @@ LOG_LEVEL = 'INFO'
 
 RETRY_HTTP_CODES = [500, 502, 503, 504, 403, 404, 408]
 
-RETRY_TIMES = 20
+RETRY_TIMES = 30
 
 
 
