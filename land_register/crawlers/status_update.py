@@ -9,7 +9,7 @@ from datetime import datetime
 def update_finished_statuses():
     running_py_jobs = get_ku_jobs(get_scraping_id(), 'R')
 
-    scrapy_jobs = utils.get_scrapyd().list_jobs('LandRegisterSpider')
+    scrapy_jobs = utils.get_scrapyd().list_jobs('land_register')
     running_scrapy_jobs = [j['id'] for j in scrapy_jobs['running']]
 
     for p in running_py_jobs:
