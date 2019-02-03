@@ -15,6 +15,7 @@ def update_finished_statuses():
     for p in running_py_jobs:
         if p['hash_ulohy'] in running_py_jobs:
             continue
+        update_job_status(p['id'], 'F')
 
 
 def update_job_status(job_id, status):
