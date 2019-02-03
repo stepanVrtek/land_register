@@ -4,5 +4,8 @@
 # scraping rizeni
 */7 * * * * cd /opt/land_register; source venv/bin/activate; python land_register/crawlers/operations_crawler.py
 
+# script for update status of finished jobs
+*/4 * * * * cd /opt/land_register; source venv/bin/activate; python land_register/crawlers/status_update.py
+
 # run scrapyd after reboot
 @reboot cd /opt/land_register; source venv/bin/activate; nohup scrapyd >& /dev/null &
