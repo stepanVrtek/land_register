@@ -9,7 +9,7 @@ def cancel_all_jobs(jobs_statuses=['running', 'pending', 'finished']):
     scrapyd = get_scrapyd()
     projects = scrapyd.list_projects()
 
-    for project in projects['projects']:
+    for project in projects:
         cancel_jobs(project, jobs_statuses)
 
 
