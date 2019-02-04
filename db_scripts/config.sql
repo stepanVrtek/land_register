@@ -40,7 +40,8 @@ CREATE OR REPLACE TABLE pozemek (
   jine_zapisy TEXT,
   datum_zmeny DATETIME DEFAULT CURRENT_TIMESTAMP,
   bylo_vymazano BOOLEAN,
-  CONSTRAINT PK_pozemek PRIMARY KEY (ext_id_parcely,cislo_zaznamu)
+  CONSTRAINT PK_pozemek PRIMARY KEY (ext_id_parcely,cislo_zaznamu),
+  CONSTRAINT FK_id_lv FOREIGN KEY (id_lv) REFERENCES lv(id)
 );
 
 CREATE OR REPLACE TABLE stavebni_objekt (
@@ -59,7 +60,8 @@ CREATE OR REPLACE TABLE stavebni_objekt (
   ext_id_stavebniho_objektu BIGINT,
   datum_zmeny DATETIME DEFAULT CURRENT_TIMESTAMP,
   bylo_vymazano BOOLEAN,
-  CONSTRAINT PK_stavebni_objekt PRIMARY KEY (id,cislo_zaznamu)
+  CONSTRAINT PK_stavebni_objekt PRIMARY KEY (id,cislo_zaznamu),
+  CONSTRAINT FK_id_lv_stavebni_objekt FOREIGN KEY (id_lv) REFERENCES lv(id)
 );
 
 CREATE OR REPLACE TABLE stavba (
@@ -76,7 +78,8 @@ CREATE OR REPLACE TABLE stavba (
   ext_id_stavebniho_objektu BIGINT,
   datum_zmeny DATETIME DEFAULT CURRENT_TIMESTAMP,
   bylo_vymazano BOOLEAN,
-  CONSTRAINT PK_stavba PRIMARY KEY (id,cislo_zaznamu)
+  CONSTRAINT PK_stavba PRIMARY KEY (id,cislo_zaznamu),
+  CONSTRAINT FK_id_lv_stavba FOREIGN KEY (id_lv) REFERENCES lv(id)
 );
 
 CREATE OR REPLACE TABLE jednotka (
@@ -92,7 +95,8 @@ CREATE OR REPLACE TABLE jednotka (
   jine_zapisy TEXT,
   datum_zmeny DATETIME DEFAULT CURRENT_TIMESTAMP,
   bylo_vymazano BOOLEAN,
-  CONSTRAINT PK_jednotka PRIMARY KEY (id,cislo_zaznamu)
+  CONSTRAINT PK_jednotka PRIMARY KEY (id,cislo_zaznamu),
+  CONSTRAINT FK_id_lv_jednotka FOREIGN KEY (id_lv) REFERENCES lv(id)
 );
 
 
@@ -108,7 +112,8 @@ CREATE OR REPLACE TABLE vlastnici (
   podil VARCHAR(20),
   datum_zmeny DATETIME DEFAULT CURRENT_TIMESTAMP,
   bylo_vymazano BOOLEAN,
-  CONSTRAINT PK_vlastnici PRIMARY KEY (id,cislo_zaznamu)
+  CONSTRAINT PK_vlastnici PRIMARY KEY (id,cislo_zaznamu),
+  CONSTRAINT FK_id_lv_vlastnici FOREIGN KEY (id_lv) REFERENCES lv(id)
 );
 
 
