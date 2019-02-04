@@ -116,6 +116,8 @@ RETRY_HTTP_CODES = [500, 502, 503, 504, 403, 404, 408]
 
 RETRY_TIMES = 30
 
+DOWNLOAD_TIMEOUT = 360
+
 
 
 # Settings for land_register project
