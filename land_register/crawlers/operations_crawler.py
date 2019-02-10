@@ -87,10 +87,10 @@ def get_last_process():
 
     db = db_handler.get_dataset()
     result = db.query("""
-        SELECT MAX(id) as id, pracoviste, typ, datum FROM log_rizeni"""
+        SELECT pracoviste, typ, datum FROM log_rizeni ORDER BY id DESC limit 1"""
     )
     for r in result:
-        return r if r.pop('id') else None
+        return r if r else None
 
 
 def create_all_process_possibilities():
