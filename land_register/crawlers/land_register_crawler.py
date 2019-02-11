@@ -236,7 +236,7 @@ def update_job_log(job_id, job_hash, status):
     """Updates job's hash and status."""
 
     db = db_handler.get_dataset()
-    fields = dict(id=job_id, hash_ulohy=job_hash, stav=status)
+    fields = dict(id=job_id, hash_ulohy=job_hash, stav=status, datum_konce=None)
 
     # if status is R (running), set date of create
     if status == 'R':
