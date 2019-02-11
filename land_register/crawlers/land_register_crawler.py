@@ -224,13 +224,13 @@ def delete_whole_lv_item(lv, ku):
     if not id_lv:
         return
 
-    # delete main table
-    db['lv'].delete(id=id_lv)
-
     # delete object tables
     for t in ['pozemek', 'stavebni_objekt', 'stavba', 'jednotka', 'vlastnici']:
         db[t].delete(id_lv = id_lv)
 
+    # delete main table
+    db['lv'].delete(id=id_lv)
+    
 
 def update_job_log(job_id, job_hash, status):
     """Updates job's hash and status."""
