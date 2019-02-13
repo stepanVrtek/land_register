@@ -13,7 +13,7 @@ def update_finished_statuses():
     running_scrapy_jobs = [j['id'] for j in scrapy_jobs['running']]
 
     for p in running_py_jobs:
-        if p['hash_ulohy'] in running_py_jobs:
+        if p['hash_ulohy'] in running_scrapy_jobs:
             continue
         update_job_status(p['id'], 'F')
 
