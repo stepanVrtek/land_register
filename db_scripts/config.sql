@@ -134,7 +134,8 @@ CREATE OR REPLACE TABLE ucastnici_rizeni (
   poradove_cislo SMALLINT UNSIGNED NOT NULL,
   jmeno VARCHAR(200),
   typ VARCHAR(50),
-  CONSTRAINT PK_ucastnici_rizeni PRIMARY KEY (id_rizeni,poradove_cislo)
+  CONSTRAINT PK_ucastnici_rizeni PRIMARY KEY (id_rizeni,poradove_cislo),
+  CONSTRAINT FK_id_rizeni_ucastnici FOREIGN KEY (rizeni) REFERENCES rizeni(id)
 );
 
 CREATE OR REPLACE TABLE provedene_operace (
@@ -142,14 +143,16 @@ CREATE OR REPLACE TABLE provedene_operace (
   poradove_cislo SMALLINT UNSIGNED NOT NULL,
   operace VARCHAR(50),
   datum DATE,
-  CONSTRAINT PK_provedene_operace PRIMARY KEY (id_rizeni,poradove_cislo)
+  CONSTRAINT PK_provedene_operace PRIMARY KEY (id_rizeni,poradove_cislo),
+  CONSTRAINT FK_id_rizeni_operace FOREIGN KEY (rizeni) REFERENCES rizeni(id)
 );
 
 CREATE OR REPLACE TABLE predmety_rizeni (
   id_rizeni INT NOT NULL,
   poradove_cislo SMALLINT UNSIGNED NOT NULL,
   typ VARCHAR(50),
-  CONSTRAINT PK_predmet_rizeni PRIMARY KEY (id_rizeni,poradove_cislo)
+  CONSTRAINT PK_predmet_rizeni PRIMARY KEY (id_rizeni,poradove_cislo),
+  CONSTRAINT FK_id_rizeni_predmety FOREIGN KEY (rizeni) REFERENCES rizeni(id)
 );
 
 CREATE OR REPLACE TABLE seznam_nemovitosti (
@@ -158,7 +161,8 @@ CREATE OR REPLACE TABLE seznam_nemovitosti (
   id_lv INT,
   typ VARCHAR(20),
   cislo VARCHAR(20),
-  CONSTRAINT PK_seznam_nemovitosti PRIMARY KEY (id_rizeni,poradove_cislo)
+  CONSTRAINT PK_seznam_nemovitosti PRIMARY KEY (id_rizeni,poradove_cislo),
+  CONSTRAINT FK_id_rizeni_nemovitosti FOREIGN KEY (rizeni) REFERENCES rizeni(id)
 );
 
 
