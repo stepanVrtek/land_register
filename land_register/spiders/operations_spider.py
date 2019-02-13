@@ -359,8 +359,8 @@ def is_operation_updated(operation_number, wp, state):
 
     db = db_handler.get_dataset()
     result = db['rizeni'].find_one(
-        cislo_rizeni=operation_number,
         cislo_pracoviste=wp,
+        cislo_rizeni=operation_number,
         stav_rizeni=state
     )
     return True if result else False
