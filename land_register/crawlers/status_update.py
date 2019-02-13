@@ -10,12 +10,13 @@ def update_finished_statuses():
     running_py_jobs = get_ku_jobs(get_scraping_id(), 'R')
 
     scrapy_jobs = utils.get_scrapyd().list_jobs('land_register')
-    running_scrapy_jobs = [j['id'] for j in scrapy_jobs['running']]
+    running_scrapy_jobs = [j['id'] for j in scrapy_jobs['running']
+        if j['spider'] == 'LandRegisterSpider']
 
-    for p in running_py_jobs:
-        if p['hash_ulohy'] in running_scrapy_jobs:
+    for py_job in running_py_jobs:
+        if py_job['hash_ulohy'] in running_scrapy_jobs:
             continue
-        update_job_status(p['id'], 'F')
+        update_job_status(py_job['id'], 'E')
 
 
 def update_job_status(job_id, status):
