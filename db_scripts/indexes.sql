@@ -10,7 +10,7 @@ CREATE INDEX idx_id_ulohy
   ON log_lv (id_ulohy DESC, cislo_lv DESC);
 
 CREATE INDEX idx_id_scraping_stav
-  ON log_uloha (id_scrapingu, status);
+  ON log_uloha (id_scrapingu, stav);
 
 CREATE INDEX idx_stav_rizeni
   ON log_rizeni (stav);
