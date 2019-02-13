@@ -34,3 +34,14 @@ def cancel_jobs(project, spider=None, jobs_statuses=['running', 'pending']):
 def cancel_job(project, job_id):
     scrapyd = get_scrapyd()
     scrapyd.cancel(project, job_id)
+
+
+def sum_active_jobs(project, spider):
+    scrapyd = get_scrapyd()
+    jobs = scrapyd.list_jobs(project)
+
+    active_jobs = []
+    for s in ['running', 'pending']:
+        active_jobs += [j for j in jobs[s] if j['spider'] == spider]
+
+    return len(active_jobs)
