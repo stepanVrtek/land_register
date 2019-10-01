@@ -5,6 +5,7 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
+from collections import OrderedDict
 from land_register import db_handler
 from land_register.pipelines import common
 from pprint import pprint
@@ -12,10 +13,10 @@ from pprint import pprint
 
 class LandRegisterPipeline():
     def __init__(self):
-        self.collection = {}
+        self.collection = OrderedDict()
 
     def open_spider(self, spider):
-        self.collection = {}
+        self.collection = OrderedDict()
 
     def close_spider(self, spider):
         self.save_all_items()
@@ -25,9 +26,9 @@ class LandRegisterPipeline():
 
         if cislo_lv not in self.collection:
             self.init_item(cislo_lv)
-        self.add_item(cislo_lv, item)
 
-        self.save_gradually(cislo_lv)
+        self.add_item(cislo_lv, item)
+        self.save_complete_items_in_order()
 
         return item
 
@@ -43,6 +44,8 @@ class LandRegisterPipeline():
     def add_item(self, cislo_lv, item):
         item_type = item.get('item_type')
         item_data = item.get('data')
+
+        # print('cislo_lv: {}, item: {}'.format(cislo_lv, item_type))
 
         self.format_item(item_data)
 
@@ -90,6 +93,16 @@ class LandRegisterPipeline():
                 item = self.collection.pop(lv_candidate)
                 save_whole_item(item)
 
+    def save_complete_items_in_order(self):
+        """Saves only fully fetched items (some other item is processing right now)."""
+
+        if len(self.collection) <= 1:
+            return
+
+        while len(self.collection) > 1:
+            item = self.collection.popitem(last=False)
+            save_whole_item(item)
+
     def save_all_items(self):
         """Saves all scraped items."""
 
@@ -102,10 +115,14 @@ def save_whole_item(item):
     """Saves all parts of item separately."""
 
     id_lv = process_lv(item['lv'])
-    process_items_list(id_lv, 'pozemek', item['pozemky'])
-    process_items_list(id_lv, 'stavebni_objekt', item['stavebni_objekty'])
-    process_items_list(id_lv, 'stavba', item['stavby'])
-    process_items_list(id_lv, 'jednotka', item['jednotky'])
+    if item['pozemky']:
+        process_items_list(id_lv, 'pozemek', item['pozemky'])
+    if item['stavebni_objekty']:
+        process_items_list(id_lv, 'stavebni_objekt', item['stavebni_objekty'])
+    if item['stavby']:
+        process_items_list(id_lv, 'stavba', item['stavby'])
+    if item['jednotky']:
+        process_items_list(id_lv, 'jednotka', item['jednotky'])
 
 
 def process_lv(new_item):
@@ -219,11 +236,11 @@ def filter_items_changes(id_lv, table_name, new_items, additional_keys={}):
 
         # if item has been deleted, create new item with delete flag
         if is_deleted:
-            new_items.append = {
+            new_items.append({
                 primary_key: current_item[primary_key],
                 'cislo_zaznamu': current_item['cislo_zaznamu'] + 1,
                 'bylo_vymazano': True
-            }
+            })
 
 
 def save_items(table_name, items, id_lv=None):
@@ -260,8 +277,8 @@ def get_current_items(id_lv, table_name, additional_fields={}):
     for item in all_items:
         item_key = item[primary_key]
         if item_key in current_items:
-            current_items[item_key].update((k,v)
-                for k,v in item.items() if v is not None)
+            current_items[item_key].update((k, v)
+                for k, v in item.items() if v is not None)
         else:
             current_items[item_key] = item
 

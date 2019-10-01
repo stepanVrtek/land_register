@@ -5,7 +5,6 @@ from scrapy.utils.project import get_project_settings
 from land_register import db_handler
 from pprint import pprint
 
-
 BASE_URL = 'https://nahlizenidokn.cuzk.cz/'
 START_URL = 'https://nahlizenidokn.cuzk.cz/VyberLV.aspx'
 KU_INPUT_ELEMENT = 'ctl00$bodyPlaceHolder$vyberObecKU$vyberKU$txtKU'
@@ -42,12 +41,43 @@ class LandRegisterSpider(scrapy.Spider):
 
         super().__init__(**kwargs)
 
+    def start_requests(self):
+        yield scrapy.Request(
+            url=START_URL,
+            callback=self.parse
+            # errback=self.errback
+        )
+
+    def errback(self, failure):
+        from scrapy.spidermiddlewares.httperror import HttpError
+        from twisted.internet.error import DNSLookupError
+        from twisted.internet.error import TimeoutError, TCPTimedOutError
+
+        # log all failures
+        self.logger.error(repr(failure))
+
+        # in case you want to do something special for some errors,
+        # you may need the failure's type:
+
+        if failure.check(HttpError):
+            # these exceptions come from HttpError spider middleware
+            # you can get the non-200 response
+            response = failure.value.response
+            self.logger.error('HttpError on %s', response.url)
+
+        elif failure.check(DNSLookupError):
+            # this is the original request
+            request = failure.request
+            self.logger.error('DNSLookupError on %s', request.url)
+
+        elif failure.check(TimeoutError, TCPTimedOutError):
+            request = failure.request
+            self.logger.error('TimeoutError on %s', request.url)
 
     def response_is_ban(self, request, response):
         """Defines, which status codes mean ban."""
 
         return response.status == 403 or response.status == 500
-
 
     def load_lv_list(self):
         """Load list of existing LVs -> have been scraped before."""
@@ -64,8 +94,7 @@ class LandRegisterSpider(scrapy.Spider):
         )
 
         self.lv_list = sorted(lv['cislo_lv'] for lv in lv_list
-            if lv['existuje'] == True)
-
+                              if lv['existuje'] is True)
 
     def get_start_lv_code(self):
         """Get first LV number to scrape. From LV list or from starting_lv."""
@@ -98,14 +127,12 @@ class LandRegisterSpider(scrapy.Spider):
 
         return False
 
-
     def closed(self, reason):
         """Called when spider is closed due to any error or success."""
 
         # F (Finished) if success, E (Error) if error
         status = 'F' if self.success else 'E'
         self.save_job_log(status)
-
 
     def save_lv_log(self, lv_code, exists):
         """Save LV log, for current job id."""
@@ -145,28 +172,26 @@ class LandRegisterSpider(scrapy.Spider):
             db['lv'].insert(r)
             break
 
-
     def parse(self, response):
         """Enter KU code (kod katastralneho uzemia) to form."""
 
         yield scrapy.FormRequest.from_response(
             response,
-            meta = {
+            meta={
                 'cislo_lv': self.get_start_lv_code()
             },
-            formdata = {
+            formdata={
                 KU_INPUT_ELEMENT: self.ku_code,
                 KU_SEARCH_BUTTON: SEARCH_TXT
             },
-            callback = self.enter_lv_code
+            callback=self.enter_lv_code
         )
-
 
     def enter_lv_code(self, response):
         """Enter LV code (kod listu vlastnictva) to form."""
 
         if is_error_message(response):
-            #if ku code doesn't exist
+            # if ku code doesn't exist
             return
 
         self.ku_response = response
@@ -174,17 +199,16 @@ class LandRegisterSpider(scrapy.Spider):
 
         yield scrapy.FormRequest.from_response(
             self.ku_response,
-            meta = {
+            meta={
                 'cislo_lv': lv_code
             },
-            formdata = {
+            formdata={
                 LV_INPUT_ELEMENT: str(lv_code),
                 LV_SEARCH_BUTTON: SEARCH_TXT
             },
-            callback = self.parse_lv_content,
-            dont_filter = True
+            callback=self.parse_lv_content,
+            dont_filter=True
         )
-
 
     def parse_lv_content(self, response):
         """Parse content of LV. If lv code doesn't exist,
@@ -207,15 +231,15 @@ class LandRegisterSpider(scrapy.Spider):
                 lv_code += 1
                 yield scrapy.FormRequest.from_response(
                     self.ku_response,
-                    meta = {
+                    meta={
                         'cislo_lv': lv_code
                     },
-                    formdata = {
+                    formdata={
                         LV_INPUT_ELEMENT: str(lv_code),
                         LV_SEARCH_BUTTON: SEARCH_TXT
                     },
-                    callback = self.parse_lv_content,
-                    dont_filter = True
+                    callback=self.parse_lv_content,
+                    dont_filter=True
                 )
 
             else:
@@ -226,7 +250,6 @@ class LandRegisterSpider(scrapy.Spider):
         else:
             self.save_lv_log(lv_code, exists=True)
             self.invalid_in_row = 0
-
 
         # LV
         lv_item = {
@@ -242,7 +265,6 @@ class LandRegisterSpider(scrapy.Spider):
 
         yield lv_item
 
-
         # pozemky
         grounds_table = response.xpath('//table[@summary="Pozemky"]/tbody/tr')
         for row in grounds_table:
@@ -251,12 +273,11 @@ class LandRegisterSpider(scrapy.Spider):
 
             yield scrapy.Request(
                 url,
-                meta = {
+                meta={
                     'cislo_lv': lv_code
                 },
-                callback = self.parse_ground
+                callback=self.parse_ground
             )
-
 
         # stavby
         buildings_table = response.xpath('//table[@summary="Stavby"]/tbody/tr')
@@ -266,12 +287,11 @@ class LandRegisterSpider(scrapy.Spider):
 
             yield scrapy.Request(
                 url,
-                meta = {
+                meta={
                     'cislo_lv': lv_code
                 },
-                callback = self.parse_building
+                callback=self.parse_building
             )
-
 
         # jednotky
         units_table = response.xpath('//table[@summary="Jednotky"]/tbody/tr')
@@ -281,28 +301,26 @@ class LandRegisterSpider(scrapy.Spider):
 
             yield scrapy.Request(
                 url,
-                meta = {
+                meta={
                     'cislo_lv': lv_code
                 },
-                callback = self.parse_unit
+                callback=self.parse_unit
             )
-
 
         # next LV
         next_lv_code = self.get_next_lv_code(int(lv_code))
         yield scrapy.FormRequest.from_response(
             self.ku_response,
-            meta = {
+            meta={
                 'cislo_lv': next_lv_code
             },
-            formdata = {
+            formdata={
                 LV_INPUT_ELEMENT: str(next_lv_code),
                 LV_SEARCH_BUTTON: SEARCH_TXT
             },
-            callback = self.parse_lv_content,
-            dont_filter = True
+            callback=self.parse_lv_content,
+            dont_filter=True
         )
-
 
     def parse_ground(self, response):
         """Ground (pozemek) parsing. In this method is also called
@@ -357,7 +375,6 @@ class LandRegisterSpider(scrapy.Spider):
         # parse operations only from separated spider
         # ground_data['rizeni'] = self.parse_operations(response)
 
-
         # stavebni objekt
         building_object_table = response.xpath(
             '//table[@summary="Atributy stavby"]/tr')
@@ -388,17 +405,16 @@ class LandRegisterSpider(scrapy.Spider):
 
                 yield scrapy.Request(
                     url,
-                    meta = {
+                    meta={
                         'cislo_lv': response.meta['cislo_lv'],
                         'ground_item': ground_data
                     },
-                    callback = self.parse_building_object
+                    callback=self.parse_building_object
                 )
                 break
 
         ground_item['data'] = ground_data
         yield ground_item
-
 
     def parse_building_object(self, response):
         """Building object (staveni objekt) parsing."""
@@ -451,7 +467,6 @@ class LandRegisterSpider(scrapy.Spider):
 
         building_object_item['data'] = building_object_data
         yield building_object_item
-
 
     def parse_building(self, response):
         """Building (stavba) parsing."""
@@ -518,7 +533,6 @@ class LandRegisterSpider(scrapy.Spider):
         building_item['data'] = building_data
         yield building_item
 
-
     def parse_unit(self, response):
         """Unit (jednotka) parsing."""
 
@@ -563,12 +577,10 @@ class LandRegisterSpider(scrapy.Spider):
         unit_item['data'] = unit_data
         yield unit_item
 
-
     def parse_operations(self, response):
         """Operations (řízení) parsing.
         NOT USED, OPERATIONS ARE SCRAPED ONLY FROM SEPARATED SPIDER."""
         pass
-
 
     def parse_owners(self, response):
         """Owners (vlastnici) parsing."""
@@ -592,7 +604,6 @@ class LandRegisterSpider(scrapy.Spider):
 
         return owners
 
-
     def parse_owner_string(self, owner_string):
         """Parse single owner (vlastnik) from string."""
 
@@ -600,7 +611,6 @@ class LandRegisterSpider(scrapy.Spider):
         name = owner_string[:comma_idx].strip()
         address = owner_string[comma_idx + 1:].strip()
         return (name, address)
-
 
     def parse_zom(self, response):
         """Parsing table of 'Způsob ochrany nemovitosti'."""
@@ -615,7 +625,6 @@ class LandRegisterSpider(scrapy.Spider):
 
         return zom if zom else None
 
-
     def parse_ovp(self, response):
         """Parsing table of 'Omezení vlastnického práva'."""
 
@@ -628,7 +637,6 @@ class LandRegisterSpider(scrapy.Spider):
             ovp += row.xpath('td[1]/text()').extract_first()
 
         return ovp if ovp else None
-
 
     def parse_other_notes(self, response):
         """Parsing table of 'Jiné zápisy'."""
@@ -643,7 +651,6 @@ class LandRegisterSpider(scrapy.Spider):
 
         return on if on else None
 
-
     def parse_building_rights(self, response):
         """Parsing table of 'Práva stavby'."""
 
@@ -656,7 +663,6 @@ class LandRegisterSpider(scrapy.Spider):
             rights += row.xpath('td[1]/text()').extract_first()
 
         return rights if rights else None
-
 
 
 def is_error_message(response):
