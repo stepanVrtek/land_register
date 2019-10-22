@@ -49,7 +49,7 @@ def prepare_batch():
     batch = []
     single_list = []
     for r in results:
-        if len(single_list) > max_processes:
+        if len(single_list) == max_items:
             batch.append(single_list.copy())
             single_list = []
 
