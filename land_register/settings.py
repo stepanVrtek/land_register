@@ -54,11 +54,12 @@ CONCURRENT_REQUESTS_PER_DOMAIN = 1  # 50
 DOWNLOADER_MIDDLEWARES = {
     # 'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
     # 'rotating_proxies.middlewares.BanDetectionMiddleware': 620,
-    'land_register.middlewares.RandomProxyMiddleware': 350,
-    'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 400,
+    # 'land_register.middlewares.RandomProxyMiddleware': 350,
 
+    'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 400,
     'land_register.middlewares.LandRegisterDownloaderMiddleware': 543,
-    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None
+    'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
+    'scrapy_user_agents.middlewares.RandomUserAgentMiddleware': 450,
     # 'scrapy_fake_useragent.middleware.RandomUserAgentMiddleware': 800
 }
 
@@ -74,6 +75,7 @@ DOWNLOADER_MIDDLEWARES = {
 # Pipelins are defined in spiders as custom settings
 # ITEM_PIPELINES = {
 #     'land_register.pipelines.land_register_pipeline.LandRegisterPipeline': 100,
+#     'land_register.pipelines.building_objects_pipeline.BuildingObjectsPipeline': 101,
 #     'land_register.pipelines.operations_pipeline.OperationsPipeline': 200
 # }
 
@@ -98,37 +100,36 @@ DOWNLOADER_MIDDLEWARES = {
 # HTTPCACHE_IGNORE_HTTP_CODES = []
 # HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
+
+# Proxy endpoints
 ROTATING_PROXY_LIST = [
     '37.48.118.4:13081',
     '5.79.66.2:13081'
 ]
 # ROTATING_PROXY_LIST_PATH = 'land_register/proxies_list.txt'
 
+
 # # Export
 # FEED_FORMAT = 'csv'
 
 
-# FOR NOW DON'T USE
-# ____________________
-# DEPTH_PRIORITY = 1
-# SCHEDULER_DISK_QUEUE = 'scrapy.squeues.PickleFifoDiskQueue'
-# SCHEDULER_MEMORY_QUEUE = 'scrapy.squeues.FifoMemoryQueue'
-
-# HTTPERROR_ALLOWED_CODES = [500, 403]
-# ____________________
+# Scrape data in order in which data are fetched
+DEPTH_PRIORITY = 1
+SCHEDULER_DISK_QUEUE = 'scrapy.squeues.PickleFifoDiskQueue'
+SCHEDULER_MEMORY_QUEUE = 'scrapy.squeues.FifoMemoryQueue'
 
 
 TELNETCONSOLE_PORT = None
 
 LOG_LEVEL = 'INFO'
 
+
 RETRY_ENABLED = True
-
 RETRY_HTTP_CODES = [500, 502, 503, 504, 403, 404, 408]
-
 RETRY_TIMES = 30
-
 DOWNLOAD_TIMEOUT = 180
+# HTTPERROR_ALLOWED_CODES = [500, 403]
+
 
 # Settings for land_register project
 
@@ -146,3 +147,9 @@ MAX_INVALID_ITEMS_IN_ROW = 500
 MAX_RIZENI_IN_BATCH = 30
 # Number of days in past to scrape 'rizeni'
 MAX_DAYS_IN_PAST_TO_SCRAPE_RIZENI = 7
+
+# Scraping of 'stavebni objekty'
+# Number of items in batch
+MAX_STAVEBNI_OBJEKTY_IN_BATCH = 100
+# Number of processes
+MAX_STAVEBNI_OBJEKTY_PROCESSES = 1

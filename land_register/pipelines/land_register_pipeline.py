@@ -27,7 +27,7 @@ class LandRegisterPipeline():
         if cislo_lv not in self.collection:
             self.init_item(cislo_lv)
 
-        self.add_item(cislo_lv, item)
+        self.add_item(cislo_lv, item, spider)
         self.save_complete_items_in_order()
 
         return item
@@ -37,17 +37,19 @@ class LandRegisterPipeline():
             'lv': {},
             'pozemky': [],
             'stavebni_objekty': [],
+            'stavebni_objekty_ref': [],
             'stavby': [],
             'jednotky': []
         }
 
-    def add_item(self, cislo_lv, item):
+    def add_item(self, cislo_lv, item, spider=None):
         item_type = item.get('item_type')
         item_data = item.get('data')
 
-        # print('cislo_lv: {}, item: {}'.format(cislo_lv, item_type))
+        if spider:
+            spider.logger.info('cislo_lv: {}, item: {}'.format(cislo_lv, item_type))
 
-        self.format_item(item_data)
+        format_item(item_data)
 
         if item_type == 'LV':
             self.collection[cislo_lv]['lv'] = item_data
@@ -55,27 +57,12 @@ class LandRegisterPipeline():
             self.collection[cislo_lv]['pozemky'].append(item_data)
         elif item_type == 'STAVEBNI_OBJEKT':
             self.collection[cislo_lv]['stavebni_objekty'].append(item_data)
+        elif item_type == 'STAVEBNI_OBJEKT_REF':
+            self.collection[cislo_lv]['stavebni_objekty_ref'].append(item_data)
         elif item_type == 'STAVBA':
             self.collection[cislo_lv]['stavby'].append(item_data)
         elif item_type == 'JEDNOTKA':
             self.collection[cislo_lv]['jednotky'].append(item_data)
-
-    def format_item(self, item):
-        """Format item values to types for DB."""
-
-        for key, value in item.items():
-            if key in [
-                'cislo_lv', 'cislo_ku', 'cislo_obce', 'cislo_casti_obce',
-                'vymera', 'cislo_stavebniho_objektu', 'ext_id_parcely',
-                'pocet_bytu', 'zastavena_plocha', 'podlahova_plocha',
-                'pocet_podlazi', 'ext_id_stavebniho_objektu'
-            ]:
-                if value:
-                    item[key] = common.string_to_int(value)
-
-            elif key in ['datum_dokonceni']:
-                if value:
-                    item[key] = common.get_date_from_string(value)
 
     def save_gradually(self, cislo_lv):
         """Saves only some items, based on gradual processing.
@@ -100,7 +87,7 @@ class LandRegisterPipeline():
             return
 
         while len(self.collection) > 1:
-            item = self.collection.popitem(last=False)
+            _, item = self.collection.popitem(last=False)
             save_whole_item(item)
 
     def save_all_items(self):
@@ -109,6 +96,23 @@ class LandRegisterPipeline():
         for _, item in self.collection.items():
             save_whole_item(item)
 
+
+def format_item(item):
+    """Format item values to types for DB."""
+
+    for key, value in item.items():
+        if key in [
+            'cislo_lv', 'cislo_ku', 'cislo_obce', 'cislo_casti_obce',
+            'vymera', 'cislo_stavebniho_objektu', 'ext_id_parcely',
+            'pocet_bytu', 'zastavena_plocha', 'podlahova_plocha',
+            'pocet_podlazi', 'ext_id_stavebniho_objektu'
+        ]:
+            if value:
+                item[key] = common.string_to_int(value)
+
+        elif key in ['datum_dokonceni']:
+            if value:
+                item[key] = common.get_date_from_string(value)
 
 
 def save_whole_item(item):
@@ -119,6 +123,8 @@ def save_whole_item(item):
         process_items_list(id_lv, 'pozemek', item['pozemky'])
     if item['stavebni_objekty']:
         process_items_list(id_lv, 'stavebni_objekt', item['stavebni_objekty'])
+    if item['stavebni_objekty_ref']:
+        save_buildings_refs(id_lv, item['stavebni_objekty_ref'])
     if item['stavby']:
         process_items_list(id_lv, 'stavba', item['stavby'])
     if item['jednotky']:
@@ -355,3 +361,10 @@ def is_changed(item, ignore_fields=[]):
         if value:
             return True
     return False
+
+
+def save_buildings_refs(id_lv, refs):
+    db = db_handler.get_dataset()
+    for r in refs:
+        r['id_lv'] = id_lv
+    db['stavebni_objekt_ref'].insert_many(refs)

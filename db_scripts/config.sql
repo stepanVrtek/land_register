@@ -48,7 +48,7 @@ CREATE OR REPLACE TABLE stavebni_objekt (
   id INT NOT NULL AUTO_INCREMENT,
   cislo_zaznamu INT NOT NULL,
   id_lv INT NOT NULL,
-  ext_id_parcely BIGINT UNSIGNED NOT NULL,
+  ext_id_parcely BIGINT UNSIGNED,
   cisla_popis_evid VARCHAR(50),
   typ VARCHAR(50),
   zpusob_vyuziti VARCHAR(100),
@@ -62,6 +62,16 @@ CREATE OR REPLACE TABLE stavebni_objekt (
   bylo_vymazano BOOLEAN,
   CONSTRAINT PK_stavebni_objekt PRIMARY KEY (id,cislo_zaznamu),
   CONSTRAINT FK_id_lv_stavebni_objekt FOREIGN KEY (id_lv) REFERENCES lv(id)
+);
+
+CREATE OR REPLACE TABLE stavebni_objekt_ref (
+  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  id_lv INT NOT NULL,
+  ext_id_parcely BIGINT SIGNED NOT NULL,
+  ext_id_stavebniho_objektu BIGINT,
+  url VARCHAR(500),
+  stav_scrapingu CHAR(1) DEFAULT 'W', -- W (waiting to process), R (running), F (finished), E (error)
+  CONSTRAINT FK_id_lv_stavebni_objekt_ref FOREIGN KEY (id_lv) REFERENCES lv(id)
 );
 
 CREATE OR REPLACE TABLE stavba (

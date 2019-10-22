@@ -11,5 +11,6 @@ def get_datetime_from_string(string):
 
 def string_to_int(value):
     if isinstance(value, str):
-        return int(value)
+        # get only digits from string
+        return int(''.join(filter(lambda x: x.isdigit(), value)))
     return value

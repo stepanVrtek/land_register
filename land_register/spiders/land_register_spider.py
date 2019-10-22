@@ -44,7 +44,7 @@ class LandRegisterSpider(scrapy.Spider):
     def start_requests(self):
         yield scrapy.Request(
             url=START_URL,
-            callback=self.parse
+            callback=self.enter_ku_code
             # errback=self.errback
         )
 
@@ -172,13 +172,18 @@ class LandRegisterSpider(scrapy.Spider):
             db['lv'].insert(r)
             break
 
-    def parse(self, response):
+    def enter_ku_code(self, response):
         """Enter KU code (kod katastralneho uzemia) to form."""
+
+        # use lv_code from response if is passed in meta (not used right now)
+        lv_code = (response.meta['cislo_lv']
+                   if response.meta.get('cislo_lv')
+                   else self.get_start_lv_code())
 
         yield scrapy.FormRequest.from_response(
             response,
             meta={
-                'cislo_lv': self.get_start_lv_code()
+                'cislo_lv': lv_code
             },
             formdata={
                 KU_INPUT_ELEMENT: self.ku_code,
@@ -216,10 +221,16 @@ class LandRegisterSpider(scrapy.Spider):
 
         lv_code = response.meta['cislo_lv']
 
+        is_error = is_error_message(response)
+
+        # if the same content
+        # if not is_error and no_lv_content(response):
+        #     yield from self.enter_ku_code(response)
+
         # check if LV is valid or if has been reached maximum number
         # of not existed LVs
         self.total_count += 1
-        if is_error_message(response):
+        if is_error:
 
             self.save_lv_log(lv_code, exists=False)
 
@@ -398,19 +409,32 @@ class LandRegisterSpider(scrapy.Spider):
             if name == 'Stavební objekt:':
                 url = row.xpath('td[2]/a/@href').extract_first()
 
-                ground_data['cislo_stavebniho_objektu'] = row.xpath(
-                    'td[2]/text()').extract_first()
-
+                ground_data['cislo_stavebniho_objektu'] = row.xpath('td[2]/a/text()').extract_first()
                 ground_data['ext_id_stavebniho_objektu'] = get_id_from_link(url)
 
-                yield scrapy.Request(
-                    url,
-                    meta={
-                        'cislo_lv': response.meta['cislo_lv'],
-                        'ground_item': ground_data
-                    },
-                    callback=self.parse_building_object
-                )
+                building_object_ref = {
+                    'cislo_lv': response.meta['cislo_lv'],
+                    'item_type': 'STAVEBNI_OBJEKT_REF',
+                    'data': {
+                        'url': url,
+                        'ext_id_parcely': ground_data.get('ext_id_parcely'),
+                        'ext_id_stavebniho_objektu': ground_data.get('ext_id_stavebniho_objektu')
+                    }
+                }
+
+                yield building_object_ref
+
+                # MOVED TO SEPARATED PARSER
+                #
+                # yield scrapy.Request(
+                #     url,
+                #     meta={
+                #         'cislo_lv': response.meta['cislo_lv'],
+                #         'ground_item': ground_data
+                #     },
+                #     callback=self.parse_building_object
+                # )
+
                 break
 
         ground_item['data'] = ground_data
@@ -674,6 +698,12 @@ def is_error_message(response):
     if error_message and error_message != 'Zadaný LV nebyl nalezen!':
         print(error_message)
     return error_message is not None
+
+
+def no_lv_content(response):
+    """Check if url of response is not first page."""
+
+    return response.url == START_URL
 
 
 def parse_string_w_num(input):
