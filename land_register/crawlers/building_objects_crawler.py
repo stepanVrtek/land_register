@@ -29,6 +29,16 @@ def prepare_batch():
     settings = get_project_settings()
     max_items = settings['MAX_STAVEBNI_OBJEKTY_IN_BATCH']
     max_processes = settings['MAX_STAVEBNI_OBJEKTY_PROCESSES']
+
+    # check current running scrapyd processes
+    active_processes = utils.sum_active_jobs(
+        LandRegisterCrawler.project_name, LandRegisterCrawler.spider_name
+    )
+
+    max_processes -= active_processes
+    if max_processes < 1:
+        return []
+
     items_to_process = max_items * max_processes
 
     db = db_handler.get_dataset()
