@@ -114,8 +114,8 @@ CREATE OR REPLACE TABLE vlastnici (
   id INT NOT NULL AUTO_INCREMENT,
   cislo_zaznamu INT NOT NULL,
   id_lv INT NOT NULL,
-  id_ref BIGINT UNSIGNED NOT NULL,
-  typ_ref VARCHAR(20) NOT NULL,
+  id_ref BIGINT UNSIGNED DEFAULT 0,
+  typ_ref VARCHAR(20) DEFAULT '-',
   vlastnicke_pravo VARCHAR(400),
   jmeno VARCHAR(200),
   adresa VARCHAR(200),
@@ -134,7 +134,7 @@ CREATE OR REPLACE TABLE rizeni (
   cislo_ku MEDIUMINT UNSIGNED,
   -- id_lv INT, referencia na LV je priamo v sezname nemovitosti
   datum_prijeti DATETIME,
-  stav_rizeni VARCHAR(50),
+  stav_rizeni VARCHAR(100),
   datum_upravy DATETIME DEFAULT CURRENT_TIMESTAMP,
   UNIQUE KEY unikatni_rizeni (cislo_pracoviste, cislo_rizeni)
 );

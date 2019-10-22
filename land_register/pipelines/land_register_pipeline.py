@@ -197,6 +197,9 @@ def process_items_list(id_lv, table_name, items):
     """Process list of items and save them.
     Save additional items too - owners, ..."""
 
+    # this should never happen - just for instance
+    # if some data were accidentally fetched multiple times, filter unique items
+    items = delete_duplicates(items)
     filter_items_changes(id_lv, table_name, items)
     save_items(table_name, items, id_lv)
     process_owners(id_lv, table_name, items)
@@ -268,7 +271,11 @@ def save_items(table_name, items, id_lv=None):
                 item['id_lv'] = id_lv
 
             db = db_handler.get_dataset()
-            item[primary_key] = db[table_name].insert(item)
+            try:
+                item[primary_key] = db[table_name].insert(item)
+            except Exception as e:
+                pprint('Exception for item: {}\n\n'.format(item))
+                pprint(e)
 
             item['vlastnici'] = owners
 
@@ -364,7 +371,12 @@ def is_changed(item, ignore_fields=[]):
 
 
 def save_buildings_refs(id_lv, refs):
+    refs = delete_duplicates(refs)
     db = db_handler.get_dataset()
     for r in refs:
         r['id_lv'] = id_lv
     db['stavebni_objekt_ref'].insert_many(refs)
+
+
+def delete_duplicates(items):
+    return [dict(s) for s in set(frozenset(d.items()) for d in items)]
