@@ -138,13 +138,13 @@ DB_CONNECTION = 'mysql://scraper:8ZQ8Mpfu@localhost/katastr_db'  # 'mysql://root
 
 # Scraping of LV
 # Number of KUs in batch
-MAX_KU_IN_BATCH = 50
+MAX_KU_IN_BATCH = 2 #50
 # Maximum number of invalid items in a row, which we want to check
 MAX_INVALID_ITEMS_IN_ROW = 500
 
 # Scraping of 'rizeni'
 # Number of 'rizeni' in batch
-MAX_RIZENI_IN_BATCH = 30
+MAX_RIZENI_IN_BATCH = 2 #30
 # Number of days in past to scrape 'rizeni'
 MAX_DAYS_IN_PAST_TO_SCRAPE_RIZENI = 7
 
