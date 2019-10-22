@@ -46,7 +46,7 @@ python-scrapyd-api==2.1.2
 pytz==2018.5
 queuelib==1.5.0
 redis==2.10.6
-requests==2.19.1
+requests==2.20.0
 Scrapy==1.5.1
 # scrapy-fake-useragent==1.1.0
 scrapy-redis==0.6.8
