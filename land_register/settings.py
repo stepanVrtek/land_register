@@ -126,7 +126,7 @@ LOG_LEVEL = 'INFO'
 
 RETRY_ENABLED = True
 RETRY_HTTP_CODES = [500, 502, 503, 504, 403, 404, 408]
-RETRY_TIMES = 30
+RETRY_TIMES = 500
 DOWNLOAD_TIMEOUT = 180
 # HTTPERROR_ALLOWED_CODES = [500, 403]
 
@@ -138,13 +138,13 @@ DB_CONNECTION = 'mysql://root@localhost/katastr_db'  # 'mysql://scraper:8ZQ8Mpfu
 
 # Scraping of LV
 # Number of KUs in batch
-MAX_KU_IN_BATCH = 2 #50
+MAX_KU_IN_BATCH = 4  # 50
 # Maximum number of invalid items in a row, which we want to check
 MAX_INVALID_ITEMS_IN_ROW = 500
 
 # Scraping of 'rizeni'
 # Number of 'rizeni' in batch
-MAX_RIZENI_IN_BATCH = 2 #30
+MAX_RIZENI_IN_BATCH = 4  # 30
 # Number of days in past to scrape 'rizeni'
 MAX_DAYS_IN_PAST_TO_SCRAPE_RIZENI = 7
 
@@ -152,4 +152,4 @@ MAX_DAYS_IN_PAST_TO_SCRAPE_RIZENI = 7
 # Number of items in batch
 MAX_STAVEBNI_OBJEKTY_IN_BATCH = 100
 # Number of processes
-MAX_STAVEBNI_OBJEKTY_PROCESSES = 1
+MAX_STAVEBNI_OBJEKTY_PROCESSES = 4

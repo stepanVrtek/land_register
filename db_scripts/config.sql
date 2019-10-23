@@ -70,8 +70,7 @@ CREATE OR REPLACE TABLE stavebni_objekt_ref (
   ext_id_parcely BIGINT SIGNED NOT NULL,
   ext_id_stavebniho_objektu BIGINT,
   url VARCHAR(500),
-  stav_scrapingu CHAR(1) DEFAULT 'W', -- W (waiting to process), R (running), F (finished), E (error)
-  CONSTRAINT FK_id_lv_stavebni_objekt_ref FOREIGN KEY (id_lv) REFERENCES lv(id)
+  stav_scrapingu CHAR(1) DEFAULT 'W' -- W (waiting to process), R (running), F (finished), E (error)
 );
 
 CREATE OR REPLACE TABLE stavba (
