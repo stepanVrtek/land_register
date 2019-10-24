@@ -134,7 +134,7 @@ DOWNLOAD_TIMEOUT = 180
 # Settings for land_register project
 
 # DB connection
-DB_CONNECTION = 'mysql://root@localhost/katastr_db'  # 'mysql://scraper:8ZQ8Mpfu@localhost/katastr_db'  # 'mysql://root@localhost/katastr_db'
+DB_CONNECTION = 'mysql://scraper:8ZQ8Mpfu@localhost/katastr_db'  # 'mysql://root@localhost/katastr_db'
 
 # Scraping of LV
 # Number of KUs in batch

@@ -14,6 +14,8 @@ from pprint import pprint
 class LandRegisterPipeline():
     def __init__(self):
         self.collection = OrderedDict()
+        # {cislo_lv: id_lv}
+        self.saved_items = {}
 
     def open_spider(self, spider):
         self.collection = OrderedDict()
@@ -64,6 +66,7 @@ class LandRegisterPipeline():
         elif item_type == 'JEDNOTKA':
             self.collection[cislo_lv]['jednotky'].append(item_data)
 
+    # DEPRECATED
     def save_gradually(self, cislo_lv):
         """Saves only some items, based on gradual processing.
         Parts of items can be processed in different order (parallel
@@ -87,38 +90,51 @@ class LandRegisterPipeline():
             return
 
         while len(self.collection) > 1:
-            _, item = self.collection.popitem(last=False)
-            save_whole_item(item)
+            cislo_lv, item = self.collection.popitem(last=False)
+            self._save_safe(cislo_lv, item)
 
     def save_all_items(self):
         """Saves all scraped items."""
 
-        for _, item in self.collection.items():
-            save_whole_item(item)
+        for cislo_lv, item in self.collection.items():
+            self._save_safe(cislo_lv, item)
+
+    def _save_safe(self, cislo_lv, item):
+        """There is some unspecific problem when previous item were not processed
+        completely; hence try to get id_lv and pass it as param to save function."""
+
+        id_lv = self.saved_items.get(cislo_lv)
+        if id_lv:
+            save_whole_item(item, id_lv)
+        else:
+            id_lv = save_whole_item(item)
+            self.saved_items[cislo_lv] = id_lv
 
 
 def format_item(item):
     """Format item values to types for DB."""
 
     for key, value in item.items():
+        if not value:
+            continue
         if key in [
             'cislo_lv', 'cislo_ku', 'cislo_obce', 'cislo_casti_obce',
             'vymera', 'cislo_stavebniho_objektu', 'ext_id_parcely',
             'pocet_bytu', 'zastavena_plocha', 'podlahova_plocha',
             'pocet_podlazi', 'ext_id_stavebniho_objektu'
         ]:
-            if value:
-                item[key] = common.string_to_int(value)
+            item[key] = common.string_to_int(value)
 
         elif key in ['datum_dokonceni']:
-            if value:
-                item[key] = common.get_date_from_string(value)
+            item[key] = common.get_date_from_string(value)
 
 
-def save_whole_item(item):
+def save_whole_item(item, id_lv=None):
     """Saves all parts of item separately."""
 
-    id_lv = process_lv(item['lv'])
+    if item.get('lv') and not id_lv:
+        id_lv = process_lv(item['lv'])
+
     if item['pozemky']:
         process_items_list(id_lv, 'pozemek', item['pozemky'])
     if item['stavebni_objekty']:
@@ -129,6 +145,8 @@ def save_whole_item(item):
         process_items_list(id_lv, 'stavba', item['stavby'])
     if item['jednotky']:
         process_items_list(id_lv, 'jednotka', item['jednotky'])
+
+    return id_lv
 
 
 def process_lv(new_item):
@@ -274,7 +292,6 @@ def save_items(table_name, items, id_lv=None):
             try:
                 item[primary_key] = db[table_name].insert(item)
             except Exception as e:
-                pprint('Exception for item: {}\n\n'.format(item))
                 pprint(e)
 
             item['vlastnici'] = owners
@@ -379,4 +396,6 @@ def save_buildings_refs(id_lv, refs):
 
 
 def delete_duplicates(items):
-    return [dict(s) for s in set(frozenset(d.items()) for d in items)]
+    return items
+    # doesn't work for dicts where items are lists
+    # return [dict(s) for s in set(frozenset(d.items()) for d in items)]
