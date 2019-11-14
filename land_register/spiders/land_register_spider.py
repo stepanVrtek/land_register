@@ -195,7 +195,7 @@ class LandRegisterSpider(scrapy.Spider):
     def enter_lv_code(self, response):
         """Enter LV code (kod listu vlastnictva) to form."""
 
-        if is_error_message(response):
+        if self.is_error_message(response):
             # if ku code doesn't exist
             return
 
@@ -221,7 +221,13 @@ class LandRegisterSpider(scrapy.Spider):
 
         lv_code = response.meta['cislo_lv']
 
-        is_error = is_error_message(response)
+        is_error = self.is_error_message(response)
+
+        # if no error occurs, check if form expired,
+        # if yes end processing
+        if not is_error and not is_valid_lv_form(response):
+            self.success = False
+            return
 
         # if the same content
         # if not is_error and no_lv_content(response):
@@ -337,7 +343,7 @@ class LandRegisterSpider(scrapy.Spider):
         """Ground (pozemek) parsing. In this method is also called
         building object parsing (stavebni objekt)."""
 
-        if is_error_message(response):
+        if self.is_error_message(response):
             return
 
         ground_item = {
@@ -495,7 +501,7 @@ class LandRegisterSpider(scrapy.Spider):
     def parse_building(self, response):
         """Building (stavba) parsing."""
 
-        if is_error_message(response):
+        if self.is_error_message(response):
             return
 
         building_item = {
@@ -560,7 +566,7 @@ class LandRegisterSpider(scrapy.Spider):
     def parse_unit(self, response):
         """Unit (jednotka) parsing."""
 
-        if is_error_message(response):
+        if self.is_error_message(response):
             return
 
         unit_item = {
@@ -688,22 +694,32 @@ class LandRegisterSpider(scrapy.Spider):
 
         return rights if rights else None
 
+    def is_error_message(self, response):
+        """Checks if error message appeared on a page."""
 
-def is_error_message(response):
-    """Checks if error message appeared on a page."""
+        error_message = response.xpath(
+            '//div[@id="ctl00_hlaseniOnMasterPage"]/span/text()').extract_first()
 
-    error_message = response.xpath(
-        '//div[@id="ctl00_hlaseniOnMasterPage"]/span/text()').extract_first()
-
-    if error_message and error_message != 'Zadaný LV nebyl nalezen!':
-        print(error_message)
-    return error_message is not None
+        if error_message and error_message != 'Zadaný LV nebyl nalezen!':
+            self.logger.warning(error_message)
+        return error_message is not None
 
 
 def no_lv_content(response):
     """Check if url of response is not first page."""
 
     return response.url == START_URL
+
+
+def is_valid_lv_form(response):
+    """Check if LV form is valid."""
+
+    header = response.xpath('//h1/text()').extract_first()
+    if header == 'Vyhledání LV':
+        return False
+    elif header == 'Seznam nemovitostí na LV':
+        return True
+    return True
 
 
 def parse_string_w_num(input):

@@ -21,6 +21,7 @@ class LandRegisterPipeline():
         self.collection = OrderedDict()
 
     def close_spider(self, spider):
+        spider.logger.info('Closing spider and saving last items.')
         self.save_all_items()
 
     def process_item(self, item, spider):
