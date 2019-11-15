@@ -26,6 +26,9 @@ class LandRegisterSpider(scrapy.Spider):
     }
 
     def __init__(self, ku_code, job_id=None, starting_lv=1, **kwargs):
+        self.logger.info(f'Scraping KU {ku_code} od LV {starting_lv}, '
+                         f'id jobu: {job_id}')
+
         self.ku_code = ku_code
         self.job_id = job_id
         self.starting_lv = int(starting_lv)
