@@ -33,6 +33,7 @@ class LandRegisterSpider(scrapy.Spider):
         self.invalid_in_row = 0
         self.total_count = 0
         self.success = False
+        self.ku_code_not_exists = False
 
         settings = get_project_settings()
         self.max_invalid_items_in_row = settings['MAX_INVALID_ITEMS_IN_ROW']
@@ -132,6 +133,11 @@ class LandRegisterSpider(scrapy.Spider):
 
         # F (Finished) if success, E (Error) if error
         status = 'F' if self.success else 'E'
+
+        # if ku code not exist, set status to Finished - it's not error
+        if self.ku_code_not_exists:
+            status = 'F'
+
         self.save_job_log(status)
 
     def save_lv_log(self, lv_code, exists):
@@ -197,6 +203,7 @@ class LandRegisterSpider(scrapy.Spider):
 
         if self.is_error_message(response):
             # if ku code doesn't exist
+            self.ku_code_not_exists = True
             return
 
         self.ku_response = response
