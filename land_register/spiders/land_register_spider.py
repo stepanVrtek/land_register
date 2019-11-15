@@ -701,7 +701,7 @@ class LandRegisterSpider(scrapy.Spider):
             '//div[@id="ctl00_hlaseniOnMasterPage"]/span/text()').extract_first()
 
         if error_message and error_message != 'Zadaný LV nebyl nalezen!':
-            self.logger.warning(error_message)
+            self.logger.info(error_message)
         return error_message is not None
 
 
