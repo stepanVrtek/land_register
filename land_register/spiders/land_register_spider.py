@@ -175,6 +175,7 @@ class LandRegisterSpider(scrapy.Spider):
 
         result = db['lv'].find(**query, order_by='datum_zmeny', _limit=1)
         for r in result:
+            r.pop('id', None)
             r['cislo_zaznamu'] += 1
             r['bylo_vymazano'] = True
             r['prava_stavby'] = None
