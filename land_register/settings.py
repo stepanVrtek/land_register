@@ -55,7 +55,7 @@ DOWNLOADER_MIDDLEWARES = {
     # 'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
     # 'rotating_proxies.middlewares.BanDetectionMiddleware': 620,
 
-    'land_register.middlewares.RandomProxyMiddleware': 350,
+    # 'land_register.middlewares.RandomProxyMiddleware': 350,
     'scrapy_user_agents.middlewares.RandomUserAgentMiddleware': 390,
     'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 400,
     'land_register.middlewares.LandRegisterDownloaderMiddleware': 543,
@@ -134,7 +134,7 @@ DOWNLOAD_TIMEOUT = 180
 # Settings for land_register project
 
 # DB connection
-DB_CONNECTION = 'mysql://scraper:8ZQ8Mpfu@localhost/katastr_db'  # 'mysql://root@localhost/katastr_db'
+DB_CONNECTION = 'mysql://root@localhost/katastr_db' # 'mysql://scraper:8ZQ8Mpfu@localhost/katastr_db'  # 'mysql://root@localhost/katastr_db'
 
 # Scraping of LV
 # Number of KUs in batch
