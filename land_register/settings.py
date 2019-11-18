@@ -55,7 +55,7 @@ DOWNLOADER_MIDDLEWARES = {
     # 'rotating_proxies.middlewares.RotatingProxyMiddleware': 610,
     # 'rotating_proxies.middlewares.BanDetectionMiddleware': 620,
 
-    # 'land_register.middlewares.RandomProxyMiddleware': 350,
+    'land_register.middlewares.RandomProxyMiddleware': 350,
     'scrapy_user_agents.middlewares.RandomUserAgentMiddleware': 390,
     'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 400,
     'land_register.middlewares.LandRegisterDownloaderMiddleware': 543,
@@ -103,8 +103,8 @@ DOWNLOADER_MIDDLEWARES = {
 
 # Proxy endpoints
 ROTATING_PROXY_LIST = [
-    '37.48.118.4:13081',
-    '5.79.66.2:13081'
+    '95.211.175.167:13151',
+    '95.211.175.225:13151'
 ]
 # ROTATING_PROXY_LIST_PATH = 'land_register/proxies_list.txt'
 
@@ -134,17 +134,17 @@ DOWNLOAD_TIMEOUT = 180
 # Settings for land_register project
 
 # DB connection
-DB_CONNECTION = 'mysql://root@localhost/katastr_db' # 'mysql://scraper:8ZQ8Mpfu@localhost/katastr_db'  # 'mysql://root@localhost/katastr_db'
+DB_CONNECTION = 'mysql://scraper:8ZQ8Mpfu@localhost/katastr_db'  # 'mysql://root@localhost/katastr_db'
 
 # Scraping of LV
 # Number of KUs in batch
-MAX_KU_IN_BATCH = 4  # 50
+MAX_KU_IN_BATCH = 8  # 50
 # Maximum number of invalid items in a row, which we want to check
 MAX_INVALID_ITEMS_IN_ROW = 500
 
 # Scraping of 'rizeni'
 # Number of 'rizeni' in batch
-MAX_RIZENI_IN_BATCH = 4  # 30
+MAX_RIZENI_IN_BATCH = 8  # 30
 # Number of days in past to scrape 'rizeni'
 MAX_DAYS_IN_PAST_TO_SCRAPE_RIZENI = 7
 
@@ -152,4 +152,4 @@ MAX_DAYS_IN_PAST_TO_SCRAPE_RIZENI = 7
 # Number of items in batch
 MAX_STAVEBNI_OBJEKTY_IN_BATCH = 100
 # Number of processes
-MAX_STAVEBNI_OBJEKTY_PROCESSES = 4
+MAX_STAVEBNI_OBJEKTY_PROCESSES = 8
