@@ -16,9 +16,11 @@ class LandRegisterPipeline():
         self.collection = OrderedDict()
         # {cislo_lv: id_lv}
         self.saved_items = {}
+        self.logger = None
 
     def open_spider(self, spider):
         self.collection = OrderedDict()
+        self.logger = spider.logger
 
     def close_spider(self, spider):
         spider.logger.info('Closing spider and saving last items.')
@@ -106,9 +108,10 @@ class LandRegisterPipeline():
 
         id_lv = self.saved_items.get(cislo_lv)
         if id_lv:
-            save_whole_item(item, id_lv)
+            save_whole_item(item, id_lv, logger=self.logger, cislo_lv=cislo_lv)
         else:
-            id_lv = save_whole_item(item)
+            id_lv = save_whole_item(item, logger=self.logger,
+                                    cislo_lv=cislo_lv)
             self.saved_items[cislo_lv] = id_lv
 
 
@@ -130,11 +133,20 @@ def format_item(item):
             item[key] = common.get_date_from_string(value)
 
 
-def save_whole_item(item, id_lv=None):
+def save_whole_item(item, id_lv=None, logger=None, cislo_lv=None):
     """Saves all parts of item separately."""
 
-    if item.get('lv') and not id_lv:
-        id_lv = process_lv(item['lv'])
+    # if id_lv is not passed (which is standard situation)
+    #   save 'lv' item and get id
+    # if 'lv' is not part of item dict end processing - this situation
+    # is weird and should never happen
+    if not id_lv:
+        if item.get('lv'):
+            id_lv = process_lv(item['lv'])
+        else:
+            if logger:
+                logger.info(f'LV with no {cislo_lv} cannot be save, because '
+                            f'it is not complete.')
 
     if item['pozemky']:
         process_items_list(id_lv, 'pozemek', item['pozemky'])
